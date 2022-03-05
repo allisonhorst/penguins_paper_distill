@@ -1,0 +1,13 @@
+Initial check results: 
+SUCCESS: Submission contains both RJwrapper.tex and RJwrapper.pdf
+ERROR: Submission does not have consistently named tex, bib, and R files
+SUCCESS: No problematic file found
+SUCCESS: Possible motivation letter found
+ERROR: The title is not in title case! Suggest title to be changed to:
+Palmer Archipelago Penguins Data in the Palmerpenguins R Package - An Alternative to Anderson's Irises
+SUCCESS: All sections are properly formatted in sentence case
+SUCCESS: Abstract comes before the introduction section
+NOTE: A potential list of spelling to check: palmerpenguins, scikit, csv, loadings, setosa, versicolor, virginica, misclassified, jl, acknowledgements, pre
+SUCCESS: All CRAN & Bioconductor packages mentioned are available
+
+ SUCCESSES: 6 | ERRORS: 2 | NOTES: 1 
