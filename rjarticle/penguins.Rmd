@@ -2,17 +2,18 @@
 title: Palmer Archipelago Penguins Data in the palmerpenguins R Package - An Alternative to Anderson's Irises
 author:
   - name: Allison M. Horst
-    affiliation: University of California, Santa Barbara Bren School of Environmental Science and Management
+    affiliation: University of California Santa Barbara 
     address:
-    - University of California, Santa Barbara
+    - Bren School of Environmental Science and Management
     - Santa Barbara, CA 93106-5131
     email:  ahorst@ucsb.edu
   - name: Alison Presmanes Hill
     email:  apreshill@gmail.com
+    affiliation: AI Strategy & Innovation, IBM
   - name: Kristen B. Gorman
-    affiliation: University of Alaska Fairbanks College of Fisheries and Ocean Sciences 
+    affiliation: University of Alaska Fairbanks 
     address:
-    - University of Alaska Fairbanks 
+    - College of Fisheries and Ocean Sciences 
     - 2150 Koyukuk Drive
     - 245 O’Neill Building
     - Fairbanks, AK 99775-7220
