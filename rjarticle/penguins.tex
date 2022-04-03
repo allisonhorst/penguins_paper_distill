@@ -58,9 +58,9 @@ dataset is built into a number of software packages including the
 auto-installed datasets package in R \citep{r_core_team_r_2019},
 Python's scikit-learn machine learning library
 \citep{pedregosa_scikit-learn_2011}, and the SAS Sashelp library (SAS
-Institute, Cary NC), which have facilitated its widespread use. As a
+Institute, Cary NC), which has facilitated its widespread use. As a
 result, eighty-six years after the data were initially published,
-\textbf{iris} is ubiquitous in statistics, computational methods,
+\textbf{iris} remains ubiquitous in statistics, computational methods,
 software documentation, and data science courses and materials.
 
 There are a number of reasons that modern data science practitioners and
@@ -68,18 +68,18 @@ educators may want to move on from \textbf{iris}. First, the dataset
 lacks metadata \citep{anderson_irises_1935}, which does not reinforce
 best practices and limits meaningful interpretation and discussion of
 research methods, analyses, and outcomes. Of the five variables in
-\textbf{iris}, two (\texttt{Sepal.Width} and \texttt{Sepal.Length}) are
-not intuitive for most non-botanists. Even with explanation, the
-difference between \emph{petal} and \emph{sepal} dimensions is not
-obvious. Second, \textbf{iris} contains equal sample sizes for each of
-the three species (\emph{n} = 50) with no missing values, which is
-cleaner than most real-world data that learners are likely to encounter.
-Third, the single factor (\texttt{Species}) in \textbf{iris} limits
-options for analyses. Finally, due to its publication in the
-\emph{Annals of Eugenics} by statistician R.A. Fisher
-\citep{fisher_use_1936}, \textbf{iris} is burdened by a history in
-eugenics research, which we are committed to addressing through the
-development of new data science education products as described below.
+\textbf{iris}, two (\emph{Sepal.Width} and \emph{Sepal.Length}) are not
+intuitive for most non-botanists. Even with explanation, the difference
+between \emph{petal} and \emph{sepal} dimensions is not obvious. Second,
+\textbf{iris} contains equal sample sizes for each of the three species
+(\emph{n} = 50) with no missing values, which is cleaner than most
+real-world data that learners are likely to encounter. Third, the single
+factor (\emph{Species}) in \textbf{iris} limits options for analyses.
+Finally, due to its publication in the \emph{Annals of Eugenics} by
+statistician R.A. Fisher \citep{fisher_use_1936}, \textbf{iris} is
+burdened by a history in eugenics research, which we are committed to
+addressing through the development of new data science education
+products as described below.
 
 Given the growing need for fresh data science-ready datasets, we sought
 to identify an alternative dataset that could be made easily accessible
@@ -300,7 +300,7 @@ and create added learning opportunity to the \textbf{penguins} dataset.
 \centering
 \begin{tabular}[t]{lclccc}
 \toprule
-\multicolumn{2}{c}{Iris sample size (by species)} & \multicolumn{4}{c}{Penguin sample size (by species and sex)} \\
+\multicolumn{2}{c}{iris sample size (by species)} & \multicolumn{4}{c}{penguins sample size (by species and sex)} \\
 \cmidrule(l{3pt}r{3pt}){1-2} \cmidrule(l{3pt}r{3pt}){3-6}
 Iris species & Sample size & Penguin species & Female & Male & NA\\
 \midrule
@@ -331,7 +331,7 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 
 }
 
-\caption{Distributions and correlations for numeric variables in the penguins data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance levels indicated for bivariate correlations are: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:penguin-pairs}
+\caption{Distributions and correlations for numeric variables in the \textbf{penguins} data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:penguin-pairs}
 \end{figure}
 \end{Schunk}
 
@@ -342,7 +342,7 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 
 }
 
-\caption{Distributions and correlations for numeric variables in \textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \textit{Iris setosa} (light gray, circles); \textit{Iris versicolor} (dark gray, triangles); and \textit{Iris virginica} (black, squares). Significance levels indicated for bivariate correlations are: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:iris-pairs}
+\caption{Distributions and correlations for numeric variables in \textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \textit{Iris setosa} (light gray, circles); \textit{Iris versicolor} (dark gray, triangles); and \textit{Iris virginica} (black, squares). Significance indicated for bivariate correlations: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:iris-pairs}
 \end{figure}
 \end{Schunk}
 
