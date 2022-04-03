@@ -204,7 +204,7 @@ iris_penguin_n %>%
    kable(caption = "Grouped sample size for **iris** (by species; *n* = 150 total) and **penguins** (by *species* and *sex*; *n* = 344 total). Data in **penguins** can be further grouped by island and study year.", 
          align = "lclccc",
          booktabs = TRUE) %>% 
-  add_header_above(c("iris sample size (by species)" = 2, "penguins sample size (by species and sex)" = 4 ))
+  add_header_above(c("**iris** sample size (by species)" = 2, "**penguins** sample size (by species and sex)" = 4 ))
 ```
 
 ```{r, eval=knitr::is_latex_output()}
@@ -522,7 +522,7 @@ Here, we have shown that structural size measurements for Palmer Archipelago *Py
 
 Data in the **penguins** object have been minimally updated from **penguins_raw** as follows:
 
--   All variable names are converted to lower snake case (e.g. from `Flipper Length (mm)` to `flipper_length_mm`)
+-   All variable names are converted to lower snake case (e.g. from *Flipper Length (mm)* to *flipper_length_mm*)
 -   Entries in *species* are truncated to only include the common name (e.g. "Gentoo", instead of "gentoo penguin (*Pygoscelis papua*)")
 -   Recorded sex for penguin N36A1, originally recorded as ".", is updated to `NA`
 -   *culmen_length_mm* and *culmen_depth_mm* variable names are updated to *bill_length_mm* and *bill_depth_mm*, respectively

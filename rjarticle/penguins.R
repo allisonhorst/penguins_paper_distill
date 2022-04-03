@@ -91,7 +91,7 @@ iris_penguin_n <- cbind(iris_counts, penguin_counts) %>%
 #>    kable(caption = "Grouped sample size for **iris** (by species; *n* = 150 total) and **penguins** (by *species* and *sex*; *n* = 344 total). Data in **penguins** can be further grouped by island and study year.",
 #>          align = "lclccc",
 #>          booktabs = TRUE) %>%
-#>   add_header_above(c("iris sample size (by species)" = 2, "penguins sample size (by species and sex)" = 4 ))
+#>   add_header_above(c("**iris** sample size (by species)" = 2, "**penguins** sample size (by species and sex)" = 4 ))
 
 
 ## ---- eval=knitr::is_latex_output()-------------------------------------------
