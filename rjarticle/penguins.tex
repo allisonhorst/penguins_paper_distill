@@ -18,26 +18,27 @@ groups with zero missing values make \textbf{iris} an inadequate and
 stale dataset for teaching and learning modern data science skills.
 Users would benefit from working with a more representative, real-world
 environmental dataset with a clear link to current scientific research.
-Importantly, Anderson's \emph{Iris} dataset appeared in a 1936
-publication by R. A. Fisher in the \emph{Annals of Eugenics} (which is
-often the first-listed citation for the dataset), inextricably linking
-\textbf{iris} to eugenics research. Thus, a modern alternative to the
-\textbf{iris} dataset is needed. In this paper, we introduce the
-palmerpenguins R package, which includes body size measurements
-collected from 2007 - 2009 for three species of Pygoscelis penguins that
-breed on islands throughout the Palmer Archipelago, Antarctica. The
-\textbf{penguins} data provides an approachable, charismatic, and near
-drop-in replacement for \textbf{iris} with topical relevance for polar
-climate change and environmental impacts on marine predators. Since the
-release on CRAN in July 2020, the \textbf{palmerpenguins} package has
-been downloaded over 238,000 times, highlighting the demand and
-widespread adoption of this viable \textbf{iris} alternative. We
-directly compare the \textbf{iris} and \textbf{penguins} datasets for
-selected analyses to demonstrate that R users, in particular teachers
-and learners currently using \textbf{iris}, can switch to the Palmer
-Archipelago penguins for many use cases including data wrangling,
-visualization, linear modeling, multivariate analysis (e.g., PCA),
-cluster analysis and classification (e.g., by k-means).
+Importantly, Anderson's \emph{Iris} data appeared in a 1936 publication
+by R. A. Fisher in the \emph{Annals of Eugenics} (which is often the
+first-listed citation for the dataset), inextricably linking
+\textbf{iris} to eugenics research. Thus, a modern alternative to
+\textbf{iris} is needed. In this paper, we introduce the
+\textbf{palmerpenguins} R package, which includes body size measurements
+collected from 2007 - 2009 for three species of \emph{Pygoscelis}
+penguins that breed on islands throughout the Palmer Archipelago,
+Antarctica. The \textbf{penguins} dataset in \textbf{palmerpenguins}
+provides an approachable, charismatic, and near drop-in replacement for
+\textbf{iris} with topical relevance for polar climate change and
+environmental impacts on marine predators. Since the release on CRAN in
+July 2020, the \textbf{palmerpenguins} package has been downloaded over
+402,000 times, highlighting the demand and widespread adoption of this
+viable \textbf{iris} alternative. We directly compare the \textbf{iris}
+and \textbf{penguins} datasets for selected analyses to demonstrate that
+R users, in particular teachers and learners currently using
+\textbf{iris}, can switch to the Palmer Archipelago penguins for many
+use cases including data wrangling, visualization, linear modeling,
+multivariate analysis (e.g., PCA), cluster analysis and classification
+(e.g., by k-means).
 }
 
 \hypertarget{introduction}{%
@@ -48,46 +49,43 @@ structural dimensions (length and width) for 50 flowers from three
 \emph{Iris} species: \emph{Iris setosa}, \emph{Iris versicolor}, and
 \emph{Iris virginica} \citep{anderson_irises_1935}. The manageable but
 non-trivial size (5 variables and 150 total observations) and
-characteristics of the dataset, including linear relationships and
-multivariate normality, have made the dataset amenable for introducing a
-wide range of statistical methods including data wrangling,
-visualization, linear modeling, multivariate analyses, and machine
-learning. Anderson's \emph{Iris} data is built into a number of software
-packages including the auto-installed datasets package in R
-\citep{r_core_team_r_2019}, Python's scikit-learn machine learning
-library \citep{pedregosa_scikit-learn_2011}, and the SAS Sashelp library
-(SAS Institute, Cary NC), which have facilitated widespread use of the
-\emph{Iris} data. As a result, eighty-six years after the data were
-initially published, Anderson's \emph{Iris} measurements are ubiquitous
-in statistics, computational methods, software documentation, and data
-science courses and materials.
+characteristics of Anderson's \emph{Iris} dataset (hereinafter referred
+to as \textbf{iris}), including linear relationships and multivariate
+normality, have made it amenable for introducing a wide range of
+statistical methods including data wrangling, visualization, linear
+modeling, multivariate analyses, and machine learning. The \textbf{iris}
+dataset is built into a number of software packages including the
+auto-installed datasets package in R \citep{r_core_team_r_2019},
+Python's scikit-learn machine learning library
+\citep{pedregosa_scikit-learn_2011}, and the SAS Sashelp library (SAS
+Institute, Cary NC), which has facilitated its widespread use. As a
+result, eighty-six years after the data were initially published,
+\textbf{iris} remains ubiquitous in statistics, computational methods,
+software documentation, and data science courses and materials.
 
 There are a number of reasons that modern data science practitioners and
-educators may want to move on from Anderson's \emph{Iris} dataset.
-First, Anderson's \emph{Iris} dataset lacks metadata almost entirely
-\citep{anderson_irises_1935}, which does not reinforce best practices
-and limits meaningful interpretation and discussion of research methods,
-analyses, and outcomes. Of the five variables in the dataset, two
-(\texttt{Sepal.Width} and \texttt{Sepal.Length}) are not intuitive for
-most non-botanists. Even with explanation, the difference between
-\emph{Iris} \emph{petal} and \emph{sepal} dimensions is not obvious.
-Second, the \emph{Iris} dataset contains equal sample sizes for each of
-the three species (\emph{n} = 50) with no missing values, which is
-cleaner than most real-world datasets that learners are likely to
-encounter. Third, the single factor (\texttt{Species}) in the
-\emph{Iris} data limits options for analyses. Finally, due to its
-publication in the \emph{Annals of Eugenics} by statistician R.A. Fisher
-\citep{fisher_use_1936}, the \emph{Iris} dataset is burdened by a
-history in eugenics research, which we are committed to addressing
-through the development of new data science education products as
-described below.
+educators may want to move on from \textbf{iris}. First, the dataset
+lacks metadata \citep{anderson_irises_1935}, which does not reinforce
+best practices and limits meaningful interpretation and discussion of
+research methods, analyses, and outcomes. Of the five variables in
+\textbf{iris}, two (\emph{Sepal.Width} and \emph{Sepal.Length}) are not
+intuitive for most non-botanists. Even with explanation, the difference
+between \emph{petal} and \emph{sepal} dimensions is not obvious. Second,
+\textbf{iris} contains equal sample sizes for each of the three species
+(\emph{n} = 50) with no missing values, which is cleaner than most
+real-world data that learners are likely to encounter. Third, the single
+factor (\emph{Species}) in \textbf{iris} limits options for analyses.
+Finally, due to its publication in the \emph{Annals of Eugenics} by
+statistician R.A. Fisher \citep{fisher_use_1936}, \textbf{iris} is
+burdened by a history in eugenics research, which we are committed to
+addressing through the development of new data science education
+products as described below.
 
 Given the growing need for fresh data science-ready datasets, we sought
 to identify an alternative dataset that could be made easily accessible
 for a broad audience. After evaluating the positive and negative
-features of the \emph{Iris} dataset in data science and statistics
-materials, we established the following criteria for a suitable
-alternative:
+features of \textbf{iris} in data science and statistics materials, we
+established the following criteria for a suitable alternative:
 
 \begin{itemize}
 \tightlist
@@ -108,19 +106,19 @@ alternative:
   Provides similar opportunities for teaching and learning R, data
   science, and statistical skills
 \item
-  Can easily replace \emph{Iris} for most use cases
+  Can easily replace \textbf{iris} for most use cases
 \end{itemize}
 
-Here, we describe an alternative to Anderson's \emph{Iris} data that
-largely satisfies these criteria: a refreshing, approachable, and
-charismatic dataset containing real-world body size measurements for
-three \emph{Pygoscelis} penguin species that breed throughout the
-Western Antarctic Peninsula region, made available through the United
-States Long-Term Ecological Research (US LTER) Network. By comparing
-data structure, size, and a range of analyses side-by-side for the two
-datasets, we demonstrate that the Palmer Archipelago penguin data are an
-ideal substitute for Anderson's \emph{Iris} dataset for many use cases
-in statistics and data science education.
+Here, we describe an alternative to \textbf{iris} that largely satisfies
+these criteria: a refreshing, approachable, and charismatic dataset
+containing real-world body size measurements for three \emph{Pygoscelis}
+penguin species that breed throughout the Western Antarctic Peninsula
+region, made available through the United States Long-Term Ecological
+Research (US LTER) Network. By comparing data structure, size, and a
+range of analyses side-by-side for the two datasets, we demonstrate that
+the Palmer Archipelago penguin data are an ideal substitute for
+\textbf{iris} for many use cases in statistics and data science
+education.
 
 \hypertarget{data-source}{%
 \subsection{Data source}\label{data-source}}
@@ -253,7 +251,7 @@ exhaustive.
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:overview-tbl}Overview comparison of penguins and iris dataset features and characteristics.}
+\caption{\label{tab:unnamed-chunk-2}Overview comparison of \textbf{penguins} and \textbf{iris} dataset features and characteristics.}
 \centering
 \begin{tabular}[t]{lcl}
 \toprule
@@ -276,7 +274,7 @@ size}\label{data-structure-and-sample-size}}
 
 Both \textbf{iris} and \textbf{penguins} are in tidy format
 \citep{wickham_tidy_2014} with each column denoting a single variable
-and each row containing measurements for a single \emph{Iris} flower or
+and each row containing measurements for a single iris flower or
 penguin, respectively. The two datasets are comparable in size:
 dimensions (columns × rows) are 5 × 150 and 8 × 344 for \textbf{iris}
 and \textbf{penguins}, respectively, and sample sizes within species are
@@ -291,18 +289,18 @@ compared to the single factor (\emph{Species}) in \textbf{iris}.
 
 Unlike \textbf{iris}, which contains only complete cases, the
 \textbf{penguins} dataset contains a small number of missing values
-(n\textsubscript{missing} = 19, out of 2752 total values). Missing
-values and unequal sample sizes are common in real-world data, and
-create added learning opportunity to the \textbf{penguins} dataset.
+(\emph{n}\textsubscript{missing} = 19, out of 2,752 total values).
+Missing values and unequal sample sizes are common in real-world data,
+and create added learning opportunity to the \textbf{penguins} dataset.
 
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:counts-tbl}Grouped sample size for iris (by species; n = 150 total) and penguins (by species and sex; n = 344 total). Penguins can be further grouped by variables for island and study year.}
+\caption{\label{tab:unnamed-chunk-4}Grouped sample size for \textbf{iris} (by species; \textit{n} = 150 total) and \textbf{penguins} (by species and sex; \textit{n} = 344 total). Data in \textbf{penguins} can be further grouped by island and study year.}
 \centering
 \begin{tabular}[t]{lclccc}
 \toprule
-\multicolumn{2}{c}{Iris sample size (by species)} & \multicolumn{4}{c}{Penguin sample size (by species and sex)} \\
+\multicolumn{2}{c}{iris sample size (by species)} & \multicolumn{4}{c}{penguins sample size (by species and sex)} \\
 \cmidrule(l{3pt}r{3pt}){1-2} \cmidrule(l{3pt}r{3pt}){3-6}
 Iris species & Sample size & Penguin species & Female & Male & NA\\
 \midrule
@@ -333,7 +331,7 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 
 }
 
-\caption[Distributions and correlations for numeric variables in the penguins data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species]{Distributions and correlations for numeric variables in the penguins data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance levels indicated for bivariate correlations are: \**p* < 0.05; \*\**p* < 0.01; \*\*\**p* < 0.001.}\label{fig:penguin-pairs}
+\caption{Distributions and correlations for numeric variables in the \textbf{penguins} data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:penguin-pairs}
 \end{figure}
 \end{Schunk}
 
@@ -344,7 +342,7 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 
 }
 
-\caption[Distributions and correlations for numeric variables in the iris data (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included Iris species]{Distributions and correlations for numeric variables in the iris data (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included Iris species: setosa (light gray, circles); versicolor (dark gray, triangles); and virginica (black, squares). Significance levels indicated for bivariate correlations are: \**p* < 0.05; \*\**p* < 0.01; \*\*\**p* < 0.001.}\label{fig:iris-pairs}
+\caption{Distributions and correlations for numeric variables in \textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \textit{Iris setosa} (light gray, circles); \textit{Iris versicolor} (dark gray, triangles); and \textit{Iris virginica} (black, squares). Significance indicated for bivariate correlations: \text{*}\textit{p} < 0.05; \text{*}\text{*}\textit{p} < 0.01; \text{*}\text{*}\text{*}\textit{p} < 0.001.}\label{fig:iris-pairs}
 \end{figure}
 \end{Schunk}
 
@@ -369,7 +367,7 @@ linear regression with species included (Figure
 
 }
 
-\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for setosa (light gray circles), versicolor (dark gray triangles) and virginica (black squares) irises. Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear-example}
+\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \textit{Iris setosa} (light gray circles), \textit{Iris versicolor} (dark gray triangles) and \textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear-example}
 \end{figure}
 \end{Schunk}
 
@@ -416,12 +414,12 @@ clustering.
 A comparison of PCA with the four variables of structural size
 measurements in \textbf{penguins} and \textbf{iris} (both normalized
 prior to PCA) reveals highly similar results (Figure \ref{fig:pca}). For
-both datasets, one species is distinct (Gentoo penguins, and setosa
-irises) while the other two species (Chinstrap/Adélie and
-versicolor/virginica) appear somewhat overlapping in the first two
-principal components (Figure \ref{fig:pca} A,B). Screeplots reveal that
-the variance explained by each principal component (PC) is very similar
-across the two datasets, particularly for PC1 and PC2: for
+both datasets, one species is distinct (Gentoo penguins, and
+\emph{setosa} irises) while the other two species (Chinstrap/Adélie and
+\emph{versicolor}/\emph{virginica}) appear somewhat overlapping in the
+first two principal components (Figure \ref{fig:pca} A,B). Screeplots
+reveal that the variance explained by each principal component (PC) is
+very similar across the two datasets, particularly for PC1 and PC2: for
 \textbf{penguins}, 88.15\% of total variance is captured by the first
 two PCs, compared to 95.81\% for \textbf{iris}, with a similarly large
 percentage of variance captured by PC1 and PC2 in each (Figure
@@ -434,7 +432,7 @@ percentage of variance captured by PC1 and PC2 in each (Figure
 
 }
 
-\caption[Principal component analysis biplots and screeplots for structural size measurements in penguins (A,C) and iris (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component]{Principal component analysis biplots and screeplots for structural size measurements in penguins (A,C) and iris (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For penguins, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For iris, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (setosa = light gray circles, versicolor = dark gray triangles, virginica = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components.}\label{fig:pca}
+\caption{Principal component analysis biplots and screeplots for structural size measurements in \textbf{penguins} (A,C) and \textbf{iris} (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For \textbf{penguins}, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For \textbf{iris}, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (\textit{Iris setosa} = light gray circles, \textit{Iris versicolor} = dark gray triangles, \textit{Iris virginica} = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components.}\label{fig:pca}
 \end{figure}
 \end{Schunk}
 
@@ -449,24 +447,24 @@ k-means clustering. For simplicity, we compare k-means clustering using
 only two variables for each dataset: for \textbf{iris}, petal width and
 petal length, and for \textbf{penguins}, bill length and bill depth. All
 variables are scaled prior to k-means. Three clusters (\emph{k} = 3) are
-specified for each, since there are three species of both \emph{Iris}
-(\emph{setosa}, \emph{versicolor}, and \emph{virginica}) and penguins
+specified for each, since there are three species of irises (\emph{Iris
+setosa}, \emph{Iris versicolor}, and \emph{Iris virginica}) and penguins
 (Adélie, Chinstrap and Gentoo).
 
 K-means clustering with penguin bill dimensions and iris petal
 dimensions yields largely distinct clusters, each dominated by one
 species (Figure \ref{fig:kmeans}). For iris petal dimensions, k-means
 yields a perfectly separated cluster (Cluster 3) containing all 50
-setosa iris observations and zero misclassified virginica or versicolor
-irises (Table 3). While clustering is not perfectly distinct for any
-penguin species, each species is largely contained within a single
-cluster, with little overlap from the other two species. For example,
-considering Adélie penguins (orange observations in Figure
-\ref{fig:kmeans}A): 147 (out of 151) Adélie penguins are assigned to
-Cluster 3, zero are assigned to Cluster 1, and 4 are assigned to the
-Chinstrap-dominated Cluster 2 (Table 3). Only 5 (of 68) Chinstrap
-penguins and 1 (of 123) Gentoo penguins are assigned to the
-Adélie-dominated Cluster 3 (Table 3).
+\emph{Iris setosa} observations and zero misclassified \emph{Iris
+virginica} or \emph{Iris versicolor} (Table 3). While clustering is not
+perfectly distinct for any penguin species, each species is largely
+contained within a single cluster, with little overlap from the other
+two species. For example, considering Adélie penguins (orange
+observations in Figure \ref{fig:kmeans}A): 147 (out of 151) Adélie
+penguins are assigned to Cluster 3, zero are assigned to Cluster 1, and
+4 are assigned to the Chinstrap-dominated Cluster 2 (Table 3). Only 5
+(of 68) Chinstrap penguins and 1 (of 123) Gentoo penguins are assigned
+to the Adélie-dominated Cluster 3 (Table 3).
 
 \begin{Schunk}
 \begin{figure}[htbp]
@@ -475,14 +473,14 @@ Adélie-dominated Cluster 3 (Table 3).
 
 }
 
-\caption[K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B)]{K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both penguins and iris.}\label{fig:kmeans}
+\caption[K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B)]{K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both \textbf{penguins} and \textbf{iris}.}\label{fig:kmeans}
 \end{figure}
 \end{Schunk}
 
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-1}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
+\caption{\label{tab:unnamed-chunk-5}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
 \centering
 \begin{tabular}[t]{cccccccc}
 \toprule
@@ -536,11 +534,11 @@ Data in the \textbf{penguins} object have been minimally updated from
 \tightlist
 \item
   All variable names are converted to lower snake case (e.g.~from
-  \texttt{Flipper\ Length\ (mm)} to \texttt{flipper\_length\_mm})
+  \emph{Flipper Length (mm)} to \emph{flipper\_length\_mm})
 \item
   Entries in \emph{species} are truncated to only include the common
-  name (e.g.~``Gentoo'', instead of ``gentoo penguin (Pygoscelis
-  papua)'')
+  name (e.g.~``Gentoo'', instead of ``gentoo penguin (\emph{Pygoscelis
+  papua})'')
 \item
   Recorded sex for penguin N36A1, originally recorded as ``.'', is
   updated to \texttt{NA}

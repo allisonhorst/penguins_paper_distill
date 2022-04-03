@@ -27,7 +27,16 @@ knitr::read_chunk("penguins_plots.R")
 
 
 ## ----overview-tbl-------------------------------------------------------------
-overview_compare <- tribble(
+overview_compare_html <- tribble(
+  ~Feature, ~iris, ~penguins,
+  "Year(s) collected", "1935", "2007 - 2009",
+  "Dimensions (col x row)", "5 x 150", "8 x 344",
+  "Documentation", "minimal", "complete metadata",
+  "Variable classes", "double (4), factor (1)", "double (2), int (3), factor (3)",
+  "Missing values?", "no (*n* = 0; 0.0%)", "yes (*n* = 19; 0.7%)"
+)
+
+overview_compare_pdf <- tribble(
   ~Feature, ~iris, ~penguins,
   "Year(s) collected", "1935", "2007 - 2009",
   "Dimensions (col x row)", "5 x 150", "8 x 344",
@@ -36,8 +45,19 @@ overview_compare <- tribble(
   "Missing values?", "no (n = 0; 0.0%)", "yes (n = 19; 0.7%)"
 )
 
-overview_compare %>% 
-  kable(caption = "Overview comparison of penguins and iris dataset features and characteristics.",
+
+## ---- eval=knitr::is_html_output()--------------------------------------------
+#> 
+#> overview_compare_html %>%
+#>   kable(caption = "Overview comparison of **penguins** and **iris** dataset features and characteristics.",
+#>         align = "lclccc",
+#>         booktabs = TRUE)
+
+
+## ---- eval=knitr::is_latex_output()-------------------------------------------
+
+overview_compare_pdf %>% 
+  kable(caption = "Overview comparison of \\textbf{penguins} and \\textbf{iris} dataset features and characteristics.",
         align = "lclccc",
         booktabs = TRUE)
 
@@ -65,15 +85,24 @@ penguin_counts <- penguins %>%
 iris_penguin_n <- cbind(iris_counts, penguin_counts) %>%
    rename(`Sample size` = n)
 
+
+## ---- eval=knitr::is_html_output()--------------------------------------------
+#> iris_penguin_n %>%
+#>    kable(caption = "Grouped sample size for **iris** (by species; *n* = 150 total) and **penguins** (by *species* and *sex*; *n* = 344 total). Data in **penguins** can be further grouped by island and study year.",
+#>          align = "lclccc",
+#>          booktabs = TRUE) %>%
+#>   add_header_above(c("**iris** sample size (by species)" = 2, "**penguins** sample size (by species and sex)" = 4 ))
+
+
+## ---- eval=knitr::is_latex_output()-------------------------------------------
 iris_penguin_n %>% 
-   kable(caption = "Grouped sample size for iris (by species; n = 150 total) and penguins (by species and sex; n = 344 total). Penguins can be further grouped by variables for island and study year.", 
+   kable(caption = "Grouped sample size for \\textbf{iris} (by species; \\textit{n} = 150 total) and \\textbf{penguins} (by species and sex; \\textit{n} = 344 total). Data in \\textbf{penguins} can be further grouped by island and study year.", 
          align = "lclccc",
          booktabs = TRUE) %>% 
-  add_header_above(c("Iris sample size (by species)" = 2, "Penguin sample size (by species and sex)" = 4 ))
+  add_header_above(c("iris sample size (by species)" = 2, "penguins sample size (by species and sex)" = 4 ))
 
 
-
-## ---- penguin-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in the penguins data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance levels indicated for bivariate correlations are: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.", eval=knitr::is_latex_output()----
+## ---- penguin-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in the \\textbf{penguins} data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.", eval=knitr::is_latex_output()----
 ### Pairs plots for penguins and iris (with ggpairs)
 
 # Function to specify opacity for ggpairs plots
@@ -112,7 +141,7 @@ penguin_pairs <- penguins %>%
 penguin_pairs
 
 
-## ---- penguin-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in the penguins data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance levels indicated for bivariate correlations are: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.",eval=knitr::is_html_output()----
+## ---- penguin-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in the **penguins** data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.", eval=knitr::is_html_output()----
 #> 
 #> ggpairs_alpha <- function(data, mapping, ...) {
 #>   ggplot(data = data, mapping = mapping) +
@@ -149,7 +178,7 @@ penguin_pairs
 #> ggplotly(penguin_pairs_int, tooltip = "text", height = 450)
 
 
-## ---- iris-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in the iris data (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included Iris species: setosa (light gray, circles); versicolor (dark gray, triangles); and virginica (black, squares). Significance levels indicated for bivariate correlations are: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_latex_output()----
+## ---- iris-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in \\textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \\textit{Iris setosa} (light gray, circles); \\textit{Iris versicolor} (dark gray, triangles); and \\textit{Iris virginica} (black, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_latex_output()----
 # Iris pairs plot:
 
 iris_pairs <- iris %>%
@@ -172,7 +201,7 @@ iris_pairs <- iris %>%
 iris_pairs
 
 
-## ---- iris-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in the iris data (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included Iris species: setosa (light gray, circles); versicolor (dark gray, triangles); and virginica (black, squares). Significance levels indicated for bivariate correlations are: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_html_output()----
+## ---- iris-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in **iris** (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: *Iris setosa* (light gray, circles); *Iris versicolor* (dark gray, triangles); and *Iris virginica* (black, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_html_output()----
 #> 
 #> iris_pairs_int <- iris %>%
 #>   ggpairs(aes(color = Species, fill = Species, shape = Species, text = paste("Species: ", Species)),
@@ -199,7 +228,73 @@ iris_pairs
 #> 
 
 
-## ---- linear-example, width = 6, height = 3, fig.cap = "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for setosa (light gray circles), versicolor (dark gray triangles) and virginica (black squares) irises. Within-species linear model is visualized for each penguin or iris species.", fig.alt = "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset.", fig.pos='htbp'----
+## ---- linear-example, width = 6, height = 3, fig.cap = "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for *Iris setosa* (light gray circles), *Iris versicolor* (dark gray triangles) and *Iris virginica* (black squares). Within-species linear model is visualized for each penguin or iris species.", fig.alt = "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset.", fig.pos='htbp', eval=knitr::is_html_output()----
+#> # Penguin linear relationships (flipper length versus body mass):
+#> 
+#> penguin_flip_mass_scatter <-
+#>   penguins %>%
+#>   mutate(species = as.character(species)) %>%
+#>   mutate(species = case_when(
+#>     species == "Adelie" ~ "Adélie",
+#>     TRUE ~ species
+#>   )) %>%
+#>   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
+#>   geom_point(aes(color = species, shape = species), size = 1.5) +
+#>   geom_smooth(method = "lm", aes(group = species, color = species), se = FALSE, show.legend = FALSE) +
+#>   theme_minimal() +
+#>   scale_color_paletteer_d("colorblindr::OkabeIto") +
+#>   theme(legend.position = c(0.2,0.85)) +
+#>   labs(x = "Flipper length (mm)",
+#>        y = "Body mass (g)") +
+#>   theme(plot.title.position = "plot",
+#>         panel.grid = element_blank(),
+#>         panel.border = element_rect(fill = NA, color = "gray70"),
+#>         legend.title = element_blank())
+#> 
+#> # To compare without penguin species as a variable (not in manuscript):
+#> penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+#>   geom_point(color = "gray50", size = 1.5) +
+#>   geom_smooth(method = "lm", se = FALSE, color = "black") +
+#>   theme_minimal() +
+#>   labs(x = "Flipper length (mm)",
+#>        y = "Body mass (g)") +
+#>   theme(plot.title.position = "plot",
+#>         panel.grid = element_blank(),
+#>         panel.border = element_rect(fill = NA, color = "gray70"))
+#> 
+#> # Iris linear relationships (petal dimensions):
+#> iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+#>   geom_point(aes(color = Species, size = Species, shape = Species), size = 1.5) +
+#>   geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE) +
+#>   theme_minimal() +
+#>   scale_color_manual(values = c("gray70","gray40","black")) +
+#>   theme(legend.position = c(0.2, 0.85)) +
+#>   labs(x = "Petal length (cm)",
+#>        y = "Petal width (cm)") +
+#>   theme(plot.title.position = "plot",
+#>         panel.grid = element_blank(),
+#>         panel.background = element_rect(fill = NA, color = "gray70"),
+#>         legend.title = element_blank())
+#> 
+#> # To compare without iris species as a variable (not in manuscript):
+#> iris_petal_scatter_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+#>   geom_point(color = "gray50", size = 1.5) +
+#>   geom_smooth(method = "lm", se = FALSE, color = "black") +
+#>   theme_minimal() +
+#>   labs(x = "Petal length (cm)",
+#>        y = "Petal width (cm)") +
+#>   theme(plot.title.position = "plot",
+#>         panel.grid = element_blank(),
+#>         panel.background = element_rect(fill = NA, color = "gray70"))
+#> 
+#> # Combine and save image:
+#> linear_example <- (penguin_flip_mass_scatter + iris_petal_scatter) + plot_annotation(tag_levels = 'A')
+#> linear_example
+#> 
+#> # ggsave(here("fig","linear_example.png"), width = 6, height = 3)
+
+
+## ---- linear-example, width = 6, height = 3, fig.cap = "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \\textit{Iris setosa} (light gray circles), \\textit{Iris versicolor} (dark gray triangles) and \\textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.", fig.alt = "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset.", fig.pos='htbp', eval=knitr::is_latex_output()----
 # Penguin linear relationships (flipper length versus body mass):
 
 penguin_flip_mass_scatter <-
@@ -298,7 +393,7 @@ simpson_gg
 #ggsave(here("fig","simpson_gg.png"), width = 6, height = 2.5, dpi = 500)
 
 
-## ---- pca, fig.width = 8, fig.height = 8, fig.cap = "Principal component analysis biplots and screeplots for structural size measurements in penguins (A,C) and iris (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For penguins, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For iris, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (setosa = light gray circles, versicolor = dark gray triangles, virginica = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components.", fig.alt = "Comparisons of principal component analysis biplots and screeplots for penguins and iris datasets. Biplots show similarities between the two datasets where one species (setosa in iris, and gentoo in penguins) is notably separated from the other two species, which overlap substantially. The screeplot also reveals similarities in variance explained by each principal component for iris and penguins (e.g. PC 1 explains 68.84% and 72.96% of variance in iris and penguins, respectively; PC explains 19.31% and 22.85%, respectively).", fig.pos='htbp'----
+## ---- pca, fig.width = 8, fig.height = 8, fig.cap = "Principal component analysis biplots and screeplots for structural size measurements in \\textbf{penguins} (A,C) and \\textbf{iris} (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For \\textbf{penguins}, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For \\textbf{iris}, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (\\textit{Iris setosa} = light gray circles, \\textit{Iris versicolor} = dark gray triangles, \\textit{Iris virginica} = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components.", fig.alt = "Comparisons of principal component analysis biplots and screeplots for penguins and iris datasets. Biplots show similarities between the two datasets where one species (setosa in iris, and gentoo in penguins) is notably separated from the other two species, which overlap substantially. The screeplot also reveals similarities in variance explained by each principal component for iris and penguins (e.g. PC 1 explains 68.84% and 72.96% of variance in iris and penguins, respectively; PC explains 19.31% and 22.85%, respectively).", fig.pos='htbp', include=knitr::is_latex_output(), eval=knitr::is_latex_output()----
 # From Alison Hill's post for palmerpenguins pkgdown site
 
 ### PENGUINS PCA:
@@ -455,6 +550,163 @@ iris_screeplot <- iris_percvar %>%
 #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
 
 
+## ---- pca, fig.width = 8, fig.height = 8, fig.cap = "Principal component analysis biplots and screeplots for structural size measurements in **penguins** (A,C) and **iris** (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For **penguins**, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For **iris**, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (*Iris setosa* = light gray circles, *Iris versicolor* = dark gray triangles, *Iris virginica* = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components.", fig.alt = "Comparisons of principal component analysis biplots and screeplots for penguins and iris datasets. Biplots show similarities between the two datasets where one species (setosa in iris, and gentoo in penguins) is notably separated from the other two species, which overlap substantially. The screeplot also reveals similarities in variance explained by each principal component for iris and penguins (e.g. PC 1 explains 68.84% and 72.96% of variance in iris and penguins, respectively; PC explains 19.31% and 22.85%, respectively).", fig.pos='htbp', eval=knitr::is_html_output()----
+#> # From Alison Hill's post for palmerpenguins pkgdown site
+#> 
+#> ### PENGUINS PCA:
+#> 
+#> # Omit year
+#> penguins_noyr <- penguins %>%
+#>   select(-year) %>%
+#>   mutate(species = as.character(species)) %>%
+#>   mutate(species = case_when(
+#>     species == "Adelie" ~ "Adélie",
+#>     TRUE ~ species
+#>   )) %>%
+#>   mutate(species = as.factor(species))
+#> 
+#> penguin_recipe <-
+#>   recipe(~., data = penguins_noyr) %>%
+#>   update_role(species, island, sex, new_role = "id") %>%
+#>   step_naomit(all_predictors()) %>%
+#>   step_normalize(all_predictors()) %>%
+#>   step_pca(all_predictors(), id = "pca") %>%
+#>   prep()
+#> 
+#> penguin_pca <-
+#>   penguin_recipe %>%
+#>   tidy(id = "pca")
+#> 
+#> penguin_percvar <- penguin_recipe %>%
+#>   tidy(id = "pca", type = "variance") %>%
+#>   dplyr::filter(terms == "percent variance")
+#> 
+#> # Make the penguins PCA biplot:
+#> 
+#> # Get pca loadings into wider format
+#> pca_wider <- penguin_pca %>%
+#>   tidyr::pivot_wider(names_from = component, id_cols = terms)
+#> 
+#> # define arrow style:
+#> arrow_style <- arrow(length = unit(.05, "inches"),
+#>                      type = "closed")
+#> 
+#> # Make the penguins PCA biplot:
+#> pca_plot <-
+#>   juice(penguin_recipe) %>%
+#>   ggplot(aes(PC1, PC2)) +
+#>   geom_point(aes(color = species, shape = species),
+#>              alpha = 0.7,
+#>              size = 2) +
+#>   scale_color_paletteer_d("colorblindr::OkabeIto") +
+#>   guides(color = guide_legend("Species"),
+#>         shape = guide_legend("Species"))
+#> 
+#> penguins_biplot <- pca_plot +
+#>   geom_segment(data = pca_wider,
+#>                aes(xend = PC1, yend = PC2),
+#>                x = 0,
+#>                y = 0,
+#>                arrow = arrow_style) +
+#>   geom_shadowtext(data = pca_wider,
+#>             aes(x = PC1, y = PC2, label = terms),
+#>             nudge_x = c(0.7,0.7,1.7,1.2),
+#>             nudge_y = c(-0.1,-0.2,0.1,-0.1),
+#>             size = 4,
+#>             color = "black",
+#>             bg.color = "white") +
+#>   theme(legend.position = "bottom",
+#>         panel.border = element_rect(color = "gray70", fill = NA))
+#> 
+#> # For positioning (above):
+#> # 1: bill_length
+#> # 2: bill_depth
+#> # 3: flipper length
+#> # 4: body mass
+#> 
+#> penguin_screeplot <- penguin_percvar %>%
+#>   ggplot(aes(x = component, y = value)) +
+#>   geom_col(fill = "gray50") +
+#>   scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
+#>   scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
+#>   ylab("% of total variance") +
+#>   geom_text(aes(label = round(value,2)), vjust=-0.25) +
+#>   theme(panel.border = element_rect(color = "gray70", fill = NA),
+#>         panel.grid.major.x = element_blank(),
+#>         panel.grid.minor.x = element_blank(),
+#>         panel.grid.minor.y = element_blank())
+#> 
+#> ### IRIS PCA:
+#> 
+#> iris_recipe <-
+#>   recipe(~., data = iris) %>%
+#>   update_role(Species, new_role = "id") %>%
+#>   step_normalize(all_predictors()) %>%
+#>   step_pca(all_predictors(), id = "pca") %>%
+#>   prep()
+#> iris_pca <-
+#>   iris_recipe %>%
+#>   tidy(id = "pca")
+#> 
+#> ### Iris PCA biplot:
+#> 
+#> # Get pca loadings into wider format
+#> iris_wider <- iris_pca %>%
+#>   tidyr::pivot_wider(names_from = component, id_cols = terms)
+#> 
+#> # define arrow style:
+#> arrow_style <- arrow(length = unit(.05, "inches"),
+#>                      type = "closed")
+#> 
+#> # Make the iris PCA biplot:
+#> iris_pca_plot <-
+#>   juice(iris_recipe) %>%
+#>   ggplot(aes(PC1, PC2)) +
+#>   geom_point(aes(color = Species, shape = Species),
+#>              alpha = 0.8,
+#>              size = 2) +
+#>   scale_colour_manual(values = c("gray70","gray40","black"))
+#> iris_biplot <- iris_pca_plot +
+#>   geom_segment(data = iris_wider,
+#>                aes(xend = PC1, yend = PC2),
+#>                x = 0,
+#>                y = 0,
+#>                arrow = arrow_style) +
+#>   geom_shadowtext(data = iris_wider,
+#>             aes(x = PC1, y = PC2, label = terms),
+#>             nudge_x = c(0.5,0.3,1,1.2),
+#>             nudge_y = c(-0.1,-0.2,0.1,-0.1),
+#>             size = 4,
+#>             color = "black",
+#>             bg.color = "white") +
+#>   theme(panel.background = element_rect(fill = NA, color = "gray70"),
+#>         legend.position = "bottom")
+#> 
+#> iris_percvar <- iris_recipe %>%
+#>   tidy(id = "pca", type = "variance") %>%
+#>   dplyr::filter(terms == "percent variance")
+#> 
+#> # Iris screeplot:
+#> 
+#> iris_screeplot <- iris_percvar %>%
+#>   ggplot(aes(x = component, y = value)) +
+#>   geom_col(fill = "gray50") +
+#>   scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
+#>   scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
+#>   ylab("% of total variance") +
+#>   geom_text(aes(label = round(value,2)), vjust=-0.25) +
+#>   theme(panel.border = element_rect(color = "gray70", fill = NA),
+#>         panel.grid.major.x = element_blank(),
+#>         panel.grid.minor.x = element_blank(),
+#>         panel.grid.minor.y = element_blank())
+#> 
+#> # Combine biplots and screeplots for both iris & penguins:
+#> 
+#> (penguins_biplot | iris_biplot) / (penguin_screeplot | iris_screeplot) + plot_annotation(tag_levels = 'A')
+#> 
+#> #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
+
+
 ## -----------------------------------------------------------------------------
 # Included to create kable table of cluster assignment
 # k-means comparison
@@ -530,7 +782,7 @@ kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
   add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
 
 
-## ---- kmeans, fig.width = 8, fig.height = 4.5, fig.cap = "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both penguins and iris.", fig.pos='htbp', fig.alt = "Scatterplot showing assignments from k-means clusters (3) using bill length and depth for the penguins dataset (left) and petal length and width for the iris dataset (right). While both show relatively distinct clustering by species, there is more overlap (and misclassification) for penguins than for iris. Particularly, the setosa cluster in iris is completely distinct from other species (with no misclassification), whereas each cluster for penguins has at least several observations assigned to the wrong species cluster. These cluster assignments are also reported in Table 3.", include=knitr::is_latex_output(), eval=knitr::is_latex_output()----
+## ---- kmeans, fig.width = 8, fig.height = 4.5, fig.cap = "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both \\textbf{penguins} and \\textbf{iris}.", fig.pos='htbp', fig.alt = "Scatterplot showing assignments from k-means clusters (3) using bill length and depth for the penguins dataset (left) and petal length and width for the iris dataset (right). While both show relatively distinct clustering by species, there is more overlap (and misclassification) for penguins than for iris. Particularly, the setosa cluster in iris is completely distinct from other species (with no misclassification), whereas each cluster for penguins has at least several observations assigned to the wrong species cluster. These cluster assignments are also reported in Table 3.", include=knitr::is_latex_output(), eval=knitr::is_latex_output()----
 # TWO VARIABLE k-means comparison
 # Penguins: Bill length vs. bill depth
 pb_species <- penguins %>%
@@ -628,7 +880,7 @@ ip_clust_n <- ip_clust %>%
 # ggsave(here("fig","kmeans.png"), width = 8, height = 4.5, dpi = 500)
 
 
-## ----kmeans-interactive, fig.cap = "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both penguins and iris. Penguin species (Adélie = orange, Chinstrap = blue, Gentoo = green) and iris species (setosa = light gray, versicolor = medium gray, virginica = dark gray), along with bill dimensions and cluster number, are included in the tooltip when hovering.", fig.alt = "Scatterplot showing assignments from k-means clusters (3) using bill length and depth for the penguins dataset (left) and petal length and width for the iris dataset (right). While both show relatively distinct clustering by species, there is more overlap (and misclassification) for penguins than for iris. Particularly, the setosa cluster in iris is completely distinct from other species (with no misclassification), whereas each cluster for penguins has at least several observations assigned to the wrong species cluster. These cluster assignments are also reported in Table 3.", eval=knitr::is_html_output()----
+## ----kmeans-interactive, fig.cap = "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both **penguins** and **iris**. Penguin species (Adélie = orange, Chinstrap = blue, Gentoo = green) and iris species (*setosa* = light gray, *versicolor* = medium gray, *virginica* = dark gray), along with bill dimensions and cluster number, are included in the tooltip when hovering.", fig.alt = "Scatterplot showing assignments from k-means clusters (3) using bill length and depth for the penguins dataset (left) and petal length and width for the iris dataset (right). While both show relatively distinct clustering by species, there is more overlap (and misclassification) for penguins than for iris. Particularly, the setosa cluster in iris is completely distinct from other species (with no misclassification), whereas each cluster for penguins has at least several observations assigned to the wrong species cluster. These cluster assignments are also reported in Table 3.", eval=knitr::is_html_output()----
 #> 
 #> # TWO VARIABLE k-means comparison
 #> # Penguins: Bill length vs. bill depth
