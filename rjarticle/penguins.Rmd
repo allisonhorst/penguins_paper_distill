@@ -583,4 +583,6 @@ All analyses were performed in the R language environment using version 3.6.2 [@
 -   \CRANpkg{shadowtext} [@yu_shadowtext_2019]: to add a background color to text labels
 -   \CRANpkg{recipes} [@kuhn_recipes_2020]: for data pre-processing
 -   \CRANpkg{pkgdown} [@wickham_pkgdown_2020]: to build the package website
--   **base** and **stats** [@r_core_team_r_2019]: for various analyses throughout
+-   \CRANpkg{base} and \CRANpkg{stats}: for various analyses throughout
+
+\bibliography{penguins.bib}
