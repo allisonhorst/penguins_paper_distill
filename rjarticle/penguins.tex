@@ -172,10 +172,6 @@ Initiative (EDI) Data Portal} at the links below:
 
 R users can install the \pkg{palmerpenguins} package from CRAN:
 
-\begin{verbatim}
-install.packages("palmerpenguins")
-\end{verbatim}
-
 Information, examples, and links to community-contributed materials are
 available on the \pkg{palmerpenguins} package website:
 \href{https://allisonhorst.github.io/palmerpenguins/}{allisonhorst.github.io/palmerpenguins/}.
@@ -183,13 +179,14 @@ See the Appendix for how Python and Julia users can access the same
 data.
 
 The \pkg{palmerpenguins} R package contains two data objects:
-\code{penguinsraw} and \code{penguins}. The \code{penguinsraw} data
+\code{penguins\_raw} and \code{penguins}. The \code{penguins\_raw} data
 consists of all raw data for 17 variables, recorded completely or in
 part for 344 individual penguins, accessed directly from EDI
-(\code{penguinsraw} properties are summarized in Appendix B). We
+(\code{penguins\_raw} properties are summarized in Appendix B). We
 generally recommend using the curated data in \code{penguins}, which is
-a subset of \code{penguinsraw} retaining all 344 observations, minimally
-updated (Appendix A) and reduced to the following eight variables:
+a subset of \code{penguins\_raw} retaining all 344 observations,
+minimally updated (Appendix A) and reduced to the following eight
+variables:
 
 \begin{itemize}
 \tightlist
@@ -201,17 +198,17 @@ updated (Appendix A) and reduced to the following eight variables:
   Antarctica where each penguin was observed (Biscoe Point, Dream
   Island, or Torgersen Island)
 \item
-  \code{bill_length_mm}: a number denoting length of the dorsal ridge of
-  a penguin bill (millimeters)
+  \code{bill\_length\_mm}: a number denoting length of the dorsal ridge
+  of a penguin bill (millimeters)
 \item
-  \code{bill_depth_mm}: a number denoting the depth of a penguin bill
+  \code{bill\_depth\_mm}: a number denoting the depth of a penguin bill
   (millimeters)
 \item
-  \code{flipper_length_mm}: an integer denoting the length of a penguin
-  flipper (millimeters)
+  \code{flipper\_length\_mm}: an integer denoting the length of a
+  penguin flipper (millimeters)
 \item
-  \code{body_mass_g}: an integer denoting the weight of a penguin's body
-  (grams)
+  \code{body\_mass\_g}: an integer denoting the weight of a penguin's
+  body (grams)
 \item
   \code{sex}: a factor denoting the sex of a penguin sex (male, female)
   based on molecular data
@@ -221,14 +218,9 @@ updated (Appendix A) and reduced to the following eight variables:
 \end{itemize}
 
 The same data exist as comma-separated value (CSV) files in the package
-(\file{penguins_raw.csv} and \file{penguins.csv}), and can be read in
-using the built-in \code{path_to_file()} function in
+(\file{penguins\_raw.csv} and \file{penguins.csv}), and can be read in
+using the built-in \code{path\_to\_file()} function in
 \pkg{palmerpenguins}. For example,
-
-\begin{verbatim}
-    library(palmerpenguins)
-    df <- read.csv(path_to_file("penguins.csv"))
-\end{verbatim}
 
 will read in \file{penguins.csv} as if from an external file, thus
 automatically parsing \code{species}, \code{island}, and \code{sex}
@@ -249,7 +241,7 @@ exhaustive.
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-2}Overview comparison of \textbf{penguins} and \textbf{iris} dataset features and characteristics.}
+\caption{\label{tab:unnamed-chunk-4}Overview comparison of \textbf{penguins} and \textbf{iris} dataset features and characteristics.}
 \centering
 \begin{tabular}[t]{lcl}
 \toprule
@@ -294,7 +286,7 @@ and create added learning opportunity to the \code{penguins} dataset.
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-4}Grouped sample size for \textbf{iris} (by species; \textit{n} = 150 total) and \textbf{penguins} (by species and sex; \textit{n} = 344 total). Data in \textbf{penguins} can be further grouped by island and study year.}
+\caption{\label{tab:unnamed-chunk-6}Grouped sample size for \textbf{iris} (by species; \textit{n} = 150 total) and \textbf{penguins} (by species and sex; \textit{n} = 344 total). Data in \textbf{penguins} can be further grouped by island and study year.}
 \centering
 \begin{tabular}[t]{lclccc}
 \toprule
@@ -475,7 +467,7 @@ to the Adélie-dominated Cluster 3 (Table 3).
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-5}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
+\caption{\label{tab:unnamed-chunk-7}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
 \centering
 \begin{tabular}[t]{cccccccc}
 \toprule
@@ -522,13 +514,13 @@ topic in ecology, evolution, and the environmental sciences.
 \subsection{Penguins data processing}\label{penguins-data-processing}}
 
 Data in the \code{penguins} object have been minimally updated from
-\code{penguinsraw} as follows:
+\code{penguins\_raw} as follows:
 
 \begin{itemize}
 \tightlist
 \item
   All variable names are converted to lower snake case (e.g.~from
-  \code{Flipper Length (mm)} to \code{flipper_length_mm})
+  \code{Flipper Length (mm)} to \code{flipper\_length\_mm})
 \item
   Entries in \code{species} are truncated to only include the common
   name (e.g.~``Gentoo'', instead of ``gentoo penguin (\emph{Pygoscelis
@@ -537,8 +529,8 @@ Data in the \code{penguins} object have been minimally updated from
   Recorded sex for penguin N36A1, originally recorded as ``.'', is
   updated to \code{NA}
 \item
-  \code{culmen_length_mm} and \code{culmen_depth_mm} variable names are
-  updated to \code{bill_length_mm} and \code{bill_depth_mm},
+  \code{culmen\_length\_mm} and \code{culmen\_depth\_mm} variable names
+  are updated to \code{bill\_length\_mm} and \code{bill\_depth\_mm},
   respectively
 \item
   Class for categorical variables (\code{species}, \code{island},
@@ -577,22 +569,11 @@ data in the
 \href{https://pypi.org/project/palmerpenguins/}{palmerpenguins Python
 package}:
 
-\begin{verbatim}
-    pip install palmerpenguins
-    from palmerpenguins import load_penguins
-    penguins = load_penguins()
-\end{verbatim}
-
 \textbf{Julia:} Julia users can access the penguins data in the
 \textbf{palmerpenguins.jl} package. Example code to import the penguins
 data through \textbf{palmerpenguins.jl} (more information on
 \textbf{palmerpenguins.jl} from David Widmann can be found
 \href{https://github.com/devmotion/palmerpenguins.jl}{here}):
-
-\begin{verbatim}
-    julia> using palmerpenguins
-    julia> table = palmerpenguins.load()
-\end{verbatim}
 
 \textbf{TensorFlow:} TensorFlow users can access the penguins data in
 TensorFlow Datasets. Information and examples for \code{penguins} data

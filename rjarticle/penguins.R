@@ -26,6 +26,15 @@ knitr::read_chunk("penguins_plots.R")
 
 
 
+## ---- eval = FALSE------------------------------------------------------------
+#> install.packages("palmerpenguins")
+
+
+## ---- eval = FALSE------------------------------------------------------------
+#> library(palmerpenguins)
+#> df <- read.csv(path_to_file("penguins.csv"))
+
+
 ## ----overview-tbl-------------------------------------------------------------
 overview_compare_html <- tribble(
   ~Feature, ~iris, ~penguins,
@@ -1003,4 +1012,16 @@ overview_penguins_raw <- tribble(
 
 overview_penguins_raw %>% 
   kable(booktabs = TRUE)
+
+
+## pip install palmerpenguins
+
+## from palmerpenguins import load_penguins
+
+## penguins = load_penguins()
+
+
+## julia> using palmerpenguins
+
+## julia> table = palmerpenguins.load()
 

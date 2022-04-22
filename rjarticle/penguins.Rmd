@@ -105,25 +105,30 @@ The data in the \pkg{palmerpenguins} R package are available for use by CC0 lice
 
 R users can install the \pkg{palmerpenguins} package from CRAN:
 
+    ```{r, eval = FALSE}
     install.packages("palmerpenguins")
+    ```
 
 Information, examples, and links to community-contributed materials are available on the \pkg{palmerpenguins} package website: [allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). See the Appendix for how Python and Julia users can access the same data.
 
-The \pkg{palmerpenguins} R package contains two data objects: \code{penguins_raw} and \code{penguins}. The \code{penguins_raw} data consists of all raw data for `r ncol(palmerpenguins::penguins_raw)` variables, recorded completely or in part for `r nrow(palmerpenguins::penguins_raw)` individual penguins, accessed directly from EDI (\code{penguins_raw} properties are summarized in Appendix B). We generally recommend using the curated data in \code{penguins}, which is a subset of \code{penguins_raw} retaining all `r nrow(palmerpenguins::penguins)` observations, minimally updated (Appendix A) and reduced to the following eight variables:
+The \pkg{palmerpenguins} R package contains two data objects: \code{penguins\_raw} and \code{penguins}. The \code{penguins\_raw} data consists of all raw data for `r ncol(palmerpenguins::penguins_raw)` variables, recorded completely or in part for `r nrow(palmerpenguins::penguins_raw)` individual penguins, accessed directly from EDI (\code{penguins\_raw} properties are summarized in Appendix B). We generally recommend using the curated data in \code{penguins}, which is a subset of \code{penguins\_raw} retaining all `r nrow(palmerpenguins::penguins)` observations, minimally updated (Appendix A) and reduced to the following eight variables:
 
 -   \code{species}: a factor denoting the penguin species (Adélie, Chinstrap, or Gentoo)
 -   \code{island}: a factor denoting the Palmer Archipelago island in Antarctica where each penguin was observed (Biscoe Point, Dream Island, or Torgersen Island)
--   \code{bill_length_mm}: a number denoting length of the dorsal ridge of a penguin bill (millimeters)
--   \code{bill_depth_mm}: a number denoting the depth of a penguin bill (millimeters)
--   \code{flipper_length_mm}: an integer denoting the length of a penguin flipper (millimeters)
--   \code{body_mass_g}: an integer denoting the weight of a penguin's body (grams)
+-   \code{bill\_length\_mm}: a number denoting length of the dorsal ridge of a penguin bill (millimeters)
+-   \code{bill\_depth\_mm}: a number denoting the depth of a penguin bill (millimeters)
+-   \code{flipper\_length\_mm}: an integer denoting the length of a penguin flipper (millimeters)
+-   \code{body\_mass\_g}: an integer denoting the weight of a penguin's body (grams)
 -   \code{sex}: a factor denoting the sex of a penguin sex (male, female) based on molecular data
 -   \code{year}: an integer denoting the year of study (2007, 2008, or 2009)
 
-The same data exist as comma-separated value (CSV) files in the package (\file{penguins_raw.csv} and \file{penguins.csv}), and can be read in using the built-in \code{path_to_file()} function in \pkg{palmerpenguins}. For example,
+The same data exist as comma-separated value (CSV) files in the package (\file{penguins\_raw.csv} and \file{penguins.csv}), and can be read in using the built-in \code{path\_to\_file()} function in \pkg{palmerpenguins}. For example,
 
-        library(palmerpenguins)
-        df <- read.csv(path_to_file("penguins.csv"))
+    ```{r, eval = FALSE}
+    library(palmerpenguins)
+    df <- read.csv(path_to_file("penguins.csv"))
+    ```
+
 
 will read in \file{penguins.csv} as if from an external file, thus automatically parsing \code{species}, \code{island}, and \code{sex} variables as characters instead of factors. This option allows users opportunities to practice or demonstrate reading in data from a CSV, then updating variable class (e.g., characters to factors).
 
@@ -520,12 +525,12 @@ Here, we have shown that structural size measurements for Palmer Archipelago *Py
 
 ## Penguins data processing
 
-Data in the \code{penguins} object have been minimally updated from \code{penguins_raw} as follows:
+Data in the \code{penguins} object have been minimally updated from \code{penguins\_raw} as follows:
 
--   All variable names are converted to lower snake case (e.g. from \code{Flipper Length (mm)} to \code{flipper_length_mm})
+-   All variable names are converted to lower snake case (e.g. from \code{Flipper Length (mm)} to \code{flipper\_length\_mm})
 -   Entries in \code{species} are truncated to only include the common name (e.g. "Gentoo", instead of "gentoo penguin (*Pygoscelis papua*)")
 -   Recorded sex for penguin N36A1, originally recorded as ".", is updated to \code{NA}
--   \code{culmen_length_mm} and \code{culmen_depth_mm} variable names are updated to \code{bill_length_mm} and \code{bill_depth_mm}, respectively
+-   \code{culmen\_length\_mm} and \code{culmen\_depth\_mm} variable names are updated to \code{bill\_length\_mm} and \code{bill\_depth\_mm}, respectively
 -   Class for categorical variables (\code{species}, \code{island}, \code{sex}) is updated to factor
 -   Variable \code{year} was pulled from clutch observations
 
@@ -549,14 +554,20 @@ overview_penguins_raw %>%
 
 **Python:** Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
 
-        pip install palmerpenguins
-        from palmerpenguins import load_penguins
-        penguins = load_penguins()
+    ```{python, eval = FALSE}
+    pip install palmerpenguins
+    from palmerpenguins import load_penguins
+    penguins = load_penguins()
+    ```
 
 **Julia:** Julia users can access the penguins data in the **palmerpenguins.jl** package. Example code to import the penguins data through **palmerpenguins.jl** (more information on **palmerpenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/palmerpenguins.jl)):
 
-        julia> using palmerpenguins
-        julia> table = palmerpenguins.load()
+
+    ```{bash, eval = FALSE}
+    julia> using palmerpenguins
+    julia> table = palmerpenguins.load()
+    ```
+
 
 **TensorFlow:** TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for \code{penguins} data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
 
