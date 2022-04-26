@@ -19,14 +19,10 @@ author:
     - Fairbanks, AK 99775-7220
     email:  kbgorman@alaska.edu
 abstract: > 
- In 1935, Edgar Anderson collected size measurements for 150 flowers from three species of *Iris* on the Gaspé Peninsula in Quebec, Canada. Since then, Anderson's *Iris* observations have become a classic dataset in statistics, machine learning, and data science teaching materials. It is included in the base R **datasets** package as **iris**, making it easy for users to access without knowing much about it. However, the lack of data documentation, presence of non-intuitive variables (e.g. "sepal width"), and perfectly balanced groups with zero missing values make **iris** an inadequate and stale dataset for teaching and learning modern data science skills. Users would benefit from working with a more representative, real-world environmental dataset with a clear link to current scientific research. Importantly, Anderson’s *Iris* data appeared in a 1936 publication by R. A. Fisher in the *Annals of Eugenics* (which is often the first-listed citation for the dataset), inextricably linking **iris** to eugenics research. Thus, a modern alternative to **iris** is needed. In this paper, we introduce the **palmerpenguins** R package, which includes body size measurements collected from 2007 - 2009 for three species of *Pygoscelis* penguins that breed on islands throughout the Palmer Archipelago, Antarctica. The **penguins** dataset in **palmerpenguins** provides an approachable, charismatic, and near drop-in replacement for **iris** with topical relevance for polar climate change and environmental impacts on marine predators. Since the release on CRAN in July 2020, the **palmerpenguins** package has been downloaded over 402,000 times, highlighting the demand and widespread adoption of this viable **iris** alternative. 
+ In 1935, Edgar Anderson collected size measurements for 150 flowers from three species of *Iris* on the Gaspé Peninsula in Quebec, Canada. Since then, Anderson's *Iris* observations have become a classic dataset in statistics, machine learning, and data science teaching materials. It is included in the base R **datasets** package as **iris**, making it easy for users to access without knowing much about it. However, the lack of data documentation, presence of non-intuitive variables (e.g. "sepal width"), and perfectly balanced groups with zero missing values make **iris** an inadequate and stale dataset for teaching and learning modern data science skills. Users would benefit from working with a more representative, real-world environmental dataset with a clear link to current scientific research. Importantly, Anderson’s *Iris* data appeared in a 1936 publication by R. A. Fisher in the *Annals of Eugenics* (which is often the first-listed citation for the dataset), inextricably linking **iris** to eugenics research. Thus, a modern alternative to **iris** is needed. In this paper, we introduce the **palmerpenguins** R package [@R-palmerpenguins], which includes body size measurements collected from 2007 - 2009 for three species of *Pygoscelis* penguins that breed on islands throughout the Palmer Archipelago, Antarctica. The **penguins** dataset in **palmerpenguins** provides an approachable, charismatic, and near drop-in replacement for **iris** with topical relevance for polar climate change and environmental impacts on marine predators. Since the release on CRAN in July 2020, the **palmerpenguins** package has been downloaded over 402,000 times, highlighting the demand and widespread adoption of this viable **iris** alternative. 
  We directly compare the **iris** and **penguins** datasets for selected analyses to demonstrate that R users, in particular teachers and learners currently using **iris**, can switch to the Palmer Archipelago penguins for many use cases including data wrangling, visualization, linear modeling, multivariate analysis (e.g., PCA), cluster analysis and classification (e.g., by k-means). 
-output: 
-  rjtools::rjournal_web_article:
-    bibliography: [penguins.bib, packages.bib]
-resource_files:
-  - packages.bib
-  - penguins.bib
+output: rjtools::rjournal_web_article
+bibliography: penguins.bib
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -55,7 +51,6 @@ library(patchwork)
 library(GGally)
 library(shadowtext)
 library(plotly)
-library(crosstalk)
 ggplot2::theme_set(ggplot2::theme_minimal())
 
 # for modeling
@@ -65,7 +60,7 @@ library(broom)
 knitr::read_chunk("penguins_plots.R")
 ```
 
-```{r write-bib, purl=FALSE, include=FALSE}
+```{r write-bib, purl=FALSE, include=FALSE, eval=FALSE}
 knitr::write_bib(.packages(), "packages.bib")
 ```
 
@@ -106,7 +101,9 @@ The data in the \CRANpkg{palmerpenguins} R package are available for use by CC0 
 
 R users can install the \CRANpkg{palmerpenguins} package from CRAN:
 
-    install.packages("palmerpenguins")
+```r
+install.packages("palmerpenguins")
+```
 
 Information, examples, and links to community-contributed materials are available on the \CRANpkg{palmerpenguins} package website: [allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). See the Appendix for how Python and Julia users can access the same data.
 
@@ -123,8 +120,10 @@ The \CRANpkg{palmerpenguins} R package contains two data objects: **penguins_raw
 
 The same data exist as comma-separated value (CSV) files in the package ("penguins_raw.csv" and "penguins.csv"), and can be read in using the built-in `path_to_file()` function in \CRANpkg{palmerpenguins}. For example,
 
-        library(palmerpenguins)
-        df <- read.csv(path_to_file("penguins.csv"))
+```r
+library(palmerpenguins)
+df <- read.csv(path_to_file("penguins.csv"))
+```
 
 will read in "penguins.csv" as if from an external file, thus automatically parsing *species*, *island*, and *sex* variables as characters instead of factors. This option allows users opportunities to practice or demonstrate reading in data from a CSV, then updating variable class (e.g., characters to factors).
 
@@ -550,26 +549,31 @@ overview_penguins_raw %>%
 
 **Python:** Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
 
-        pip install palmerpenguins
-        from palmerpenguins import load_penguins
-        penguins = load_penguins()
+```python
+pip install palmerpenguins
+from palmerpenguins import load_penguins
+penguins = load_penguins()
+```
 
 **Julia:** Julia users can access the penguins data in the **PalmerPenguins.jl** package. Example code to import the penguins data through **PalmerPenguins.jl** (more information on **PalmerPenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/PalmerPenguins.jl)):
 
-        julia> using PalmerPenguins
-        julia> table = PalmerPenguins.load()
+```julia
+julia> using PalmerPenguins
+julia> table = PalmerPenguins.load()
+```
 
 **TensorFlow:** TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for **penguins** data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
 
 ## Acknowledgements
 
-All analyses were performed in the R language environment using version 3.6.2 [@R-base]. Complete code for this paper is shared in the Supplemental Material. We acknowledge the following R packages used in analyses, with gratitude to developers and contributors:
+All analyses were performed in the R language environment using version 4.1.2 [@R-base]. Complete code for this paper is shared in the Supplemental Material. We acknowledge the following R packages used in analyses, with gratitude to developers and contributors:
 
--   \CRANpkg{tidyverse} [@wickham_welcome_2019]: for data import and cleaning
+-   \CRANpkg{tidyverse} [@tidyverse2019]: for data import and cleaning
 -   \CRANpkg{ggplot2} [@R-ggplot2]: for data visualizations
 -   \CRANpkg{kableExtra} [@R-kableExtra]: for finalized tables
 -   \CRANpkg{GGally} [@R-GGally]: for pairs plots
 -   \CRANpkg{patchwork} [@R-patchwork]: for compound figures
 -   \CRANpkg{shadowtext} [@R-shadowtext]: to add a background color to text labels
--   \CRANpkg{recipes} [@R-recipes]: for data pre-processing
--   **base** and **stats** [@R-base]: for various analyses throughout
+-   \CRANpkg{recipes} [@R-recipes] and \CRANpkg{broom} [@R-broom]: for pre-processing and statistical analyses
+-   \CRANpkg{paletteer} [@R-paletteer]: for the Okabe Ito color palette, provided by the \CRANpkg{colorblindr} package
+-   \CRANpkg{plotly} [@R-plotly]: for interactive graphics

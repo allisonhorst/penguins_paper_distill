@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  26 APR 2022 09:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  26 APR 2022 10:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -688,21 +688,6 @@ Package caption Info: End \AtBeginDocument code.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 45.
 
-
-Package natbib Warning: Citation `anderson_irises_1935' on page 1 undefined on input line 50.
-
-
-Package natbib Warning: Citation `R-base' on page 1 undefined on input line 58.
-
-
-Package natbib Warning: Citation `pedregosa_scikit-learn_2011' on page 1 undefined on input line 60.
-
-
-Package natbib Warning: Citation `anderson_irises_1935' on page 1 undefined on input line 68.
-
-
-Package natbib Warning: Citation `fisher_use_1936' on page 1 undefined on input line 79.
-
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 93.
 (/Users/alison/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
@@ -751,18 +736,6 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.29405pt on input line 130.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 5.21004pt on input line 130.
-
-Package natbib Warning: Citation `gorman_ecological_2014' on page 2 undefined on input line 141.
-
-
-Package natbib Warning: Citation `palmer_station_antarctica_lter_structural_2020' on page 2 undefined on input line 156.
-
-
-Package natbib Warning: Citation `palmer_station_antarctica_lter_structural_2020-1' on page 2 undefined on input line 161.
-
-
-Package natbib Warning: Citation `palmer_station_antarctica_lter_structural_2020-2' on page 2 undefined on input line 166.
-
 LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 176.
 (/Users/alison/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
@@ -786,116 +759,76 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.91925pt on input line 256.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 6.25204pt on input line 256.
-
-Package natbib Warning: Citation `wickham_tidy_2014' on page 3 undefined on input line 276.
-
-<figs/penguin-pairs-1.png, id=87, 1957.3125pt x 1355.0625pt>
+<figs/penguin-pairs-1.png, id=121, 1957.3125pt x 1355.0625pt>
 File: figs/penguin-pairs-1.png Graphic file (type png)
 <use figs/penguin-pairs-1.png>
 Package pdftex.def Info: figs/penguin-pairs-1.png  used on input line 330.
 (pdftex.def)             Requested size: 398.33858pt x 275.7633pt.
-<figs/iris-pairs-1.png, id=89, 1957.3125pt x 1355.0625pt>
+<figs/iris-pairs-1.png, id=123, 1957.3125pt x 1355.0625pt>
 File: figs/iris-pairs-1.png Graphic file (type png)
 <use figs/iris-pairs-1.png>
 Package pdftex.def Info: figs/iris-pairs-1.png  used on input line 341.
 (pdftex.def)             Requested size: 398.33858pt x 275.7633pt.
-<figs/linear-example-1.png, id=94, 1957.3125pt x 1355.0625pt>
+[3] [4 <./figs/penguin-pairs-1.png> <./figs/iris-pairs-1.png>]
+<figs/linear-example-1.png, id=147, 1957.3125pt x 1355.0625pt>
 File: figs/linear-example-1.png Graphic file (type png)
 <use figs/linear-example-1.png>
 Package pdftex.def Info: figs/linear-example-1.png  used on input line 366.
 (pdftex.def)             Requested size: 398.33858pt x 275.7633pt.
-[3] [4 <./figs/penguin-pairs-1.png> <./figs/iris-pairs-1.png>]
-<figs/simpsons-1.png, id=117, 1957.3125pt x 903.375pt>
+<figs/simpsons-1.png, id=152, 1957.3125pt x 903.375pt>
 File: figs/simpsons-1.png Graphic file (type png)
 <use figs/simpsons-1.png>
 Package pdftex.def Info: figs/simpsons-1.png  used on input line 396.
 (pdftex.def)             Requested size: 398.33858pt x 183.84221pt.
-<figs/pca-1.png, id=121, 2409.0pt x 2409.0pt>
+<figs/pca-1.png, id=156, 2409.0pt x 2409.0pt>
 File: figs/pca-1.png Graphic file (type png)
 <use figs/pca-1.png>
 Package pdftex.def Info: figs/pca-1.png  used on input line 431.
 (pdftex.def)             Requested size: 398.33858pt x 398.3133pt.
 [5 <./figs/linear-example-1.png>]
-<figs/kmeans-1.png, id=133, 2409.0pt x 1355.0625pt>
+<figs/kmeans-1.png, id=169, 2409.0pt x 1355.0625pt>
 File: figs/kmeans-1.png Graphic file (type png)
 <use figs/kmeans-1.png>
 Package pdftex.def Info: figs/kmeans-1.png  used on input line 472.
 (pdftex.def)             Requested size: 398.33858pt x 224.05122pt.
+[6 <./figs/simpsons-1.png>] [7 <./figs/pca-1.png>] [8 <./figs/kmeans-1.png>] (./RJwrapper.bbl (./RJwrapper.brf)
+\tf@brf=\write6
+\openout6 = `RJwrapper.brf'.
 
-Package natbib Warning: Citation `bestelmeyer_analysis_2011' on page 6 undefined on input line 516.
-
-
-Package natbib Warning: Citation `gorman_ecological_2014' on page 6 undefined on input line 517.
-
-
-Package natbib Warning: Citation `gorman_population_2017' on page 6 undefined on input line 517.
-
-
-Package natbib Warning: Citation `gorman_advancing_2021' on page 6 undefined on input line 518.
-
-[6 <./figs/simpsons-1.png>] [7 <./figs/pca-1.png>] [8 <./figs/kmeans-1.png>]
-
-Package natbib Warning: Citation `R-base' on page 9 undefined on input line 612.
-
-
-Package natbib Warning: Citation `wickham_welcome_2019' on page 9 undefined on input line 619.
-
-
-Package natbib Warning: Citation `R-ggplot2' on page 9 undefined on input line 622.
-
-
-Package natbib Warning: Citation `R-kableExtra' on page 9 undefined on input line 624.
-
-
-Package natbib Warning: Citation `R-GGally' on page 9 undefined on input line 626.
-
-
-Package natbib Warning: Citation `R-patchwork' on page 9 undefined on input line 628.
-
-
-Package natbib Warning: Citation `R-shadowtext' on page 9 undefined on input line 630.
-
-
-Package natbib Warning: Citation `R-recipes' on page 9 undefined on input line 633.
-
-
-Package natbib Warning: Citation `R-base' on page 9 undefined on input line 635.
-
+[9])
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 649.
+(Font)              using `T1/zi4/m/n' instead on input line 656.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 659.
+(Font)              scaled to size 9.18004pt on input line 666.
 
-Underfull \hbox (badness 10000) in paragraph at lines 659--660
+Underfull \hbox (badness 10000) in paragraph at lines 666--667
 
  []
 
-)
-
-Package natbib Warning: There were undefined citations.
-
-[9] (./RJwrapper.aux)
+[10]) [11] (./RJwrapper.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: F9640761EA662569173C6C6551C83CE7;2367.
+Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
+(rerunfilecheck)             Checksum: F32BCD2ABCD8492C4B8D00192C320D5D;1636.
  ) 
 Here is how much of TeX's memory you used:
- 26511 strings out of 480238
- 487877 string characters out of 5894844
- 782195 words of memory out of 5000000
- 43611 multiletter control sequences out of 15000+600000
- 516074 words of font info for 296 fonts, out of 8000000 for 9000
+ 26715 strings out of 480238
+ 492278 string characters out of 5894844
+ 786869 words of memory out of 5000000
+ 43757 multiletter control sequences out of 15000+600000
+ 517477 words of font info for 314 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 115i,12n,131p,1048b,593s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 115i,12n,131p,1048b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (9 pages, 1532439 bytes).
+Output written on RJwrapper.pdf (11 pages, 1550949 bytes).
 PDF statistics:
- 215 PDF objects out of 1000 (max. 8388607)
- 180 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
+ 370 PDF objects out of 1000 (max. 8388607)
+ 331 compressed objects within 4 object streams
+ 70 named destinations out of 1000 (max. 500000)
  65155 words of extra memory for PDF output out of 74296 (max. 10000000)
 

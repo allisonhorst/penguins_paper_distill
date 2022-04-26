@@ -14,7 +14,6 @@ library(patchwork)
 library(GGally)
 library(shadowtext)
 library(plotly)
-library(crosstalk)
 ggplot2::theme_set(ggplot2::theme_minimal())
 
 # for modeling

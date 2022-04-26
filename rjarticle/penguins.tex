@@ -23,22 +23,22 @@ by R. A. Fisher in the \emph{Annals of Eugenics} (which is often the
 first-listed citation for the dataset), inextricably linking
 \textbf{iris} to eugenics research. Thus, a modern alternative to
 \textbf{iris} is needed. In this paper, we introduce the
-\textbf{palmerpenguins} R package, which includes body size measurements
-collected from 2007 - 2009 for three species of \emph{Pygoscelis}
-penguins that breed on islands throughout the Palmer Archipelago,
-Antarctica. The \textbf{penguins} dataset in \textbf{palmerpenguins}
-provides an approachable, charismatic, and near drop-in replacement for
-\textbf{iris} with topical relevance for polar climate change and
-environmental impacts on marine predators. Since the release on CRAN in
-July 2020, the \textbf{palmerpenguins} package has been downloaded over
-402,000 times, highlighting the demand and widespread adoption of this
-viable \textbf{iris} alternative. We directly compare the \textbf{iris}
-and \textbf{penguins} datasets for selected analyses to demonstrate that
-R users, in particular teachers and learners currently using
-\textbf{iris}, can switch to the Palmer Archipelago penguins for many
-use cases including data wrangling, visualization, linear modeling,
-multivariate analysis (e.g., PCA), cluster analysis and classification
-(e.g., by k-means).
+\textbf{palmerpenguins} R package \citep{R-palmerpenguins}, which
+includes body size measurements collected from 2007 - 2009 for three
+species of \emph{Pygoscelis} penguins that breed on islands throughout
+the Palmer Archipelago, Antarctica. The \textbf{penguins} dataset in
+\textbf{palmerpenguins} provides an approachable, charismatic, and near
+drop-in replacement for \textbf{iris} with topical relevance for polar
+climate change and environmental impacts on marine predators. Since the
+release on CRAN in July 2020, the \textbf{palmerpenguins} package has
+been downloaded over 402,000 times, highlighting the demand and
+widespread adoption of this viable \textbf{iris} alternative. We
+directly compare the \textbf{iris} and \textbf{penguins} datasets for
+selected analyses to demonstrate that R users, in particular teachers
+and learners currently using \textbf{iris}, can switch to the Palmer
+Archipelago penguins for many use cases including data wrangling,
+visualization, linear modeling, multivariate analysis (e.g., PCA),
+cluster analysis and classification (e.g., by k-means).
 }
 
 \hypertarget{introduction}{%
@@ -228,8 +228,8 @@ the built-in \texttt{path\_to\_file()} function in
 \CRANpkg{palmerpenguins}. For example,
 
 \begin{verbatim}
-    library(palmerpenguins)
-    df <- read.csv(path_to_file("penguins.csv"))
+library(palmerpenguins)
+df <- read.csv(path_to_file("penguins.csv"))
 \end{verbatim}
 
 will read in ``penguins.csv'' as if from an external file, thus
@@ -584,9 +584,9 @@ data in the
 package}:
 
 \begin{verbatim}
-    pip install palmerpenguins
-    from palmerpenguins import load_penguins
-    penguins = load_penguins()
+pip install palmerpenguins
+from palmerpenguins import load_penguins
+penguins = load_penguins()
 \end{verbatim}
 
 \textbf{Julia:} Julia users can access the penguins data in the
@@ -596,8 +596,8 @@ data through \textbf{PalmerPenguins.jl} (more information on
 \href{https://github.com/devmotion/PalmerPenguins.jl}{here}):
 
 \begin{verbatim}
-    julia> using PalmerPenguins
-    julia> table = PalmerPenguins.load()
+julia> using PalmerPenguins
+julia> table = PalmerPenguins.load()
 \end{verbatim}
 
 \textbf{TensorFlow:} TensorFlow users can access the penguins data in
@@ -609,14 +609,14 @@ in TensorFlow can be found
 \subsection{Acknowledgements}\label{acknowledgements}}
 
 All analyses were performed in the R language environment using version
-3.6.2 \citep{R-base}. Complete code for this paper is shared in the
+4.1.2 \citep{R-base}. Complete code for this paper is shared in the
 Supplemental Material. We acknowledge the following R packages used in
 analyses, with gratitude to developers and contributors:
 
 \begin{itemize}
 \tightlist
 \item
-  \CRANpkg{tidyverse} \citep{wickham_welcome_2019}: for data import and
+  \CRANpkg{tidyverse} \citep{tidyverse2019}: for data import and
   cleaning
 \item
   \CRANpkg{ggplot2} \citep{R-ggplot2}: for data visualizations
@@ -630,12 +630,19 @@ analyses, with gratitude to developers and contributors:
   \CRANpkg{shadowtext} \citep{R-shadowtext}: to add a background color
   to text labels
 \item
-  \CRANpkg{recipes} \citep{R-recipes}: for data pre-processing
+  \CRANpkg{recipes} \citep{R-recipes} and \CRANpkg{broom}
+  \citep{R-broom}: for pre-processing and statistical analyses
+\item
+  \CRANpkg{paletteer} \citep{R-paletteer}: for the Okabe Ito color
+  palette, provided by the \CRANpkg{colorblindr} package
+\item
+  \CRANpkg{plotly} \citep{R-plotly}: for interactive graphics
 \item
   \textbf{base} and \textbf{stats} \citep{R-base}: for various analyses
   throughout
 \end{itemize}
 
+\bibliography{penguins.bib}
 
 \address{%
 Allison M. Horst\\
