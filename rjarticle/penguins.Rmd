@@ -9,7 +9,7 @@ author:
     email:  ahorst@ucsb.edu
   - name: Alison Presmanes Hill
     email:  apreshill@gmail.com
-    affiliation: AI Strategy & Innovation, IBM
+    affiliation: Director of Knowledge, Voltron Data
   - name: Kristen B. Gorman
     affiliation: University of Alaska Fairbanks 
     address:
