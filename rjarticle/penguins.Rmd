@@ -19,8 +19,8 @@ author:
     - Fairbanks, AK 99775-7220
     email:  kbgorman@alaska.edu
 abstract: > 
- In 1935, Edgar Anderson collected size measurements for 150 flowers from three species of *Iris* on the Gaspé Peninsula in Quebec, Canada. Since then, Anderson's *Iris* observations have become a classic dataset in statistics, machine learning, and data science teaching materials. It is included in the base R **datasets** package as **iris**, making it easy for users to access without knowing much about it. However, the lack of data documentation, presence of non-intuitive variables (e.g. "sepal width"), and perfectly balanced groups with zero missing values make **iris** an inadequate and stale dataset for teaching and learning modern data science skills. Users would benefit from working with a more representative, real-world environmental dataset with a clear link to current scientific research. Importantly, Anderson’s *Iris* data appeared in a 1936 publication by R. A. Fisher in the *Annals of Eugenics* (which is often the first-listed citation for the dataset), inextricably linking **iris** to eugenics research. Thus, a modern alternative to **iris** is needed. In this paper, we introduce the **palmerpenguins** R package, which includes body size measurements collected from 2007 - 2009 for three species of *Pygoscelis* penguins that breed on islands throughout the Palmer Archipelago, Antarctica. The **penguins** dataset in **palmerpenguins** provides an approachable, charismatic, and near drop-in replacement for **iris** with topical relevance for polar climate change and environmental impacts on marine predators. Since the release on CRAN in July 2020, the **palmerpenguins** package has been downloaded over 402,000 times, highlighting the demand and widespread adoption of this viable **iris** alternative. 
- We directly compare the **iris** and **penguins** datasets for selected analyses to demonstrate that R users, in particular teachers and learners currently using **iris**, can switch to the Palmer Archipelago penguins for many use cases including data wrangling, visualization, linear modeling, multivariate analysis (e.g., PCA), cluster analysis and classification (e.g., by k-means). 
+ In 1935, Edgar Anderson collected size measurements for 150 flowers from three species of *Iris* on the Gaspé Peninsula in Quebec, Canada. Since then, Anderson's *Iris* observations have become a classic dataset in statistics, machine learning, and data science teaching materials. It is included in the base R `datasets` package as **iris**, making it easy for users to access without knowing much about it. However, the lack of data documentation, presence of non-intuitive variables (e.g. "sepal width"), and perfectly balanced groups with zero missing values make iris an inadequate and stale dataset for teaching and learning modern data science skills. Users would benefit from working with a more representative, real-world environmental dataset with a clear link to current scientific research. Importantly, Anderson’s *Iris* data appeared in a 1936 publication by R. A. Fisher in the *Annals of Eugenics* (which is often the first-listed citation for the dataset), inextricably linking iris to eugenics research. Thus, a modern alternative to iris is needed. In this paper, we introduce the `palmerpenguins` R package, which includes body size measurements collected from 2007 - 2009 for three species of *Pygoscelis* penguins that breed on islands throughout the Palmer Archipelago, Antarctica. The **penguins** dataset in `palmerpenguins` provides an approachable, charismatic, and near drop-in replacement for iris with topical relevance for polar climate change and environmental impacts on marine predators. Since the release on CRAN in July 2020, the `palmerpenguins` package has been downloaded over 402,000 times, highlighting the demand and widespread adoption of this viable iris alternative. 
+ We directly compare the iris and penguins datasets for selected analyses to demonstrate that R users, in particular teachers and learners currently using iris, can switch to the Palmer Archipelago penguins for many use cases including data wrangling, visualization, linear modeling, multivariate analysis (e.g., PCA), cluster analysis and classification (e.g., by k-means). 
 preamble: |
   % Any extra LaTeX you need in the preamble
 output: 
@@ -105,7 +105,9 @@ The data in the \CRANpkg{palmerpenguins} R package are available for use by CC0 
 
 R users can install the \CRANpkg{palmerpenguins} package from CRAN:
 
-    install.packages("palmerpenguins")
+```
+install.packages("palmerpenguins")
+```
 
 Information, examples, and links to community-contributed materials are available on the \CRANpkg{palmerpenguins} package website: [allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). See the Appendix for how Python and Julia users can access the same data.
 
@@ -122,8 +124,10 @@ The \CRANpkg{palmerpenguins} R package contains two data objects: **penguins_raw
 
 The same data exist as comma-separated value (CSV) files in the package ("penguins_raw.csv" and "penguins.csv"), and can be read in using the built-in `path_to_file()` function in \CRANpkg{palmerpenguins}. For example,
 
-        library(palmerpenguins)
-        df <- read.csv(path_to_file("penguins.csv"))
+```
+library(palmerpenguins)
+df <- read.csv(path_to_file("penguins.csv"))
+```
 
 will read in "penguins.csv" as if from an external file, thus automatically parsing *species*, *island*, and *sex* variables as characters instead of factors. This option allows users opportunities to practice or demonstrate reading in data from a CSV, then updating variable class (e.g., characters to factors).
 
@@ -219,10 +223,42 @@ iris_penguin_n %>%
 
 Distributions, relationships between variables, and clustering can be visually explored between species for the four structural size measurements in **penguins** (flipper length, body mass, bill length and depth; Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguin-pairs-plotly)', '\\@ref(fig:penguin-pairs)'))`) and **iris** (sepal width and length, petal width and length; Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:iris-pairs-plotly)', '\\@ref(fig:iris-pairs)'))`).
 
-```{r, penguin-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in the \\textbf{penguins} data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.", eval=knitr::is_latex_output()}
+```{r, penguin-pairs, width = 6, height = 7, eval=knitr::is_latex_output(), fig.cap = "Distributions and correlations for numeric variables in the \\textbf{penguins} data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species."}
+ggpairs_alpha <- function(data, mapping, ...) {
+  ggplot(data = data, mapping = mapping) +
+    geom_density(..., alpha = 0.7, color = NA)
+}
+
+penguin_pairs_int <- penguins %>%
+  mutate(species = as.character(species)) %>%
+  mutate(species = case_when(
+    species == "Adelie" ~ "Adélie",
+    TRUE ~ species
+  )) %>%
+  select(species, where(is.numeric)) %>%
+  ggpairs(aes(color = species, shape = species, fill = species, text = paste("Species: ", species)),
+          diag = list(continuous = ggpairs_alpha),
+          columns = c("flipper_length_mm", "body_mass_g",
+                      "bill_length_mm", "bill_depth_mm"),
+          columnLabels = c("Flipper length (mm)","Body mass (g)", "Bill length (mm)", "Bill depth (mm)"),
+          upper = list(continuous = wrap("cor", size = 2.7)),
+          lower = list(continuous = wrap(ggally_points, size = 1.3))) +
+  scale_color_paletteer_d("colorblindr::OkabeIto") +
+  scale_fill_paletteer_d("colorblindr::OkabeIto") +
+  scale_shape_manual(values = c(15,16,17)) +
+  theme_minimal() +
+  theme(
+    aspect.ratio = 1,
+    text = element_text(size = 9),
+    axis.text = element_text(size = 7),
+    axis.title = element_text(size = 8),
+    panel.grid.major = element_line(colour = NA),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "gray80", fill = NA)
+  )
 ```
 
-```{r, penguin-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in the **penguins** data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species.", eval=knitr::is_html_output()}
+```{r, penguin-pairs-plotly, eval=knitr::is_html_output(), layout = "l-body", fig.width = 6, fig.height = 7, fig.cap = "Distributions and correlations for numeric variables in the **penguins** data (flipper length (mm), body mass (g), bill length (mm) and bill depth (mm)) for the three observed species: Gentoo (green, triangles); Chinstrap (blue, circles); and Adélie (orange, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) for penguin body size including flipper length, body mass, bill length, and bill depth for the three species. Generally, distributions for each variable within species appear approximately normal, and bivariate relationships appear linear. Notable patterns are the greater body mass and flipper length, but decreased bill depth for Gentoo penguins (compared to Adélies and Chinstraps). Adélie penguins have notably shorter bill lengths than the other two species."}
 
 ggpairs_alpha <- function(data, mapping, ...) {
   ggplot(data = data, mapping = mapping) +
@@ -256,13 +292,33 @@ penguin_pairs_int <- penguins %>%
     panel.border = element_rect(color = "gray80", fill = NA)
   )
 
-ggplotly(penguin_pairs_int, tooltip = "text", height = 450)
+ggplotly(penguin_pairs_int, tooltip = "text", width=600, height = 600)
 ```
 
-```{r, iris-pairs, width = 6, height = 4.5, fig.cap = "Distributions and correlations for numeric variables in \\textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \\textit{Iris setosa} (light gray, circles); \\textit{Iris versicolor} (dark gray, triangles); and \\textit{Iris virginica} (black, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_latex_output()}
+```{r, iris-pairs, width = 6, height = 7, eval=knitr::is_latex_output(), fig.cap = "Distributions and correlations for numeric variables in \\textbf{iris} (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: \\textit{Iris setosa} (light gray, circles); \\textit{Iris versicolor} (dark gray, triangles); and \\textit{Iris virginica} (black, squares). Significance indicated for bivariate correlations: \\text{*}\\textit{p} < 0.05; \\text{*}\\text{*}\\textit{p} < 0.01; \\text{*}\\text{*}\\text{*}\\textit{p} < 0.001.", include=knitr::is_latex_output(), fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica)."}
+iris_pairs_int <- iris %>%
+  ggpairs(aes(color = Species, fill = Species, shape = Species, text = paste("Species: ", Species)),
+          diag = list(continuous = ggpairs_alpha),
+          columns = c("Petal.Length", "Petal.Width",
+                      "Sepal.Length", "Sepal.Width"),
+          columnLabels = c("Petal length (cm)","Petal width (cm)", "Sepal length (cm)", "Sepal width (cm)"),
+          upper = list(continuous = wrap("cor", size = 2.7, color = "black"))) +
+  scale_colour_manual(values = c("gray70","gray40","black")) +
+  scale_fill_manual(values = c("gray70","gray40","black")) +
+  theme_minimal() +
+  theme(
+        aspect.ratio = 1,
+        text = element_text(size = 9),
+        axis.text = element_text(size = 7),
+        axis.title = element_text(size = 8),
+        panel.grid.major = element_line(colour = NA),
+        panel.grid.minor = element_blank(),
+        panel.background = element_rect(fill = "white", color = "gray80"),
+        panel.border = element_rect(color = "gray80", fill = NA)
+        )
 ```
 
-```{r, iris-pairs-plotly, fig.cap = "Distributions and correlations for numeric variables in **iris** (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: *Iris setosa* (light gray, circles); *Iris versicolor* (dark gray, triangles); and *Iris virginica* (black, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica).", eval=knitr::is_html_output()}
+```{r, iris-pairs-plotly, eval=knitr::is_html_output(), layout = "l-body", fig.width = 6, fig.height = 7, fig.cap = "Distributions and correlations for numeric variables in **iris** (petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm)) for the three included iris species: *Iris setosa* (light gray, circles); *Iris versicolor* (dark gray, triangles); and *Iris virginica* (black, squares). Significance indicated for bivariate correlations: \\**p* < 0.05; \\*\\**p* < 0.01; \\*\\*\\**p* < 0.001.", fig.alt = "A pairs plot showing distributions of, and relationships between, measured variables (all continuous) in the iris dataset. Overall, distributions appear approximately normal for all four variables including sepal length, sepal width, petal length and petal width within species, and bivariate relationships appear approximately normal. Setosa iris petals are notably smaller in length and width than the other two species (versicolor and virginica)."}
 
 iris_pairs_int <- iris %>%
   ggpairs(aes(color = Species, fill = Species, shape = Species, text = paste("Species: ", Species)),
@@ -284,7 +340,7 @@ iris_pairs_int <- iris %>%
         panel.border = element_rect(color = "gray80", fill = NA)
         )
 
-ggplotly(iris_pairs_int, tooltip = "text", height = 450)
+ggplotly(iris_pairs_int, tooltip = "text", width=600, height = 600)
 
 
 ```
