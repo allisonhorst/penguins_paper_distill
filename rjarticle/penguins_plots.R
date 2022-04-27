@@ -17,23 +17,25 @@ penguin_pairs <- penguins %>%
     TRUE ~ species
   )) %>%
   select(species, where(is.numeric)) %>%
-  ggpairs(aes(color = species, shape = species, fill = species),
+  ggpairs(aes(color = species, shape = species, fill = species, text = paste("Species: ", species)),
           diag = list(continuous = ggpairs_alpha),
           columns = c("flipper_length_mm", "body_mass_g",
                       "bill_length_mm", "bill_depth_mm"),
           columnLabels = c("Flipper length (mm)","Body mass (g)", "Bill length (mm)", "Bill depth (mm)"),
           upper = list(continuous = wrap("cor", size = 2.7)),
-          lower = list(continuous = wrap(ggally_points, size = 1.3))) +
+          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.7))) +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   scale_fill_paletteer_d("colorblindr::OkabeIto") +
   scale_shape_manual(values = c(15,16,17)) +
   theme_minimal() +
   theme(
-        text = element_text(size = 9),
-        panel.grid.major = element_line(colour = NA),
-        panel.grid.minor = element_blank(),
-        panel.border = element_rect(color = "gray80", fill = NA)
-        )
+    text = element_text(size = 9),
+    axis.text = element_text(size = 7),
+    axis.title = element_text(size = 8),
+    panel.grid.major = element_line(colour = NA),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "gray80", fill = NA)
+  )
 penguin_pairs
 
 ## ---- iris-pairs ---------------------------------------------------------
@@ -41,24 +43,29 @@ penguin_pairs
 # Iris pairs plot:
 
 iris_pairs <- iris %>%
-  ggpairs(aes(color = Species, fill = Species, shape = Species),
+  ggpairs(aes(color = Species,
+              fill = Species,
+              shape = Species,
+              text = paste("Species: ", Species)),
           diag = list(continuous = ggpairs_alpha),
           columns = c("Petal.Length", "Petal.Width",
                       "Sepal.Length", "Sepal.Width"),
           columnLabels = c("Petal length (cm)","Petal width (cm)", "Sepal length (cm)", "Sepal width (cm)"),
-          upper = list(continuous = wrap("cor", size = 2.7, color = "black"))) +
+          upper = list(continuous = wrap("cor", size = 2.7, color = "black")),
+          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.7))) +
   scale_colour_manual(values = c("gray70","gray40","black")) +
   scale_fill_manual(values = c("gray70","gray40","black")) +
   theme_minimal() +
   theme(
-        text = element_text(size = 9),
-        panel.grid.major = element_line(colour = NA),
-        panel.grid.minor = element_blank(),
-        panel.background = element_rect(fill = "white", color = "gray80"),
-        panel.border = element_rect(color = "gray80", fill = NA)
-        )
+    text = element_text(size = 9),
+    axis.text = element_text(size = 7),
+    axis.title = element_text(size = 8),
+    panel.grid.major = element_line(colour = NA),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white", color = "gray80"),
+    panel.border = element_rect(color = "gray80", fill = NA)
+  )
 iris_pairs
-
 
 ## ---- linear-example ---------------------------------------------------------
 
@@ -126,6 +133,18 @@ linear_example
 
 # ggsave(here("fig","linear_example.png"), width = 6, height = 3)
 
+## ---- linear-web -------------------------------------------------------------------------------
+
+linear_figa <- ggplotly(penguin_flip_mass_scatter) %>%
+  style(showlegend = FALSE, traces = 4:6)
+linear_figb <- ggplotly(iris_petal_scatter) %>%
+  style(showlegend = FALSE, traces = 4:6)
+subplot(linear_figa, linear_figb,
+        nrows = 1,
+        titleX = TRUE,
+        titleY = TRUE,
+        margin = 0.09) %>%
+  layout(legend = list(orientation = 'h'))
 
 ## ---- simpsons -------------------------------------------------------------------------------
 # Simpson's Paradox example (bill dimensions, omitting species):
@@ -315,8 +334,57 @@ iris_screeplot <- iris_percvar %>%
 
 #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
 
+## ---- pca-plotly ---------------------------------------------------------
 
-## ---- kmeans ---------------------------------------------------------
+pca_penguins_plotly <- plot_ly(juice(penguin_recipe),
+               x = ~PC1,
+               y = ~PC2,
+               color = ~juice(penguin_recipe)$species,
+               colors = scale_color_paletteer_d("colorblindr::OkabeIto"),
+               type = 'scatter',
+               mode = 'markers') %>%
+  layout(
+    legend=list(title=list(text='color')),
+    plot_bgcolor = "#fff",
+    xaxis = list(
+      title = "0"),
+    yaxis = list(
+      title = "1"))
+
+penguin_features <- pull(pca_wider[1])
+for (i in seq(4)){
+  pca_penguins_plotly <- pca_penguins_plotly %>%
+    add_segments(x = 0, xend = pull(pca_wider[i, 2]), y = 0, yend = pull(pca_wider[i, 3]), line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+    add_annotations(x=pull(pca_wider[i, 2]), y=pull(pca_wider[i, 3]), ax = 0, ay = 0,text = penguin_features[i], xanchor = 'center', yanchor= 'bottom')
+}
+
+pca_penguins_plotly
+
+pca_iris_plotly <- plot_ly(juice(iris_recipe),
+                               x = ~PC1,
+                               y = ~PC2,
+                               color = ~juice(iris_recipe)$Species,
+                               colors = c("gray70","gray40","black"),
+                               type = 'scatter',
+                               mode = 'markers') %>%
+  layout(
+    legend=list(title=list(text='color')),
+    plot_bgcolor = "#fff",
+    xaxis = list(
+      title = "0"),
+    yaxis = list(
+      title = "1"))
+
+iris_features <- pull(iris_wider[1])
+for (i in seq(4)){
+  pca_iris_plotly <- pca_iris_plotly %>%
+    add_segments(x = 0, xend = pull(iris_wider[i, 2]), y = 0, yend = pull(iris_wider[i, 3]), line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+    add_annotations(x=pull(iris_wider[i, 2]), y=pull(iris_wider[i, 3]), ax = 0, ay = 0,text = iris_features[i], xanchor = 'center', yanchor= 'bottom')
+}
+
+pca_iris_plotly
+
+## ---- kmeans-counts ---------------------------------------------------------
 
 # TWO VARIABLE k-means comparison
 # Penguins: Bill length vs. bill depth
@@ -347,19 +415,6 @@ pb_clust <-
   kmeans(centers = 3, nstart = 20) %>%
   broom::augment(pb_species)
 
-# Plot penguin k-means clusters:
-pb_kmeans_gg <-
-  pb_clust %>%
-  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_text(aes(label = .cluster, color = species),
-            key_glyph = draw_key_rect) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") +
-  theme(legend.position = "bottom",
-         panel.border = element_rect(fill = NA, color = "gray70")) +
-  labs(x = "Bill length (mm)",
-       y = "Bill depth (mm)",
-       color = "Species")
-
 # Get counts in each cluster by species
 pb_clust_n <- pb_clust %>%
   count(species, .cluster) %>%
@@ -389,18 +444,6 @@ ip_clust <-
   kmeans(centers = 3, nstart = 20) %>%
   broom::augment(ip_species)
 
-# Plot iris k-means clusters:
-ip_kmeans_gg <-
-  ip_clust %>%
-  ggplot(aes(x = Petal.Length, y = Petal.Width)) +
-  geom_text(aes(label = .cluster, color = Species),
-            key_glyph = draw_key_rect) +
-  theme(legend.position = "bottom",
-         panel.border = element_rect(fill = NA, color = "gray70")) +
-  scale_color_manual(values = c("gray70","gray50","black"))  +
-  labs(x = "Petal length (cm)",
-       y = "Petal width (cm)")
-
 # Get iris counts in each cluster by species:
 ip_clust_n <- ip_clust %>%
   count(Species, .cluster) %>%
@@ -408,8 +451,92 @@ ip_clust_n <- ip_clust %>%
   arrange(.cluster) %>%
   replace_na(list(`setosa` = 0, `versicolor` = 0, `virginica` = 0))
 
+# Making cluster assignments table
+kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
+  kable(col.names = c("Cluster", "Adélie", "Chinstrap", "Gentoo", "Cluster", "setosa", "versicolor", "virginica"),
+        caption = "K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).",
+        align = "cccccc",
+        booktabs = TRUE) %>%
+  kable_styling(full_width = FALSE) %>%
+  add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
+
+## ---- kmeans-plots ---------------------------------------------------------
+
+# Plot penguin k-means clusters:
+# make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
+pb_kmeans_base <-
+  pb_clust %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+  scale_color_paletteer_d("colorblindr::OkabeIto") +
+  scale_x_continuous(limits = c(30, 60),
+                     breaks = c(30, 40, 50, 60)) +
+  theme(legend.position = "bottom",
+        panel.border = element_rect(fill = NA, color = "gray70")) +
+  labs(x = "Bill length (mm)",
+       y = "Bill depth (mm)",
+       color = "Species")
+
+pb_kmeans_gg <- pb_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = species),
+            key_glyph = draw_key_rect)
+
+# Plot iris k-means clusters:
+# make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
+ip_kmeans_base <-
+  ip_clust %>%
+  ggplot(aes(x = Petal.Length, y = Petal.Width)) +
+  theme(legend.position = "bottom",
+        panel.border = element_rect(fill = NA, color = "gray70")) +
+  scale_color_manual(values = c("gray70","gray50","black"))  +
+  labs(x = "Petal length (cm)",
+       y = "Petal width (cm)")
+
+ip_kmeans_gg <- ip_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = Species),
+            key_glyph = draw_key_rect)
+
 # Combine k-means plots for penguins & iris:
 (pb_kmeans_gg | ip_kmeans_gg) + plot_annotation(tag_levels = "A")
 
 # Save image:
 # ggsave(here("fig","kmeans.png"), width = 8, height = 4.5, dpi = 500)
+
+## ---- kmeans-plotly ---------------------------------------------------------
+
+# Plot penguin k-means clusters:
+pb_kmeans_plotly <- pb_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = species,
+                text = paste("Species: ", species,
+                             "\nCluster: ", .cluster,
+                             "\nBill length (mm): ", bill_length_mm,
+                             "\nBill depth (mm): ", bill_depth_mm)
+                ),
+            size = 3) +
+  annotate(geom = "text", label = "A", x = 31, y = 21.2, size = 4)
+
+pb_kmeans_plotly <- ggplotly(pb_kmeans_plotly, height = 300, tooltip = "text")
+
+# Plot iris k-means clusters:
+ip_kmeans_plotly <- ip_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = Species,
+                text = paste("Species: ", Species,
+                             "\nCluster: ", .cluster,
+                             "\nPetal Length (cm): ", Petal.Length,
+                             "\nPetal width (cm): ", Petal.Width)
+                ),
+            size = 3) +
+  annotate(geom = "text", label = "B", x = 1.2, y = 2.43, size = 4)
+
+ip_kmeans_plotly <- ggplotly(ip_kmeans_plotly, height = 300, tooltip = "text")
+
+# Combine k-means plots for penguins & iris:
+subplot(pb_kmeans_plotly, ip_kmeans_plotly,
+        nrows = 1,
+        titleX = TRUE,
+        titleY = TRUE,
+        margin = 0.09) %>%
+  layout()
