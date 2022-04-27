@@ -79,7 +79,7 @@ penguin_flip_mass_scatter <-
     TRUE ~ species
   )) %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(aes(color = species, shape = species), size = 1.5) +
+  geom_point(aes(color = species, shape = species), size = 1.5, alpha = 0.7) +
   geom_smooth(method = "lm", aes(group = species, color = species), se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
@@ -104,7 +104,7 @@ penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y =
 
 # Iris linear relationships (petal dimensions):
 iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point(aes(color = Species, size = Species, shape = Species), size = 1.5) +
+  geom_point(aes(color = Species, size = Species, shape = Species), size = 1.5, alpha = 0.7) +
   geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_manual(values = c("gray70","gray40","black")) +
@@ -113,7 +113,7 @@ iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
        y = "Petal width (cm)") +
   theme(plot.title.position = "plot",
         panel.grid = element_blank(),
-        panel.background = element_rect(fill = NA, color = "gray70"),
+        panel.border = element_rect(fill = NA, color = "gray70"),
         legend.title = element_blank())
 
 # To compare without iris species as a variable (not in manuscript):
@@ -135,16 +135,25 @@ linear_example
 
 ## ---- linear-web -------------------------------------------------------------------------------
 
-linear_figa <- ggplotly(penguin_flip_mass_scatter) %>%
+linear_figa <- ggplotly(penguin_flip_mass_scatter,
+                        height=600,
+                        width=1000,
+                        tooltip = c("x","y","colour")) %>%
   style(showlegend = FALSE, traces = 4:6)
-linear_figb <- ggplotly(iris_petal_scatter) %>%
+linear_figb <- ggplotly(iris_petal_scatter,
+                        height=600,
+                        width=1000,
+                        tooltip = c("x","y","colour")) %>%
   style(showlegend = FALSE, traces = 4:6)
 subplot(linear_figa, linear_figb,
         nrows = 1,
         titleX = TRUE,
         titleY = TRUE,
-        margin = 0.09) %>%
-  layout(legend = list(orientation = 'h'))
+        margin = 0.05,
+        widths = c(0.5, 0.5)) %>%
+  layout(legend = list(orientation = 'h'),
+         xanchor = "center",  # use center of legend as anchor
+         x = 0.5)             # put legend in center of x-axis
 
 ## ---- simpsons -------------------------------------------------------------------------------
 # Simpson's Paradox example (bill dimensions, omitting species):
