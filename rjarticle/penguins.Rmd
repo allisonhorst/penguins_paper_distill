@@ -74,6 +74,7 @@ library(patchwork)
 library(GGally)
 library(shadowtext)
 library(plotly)
+library(ggiraph)
 ggplot2::theme_set(ggplot2::theme_minimal())
 
 # for modeling
@@ -310,7 +311,6 @@ Both `penguins` and `iris` offer numerous opportunities to explore linear relati
 #| fig.cap: "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for *Iris setosa* (light gray circles), *Iris versicolor* (dark gray triangles) and *Iris virginica* (black squares). Within-species linear model is visualized for each penguin or iris species."
 #| fig.alt: "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset."
 ```
-
 
 
 Notably, distinctions between species are clearer for iris petals - particularly, the much smaller petals for *Iris setosa* - compared to penguins, in which Adélie and Chinstrap penguins are largely overlapping in body size (body mass and flipper length), and are both generally smaller than Gentoo penguins.

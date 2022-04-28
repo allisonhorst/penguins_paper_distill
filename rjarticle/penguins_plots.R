@@ -104,7 +104,7 @@ penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y =
 
 # Iris linear relationships (petal dimensions):
 iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point(aes(color = Species, size = Species, shape = Species), size = 2, alpha = 0.7) +
+  geom_point(aes(color = Species, shape = Species), size = 2, alpha = 0.7) +
   geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_manual(values = c("gray70","gray40","black")) +
@@ -133,7 +133,7 @@ linear_example
 
 # ggsave(here("fig","linear_example.png"), width = 6, height = 3)
 
-## ---- linear-web -------------------------------------------------------------------------------
+## ---- linear-plotly -------------------------------------------------------------------------------
 
 a <- list(
   text = "A",
@@ -177,9 +177,56 @@ subplot(linear_figa, linear_figb,
         widths = c(0.5, 0.5)) %>%
   style(showlegend = FALSE)
 
+## ---- linear-web -------------------------------------------------------------------------------
+
+penguins_tooltip <- c(str_c("Flipper length (mm) = ", penguins$flipper_length_mm,
+                           "\n Body mass (g) = ", penguins$body_mass_g,
+                           "\n Species = ", penguins$species))
+
+penguin_int <-
+  penguin_flip_mass_scatter +
+  geom_point_interactive(aes(color = species,
+                             shape = species,
+                             tooltip = penguins_tooltip,
+                             data_id = species),
+                         size = 2
+                         )
+
+# girafe(ggobj = penguin_int)
+
+iris_tooltip <- c(str_c("Petal length = ", iris$Petal.Length,
+                        "\n Petal width = ", iris$Petal.Width,
+                        "\n Species = ", iris$Species))
+
+iris_int <-
+  iris_petal_scatter +
+  geom_point_interactive(aes(color = Species,
+                             shape = Species,
+                             tooltip = iris_tooltip,
+                             data_id = Species),
+                         size = 2
+  )
+
+# girafe(ggobj = iris_int)
+
+girafe(code = print(penguin_int + iris_int + plot_annotation(tag_levels = 'A')),
+       width_svg = 8,
+       height_svg = 4,
+       options = list(
+         opts_hover_inv(css = "opacity:0.1;"),
+         opts_hover(css = "fill:#F0E442; stroke:white;")
+       ))
+
 ## ---- simpsons -------------------------------------------------------------------------------
 # Simpson's Paradox example (bill dimensions, omitting species):
-simpson_nospecies <- ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+simpson_nospecies <- penguins %>%
+  # doing this so ggiraph recognizes species across plots
+  mutate(species = as.character(species)) %>%
+  mutate(species = case_when(
+    species == "Adelie" ~ "Adélie",
+    TRUE ~ species)
+  ) %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point(color = "gray40", alpha = 0.6, size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
@@ -194,7 +241,7 @@ simpson_wspecies <-
     species == "Adelie" ~ "Adélie",
     TRUE ~ species)
     ) %>%
-    ggplot(aes(x = bill_length_mm, y = bill_depth_mm, group = species)) +
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, group = species)) +
   geom_point(aes(color = species, shape = species), size = 2, alpha = 0.8) +
   geom_smooth(method = "lm", se = FALSE, aes(color = species), show.legend = FALSE) +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
@@ -209,7 +256,7 @@ simpson_gg <- (simpson_nospecies | simpson_wspecies) + plot_annotation(tag_level
 simpson_gg
 #ggsave(here("fig","simpson_gg.png"), width = 6, height = 2.5, dpi = 500)
 
-## ---- simpsons-web -------------------------------------------------------------------------------
+## ---- simpsons-plotly -------------------------------------------------------------------------------
 
 simpson_figa <- ggplotly(simpson_nospecies,
                         height=500,
@@ -228,6 +275,45 @@ subplot(simpson_figa, simpson_figb,
         titleY = TRUE,
         margin = 0.09,
         widths = c(0.5, 0.5))
+
+## ---- simpsons-web -------------------------------------------------------------------------------
+
+nospecies_tooltip <- c(str_c("Bill length (mm) = ", penguins$bill_length_mm,
+                            "\n Bill depth (g) = ", penguins$bill_depth_mm,
+                            "\n Species = ", penguins$species))
+
+simpson_nospecies_int <-
+  simpson_nospecies +
+  geom_point_interactive(aes(tooltip = nospecies_tooltip,
+                             data_id = species),
+                         size = 2,
+                         alpha = 0.7)
+
+# girafe(ggobj = simpson_nospecies_int)
+
+wspecies_tooltip <- c(str_c("Bill length (mm) = ", penguins$bill_length_mm,
+                             "\n Bill depth (g) = ", penguins$bill_depth_mm,
+                             "\n Species = ", penguins$species))
+
+simpson_wspecies_int <-
+  simpson_wspecies +
+  geom_point_interactive(aes(color = species,
+                             shape = species,
+                             tooltip = wspecies_tooltip,
+                             data_id = species),
+                         size = 2,
+                         alpha = 0.7)
+
+# girafe(ggobj = simpson_wspecies_int)
+
+girafe(code = print(simpson_nospecies_int + simpson_wspecies_int + plot_annotation(tag_levels = 'A')),
+       width_svg = 8,
+       height_svg = 4,
+       options = list(
+         opts_hover_inv(css = "opacity:0.1;"),
+         opts_hover(css = "fill:#F0E442; stroke:white;")
+       ))
+
 
 ## ---- pca ---------------------------------------------------------
 # From Alison Hill's post for palmerpenguins pkgdown site
@@ -385,13 +471,13 @@ iris_screeplot <- iris_percvar %>%
 
 #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
 
-## ---- pca-web ---------------------------------------------------------
+## ---- pca-plotly ---------------------------------------------------------
 
 pca_penguins_plotly <- plot_ly(juice(penguin_recipe),
                x = ~PC1,
                y = ~PC2,
                color = ~juice(penguin_recipe)$species,
-               colors = scale_color_paletteer_d("colorblindr::OkabeIto"),
+               colors = as.character(paletteer_d("colorblindr::OkabeIto", n = 3)),
                type = 'scatter',
                mode = 'markers') %>%
   layout(
@@ -552,7 +638,7 @@ ip_kmeans_gg <- ip_kmeans_base +
 # Save image:
 # ggsave(here("fig","kmeans.png"), width = 8, height = 4.5, dpi = 500)
 
-## ---- kmeans-web ---------------------------------------------------------
+## ---- kmeans-plotly ---------------------------------------------------------
 
 # Plot penguin k-means clusters:
 pb_kmeans_plotly <- pb_kmeans_base +
@@ -590,3 +676,41 @@ subplot(pb_kmeans_plotly, ip_kmeans_plotly,
         margin = 0.09) %>%
   layout() %>%
   style(showlegend = FALSE)
+
+## ---- kmeans-web ---------------------------------------------------------
+
+pb_tooltip <- c(str_c("Species: ", pb_clust$species,
+                      "\n Cluster: ", pb_clust$.cluster,
+                      "\n Bill length (mm): ", pb_clust$bill_length_mm,
+                      "\n Bill depth (mm) : ", pb_clust$bill_depth_mm))
+
+pb_kmeans_int <- pb_kmeans_base +
+  geom_text_interactive(aes(
+    label = .cluster,
+    color = species,
+    tooltip = pb_tooltip),
+    size = 3)
+
+# girafe(ggobj = pb_kmeans_int)
+
+ip_tooltip <- c(str_c("Species: ", ip_clust$Species,
+                      "\n Cluster: ", ip_clust$.cluster,
+                      "\n Petal Length (cm): ", ip_clust$Petal.Length,
+                      "\n Petal Width (cm): ", ip_clust$Petal.Width))
+
+ip_kmeans_int <- ip_kmeans_base +
+  geom_text_interactive(aes(
+    label = .cluster,
+    color = Species,
+    tooltip = ip_tooltip),
+    size = 3)
+
+# girafe(ggobj = ip_kmeans_int)
+
+girafe(code = print(pb_kmeans_int + ip_kmeans_int + plot_annotation(tag_levels = 'A')),
+       width_svg = 8,
+       height_svg = 4,
+       options = list(
+         opts_hover_inv(css = "opacity:0.1;"),
+         opts_hover(css = "fill:#F0E442; stroke:white;")
+       ))
