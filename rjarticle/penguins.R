@@ -332,10 +332,7 @@ subplot(simpson_figa, simpson_figb,
         widths = c(0.5, 0.5))
 
 
-## ----pca-plots----------------------------------------------------------------
-
-
-## ----pca----------------------------------------------------------------------
+## ----pca, opts.label='fig.pdf'------------------------------------------------
 # From Alison Hill's post for palmerpenguins pkgdown site
 
 ### PENGUINS PCA:
@@ -492,164 +489,57 @@ iris_screeplot <- iris_percvar %>%
 #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
 
 
-## ----pca----------------------------------------------------------------------
-# From Alison Hill's post for palmerpenguins pkgdown site
-
-### PENGUINS PCA:
-
-# Omit year
-penguins_noyr <- penguins %>%
-  select(-year) %>%
-  mutate(species = as.character(species)) %>%
-  mutate(species = case_when(
-    species == "Adelie" ~ "Adélie",
-    TRUE ~ species
-  )) %>%
-  mutate(species = as.factor(species))
-
-penguin_recipe <-
-  recipe(~., data = penguins_noyr) %>%
-  update_role(species, island, sex, new_role = "id") %>%
-  step_naomit(all_predictors()) %>%
-  step_normalize(all_predictors()) %>%
-  step_pca(all_predictors(), id = "pca") %>%
-  prep()
-
-penguin_pca <-
-  penguin_recipe %>%
-  tidy(id = "pca")
-
-penguin_percvar <- penguin_recipe %>%
-  tidy(id = "pca", type = "variance") %>%
-  dplyr::filter(terms == "percent variance")
-
-# Make the penguins PCA biplot:
-
-# Get pca loadings into wider format
-pca_wider <- penguin_pca %>%
-  tidyr::pivot_wider(names_from = component, id_cols = terms)
-
-# define arrow style:
-arrow_style <- arrow(length = unit(.05, "inches"),
-                     type = "closed")
-
-# Make the penguins PCA biplot:
-pca_plot <-
-  juice(penguin_recipe) %>%
-  ggplot(aes(PC1, PC2)) +
-  geom_point(aes(color = species, shape = species),
-             alpha = 0.7,
-             size = 2) +
-  scale_color_paletteer_d("colorblindr::OkabeIto") +
-  guides(color = guide_legend("Species"),
-        shape = guide_legend("Species"))
-
-penguins_biplot <- pca_plot +
-  geom_segment(data = pca_wider,
-               aes(xend = PC1, yend = PC2),
-               x = 0,
-               y = 0,
-               arrow = arrow_style) +
-  geom_shadowtext(data = pca_wider,
-            aes(x = PC1, y = PC2, label = terms),
-            nudge_x = c(0.7,0.7,1.7,1.2),
-            nudge_y = c(-0.1,-0.2,0.1,-0.1),
-            size = 4,
-            color = "black",
-            bg.color = "white") +
-  theme(legend.position = "bottom",
-        panel.border = element_rect(color = "gray70", fill = NA))
-
-# For positioning (above):
-# 1: bill_length
-# 2: bill_depth
-# 3: flipper length
-# 4: body mass
-
-penguin_screeplot <- penguin_percvar %>%
-  ggplot(aes(x = component, y = value)) +
-  geom_col(fill = "gray50") +
-  scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
-  scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
-  ylab("% of total variance") +
-  geom_text(aes(label = round(value,2)), vjust=-0.25) +
-  theme(panel.border = element_rect(color = "gray70", fill = NA),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank())
-
-### IRIS PCA:
-
-iris_recipe <-
-  recipe(~., data = iris) %>%
-  update_role(Species, new_role = "id") %>%
-  step_normalize(all_predictors()) %>%
-  step_pca(all_predictors(), id = "pca") %>%
-  prep()
-iris_pca <-
-  iris_recipe %>%
-  tidy(id = "pca")
-
-### Iris PCA biplot:
-
-# Get pca loadings into wider format
-iris_wider <- iris_pca %>%
-  tidyr::pivot_wider(names_from = component, id_cols = terms)
-
-# define arrow style:
-arrow_style <- arrow(length = unit(.05, "inches"),
-                     type = "closed")
-
-# Make the iris PCA biplot:
-iris_pca_plot <-
-  juice(iris_recipe) %>%
-  ggplot(aes(PC1, PC2)) +
-  geom_point(aes(color = Species, shape = Species),
-             alpha = 0.8,
-             size = 2) +
-  scale_colour_manual(values = c("gray70","gray40","black"))
-iris_biplot <- iris_pca_plot +
-  geom_segment(data = iris_wider,
-               aes(xend = PC1, yend = PC2),
-               x = 0,
-               y = 0,
-               arrow = arrow_style) +
-  geom_shadowtext(data = iris_wider,
-            aes(x = PC1, y = PC2, label = terms),
-            nudge_x = c(0.5,0.3,1,1.2),
-            nudge_y = c(-0.1,-0.2,0.1,-0.1),
-            size = 4,
-            color = "black",
-            bg.color = "white") +
-  theme(panel.background = element_rect(fill = NA, color = "gray70"),
-        legend.position = "bottom")
-
-iris_percvar <- iris_recipe %>%
-  tidy(id = "pca", type = "variance") %>%
-  dplyr::filter(terms == "percent variance")
-
-# Iris screeplot:
-
-iris_screeplot <- iris_percvar %>%
-  ggplot(aes(x = component, y = value)) +
-  geom_col(fill = "gray50") +
-  scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
-  scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
-  ylab("% of total variance") +
-  geom_text(aes(label = round(value,2)), vjust=-0.25) +
-  theme(panel.border = element_rect(color = "gray70", fill = NA),
-        panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank())
-
-# Combine biplots and screeplots for both iris & penguins:
-
-(penguins_biplot | iris_biplot) / (penguin_screeplot | iris_screeplot) + plot_annotation(tag_levels = 'A')
-
-#ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
+## ----pca-web, opts.label=c('pca', 'fig.web')----------------------------------
+#> pca_penguins_plotly <- plot_ly(juice(penguin_recipe),
+#>                x = ~PC1,
+#>                y = ~PC2,
+#>                color = ~juice(penguin_recipe)$species,
+#>                colors = scale_color_paletteer_d("colorblindr::OkabeIto"),
+#>                type = 'scatter',
+#>                mode = 'markers') %>%
+#>   layout(
+#>     legend=list(title=list(text='color')),
+#>     plot_bgcolor = "#fff",
+#>     xaxis = list(
+#>       title = "0"),
+#>     yaxis = list(
+#>       title = "1"))
+#> 
+#> penguin_features <- pull(pca_wider[1])
+#> for (i in seq(4)){
+#>   pca_penguins_plotly <- pca_penguins_plotly %>%
+#>     add_segments(x = 0, xend = pull(pca_wider[i, 2]), y = 0, yend = pull(pca_wider[i, 3]), line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+#>     add_annotations(x=pull(pca_wider[i, 2]), y=pull(pca_wider[i, 3]), ax = 0, ay = 0,text = penguin_features[i], xanchor = 'center', yanchor= 'bottom')
+#> }
+#> 
+#> pca_penguins_plotly
+#> 
+#> pca_iris_plotly <- plot_ly(juice(iris_recipe),
+#>                                x = ~PC1,
+#>                                y = ~PC2,
+#>                                color = ~juice(iris_recipe)$Species,
+#>                                colors = c("gray70","gray40","black"),
+#>                                type = 'scatter',
+#>                                mode = 'markers') %>%
+#>   layout(
+#>     legend=list(title=list(text='color')),
+#>     plot_bgcolor = "#fff",
+#>     xaxis = list(
+#>       title = "0"),
+#>     yaxis = list(
+#>       title = "1"))
+#> 
+#> iris_features <- pull(iris_wider[1])
+#> for (i in seq(4)){
+#>   pca_iris_plotly <- pca_iris_plotly %>%
+#>     add_segments(x = 0, xend = pull(iris_wider[i, 2]), y = 0, yend = pull(iris_wider[i, 3]), line = list(color = 'black'),inherit = FALSE, showlegend = FALSE) %>%
+#>     add_annotations(x=pull(iris_wider[i, 2]), y=pull(iris_wider[i, 3]), ax = 0, ay = 0,text = iris_features[i], xanchor = 'center', yanchor= 'bottom')
+#> }
+#> 
+#> pca_iris_plotly
 
 
-## ----kmeans-counts------------------------------------------------------------
+## ----kmeans, opts.label='fig.pdf'---------------------------------------------
 # TWO VARIABLE k-means comparison
 # Penguins: Bill length vs. bill depth
 pb_species <- penguins %>%
@@ -724,8 +614,6 @@ kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
   kable_styling(full_width = FALSE) %>%
   add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
 
-
-## ----kmeans-plots-------------------------------------------------------------
 # Plot penguin k-means clusters:
 # make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
 pb_kmeans_base <-
@@ -768,42 +656,43 @@ ip_kmeans_gg <- ip_kmeans_base +
 # ggsave(here("fig","kmeans.png"), width = 8, height = 4.5, dpi = 500)
 
 
-## ----kmeans-plotly------------------------------------------------------------
-#> # Plot penguin k-means clusters:
-#> pb_kmeans_plotly <- pb_kmeans_base +
-#>   geom_text(aes(label = .cluster,
-#>                 color = species,
-#>                 text = paste("Species: ", species,
-#>                              "\nCluster: ", .cluster,
-#>                              "\nBill length (mm): ", bill_length_mm,
-#>                              "\nBill depth (mm): ", bill_depth_mm)
-#>                 ),
-#>             size = 3) +
-#>   annotate(geom = "text", label = "A", x = 31, y = 21.2, size = 4)
-#> 
-#> pb_kmeans_plotly <- ggplotly(pb_kmeans_plotly, height = 300, tooltip = "text")
-#> 
-#> # Plot iris k-means clusters:
-#> ip_kmeans_plotly <- ip_kmeans_base +
-#>   geom_text(aes(label = .cluster,
-#>                 color = Species,
-#>                 text = paste("Species: ", Species,
-#>                              "\nCluster: ", .cluster,
-#>                              "\nPetal Length (cm): ", Petal.Length,
-#>                              "\nPetal width (cm): ", Petal.Width)
-#>                 ),
-#>             size = 3) +
-#>   annotate(geom = "text", label = "B", x = 1.2, y = 2.43, size = 4)
-#> 
-#> ip_kmeans_plotly <- ggplotly(ip_kmeans_plotly, height = 300, tooltip = "text")
-#> 
-#> # Combine k-means plots for penguins & iris:
-#> subplot(pb_kmeans_plotly, ip_kmeans_plotly,
-#>         nrows = 1,
-#>         titleX = TRUE,
-#>         titleY = TRUE,
-#>         margin = 0.09) %>%
-#>   layout()
+## ----kmeans-web, opts.label=c('kmeans','fig.web')-----------------------------
+# Plot penguin k-means clusters:
+pb_kmeans_plotly <- pb_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = species,
+                text = paste("Species: ", species,
+                             "\nCluster: ", .cluster,
+                             "\nBill length (mm): ", bill_length_mm,
+                             "\nBill depth (mm): ", bill_depth_mm)
+                ),
+            size = 3) +
+  annotate(geom = "text", label = "A", x = 31, y = 21.2, size = 4)
+
+pb_kmeans_plotly <- ggplotly(pb_kmeans_plotly, height = 300, tooltip = "text")
+
+# Plot iris k-means clusters:
+ip_kmeans_plotly <- ip_kmeans_base +
+  geom_text(aes(label = .cluster,
+                color = Species,
+                text = paste("Species: ", Species,
+                             "\nCluster: ", .cluster,
+                             "\nPetal Length (cm): ", Petal.Length,
+                             "\nPetal width (cm): ", Petal.Width)
+                ),
+            size = 3) +
+  annotate(geom = "text", label = "B", x = 1.2, y = 2.43, size = 4)
+
+ip_kmeans_plotly <- ggplotly(ip_kmeans_plotly, height = 300, tooltip = "text")
+
+# Combine k-means plots for penguins & iris:
+subplot(pb_kmeans_plotly, ip_kmeans_plotly,
+        nrows = 1,
+        titleX = TRUE,
+        titleY = TRUE,
+        margin = 0.09) %>%
+  layout() %>%
+  style(showlegend = FALSE)
 
 
 ## ----kmeans-table-------------------------------------------------------------

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  27 APR 2022 22:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  27 APR 2022 22:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -786,40 +786,18 @@ Package pdftex.def Info: figs/simpsons-1.png  used on input line 400.
 File: figs/pca-1.png Graphic file (type png)
 <use figs/pca-1.png>
 Package pdftex.def Info: figs/pca-1.png  used on input line 435.
-(pdftex.def)             Requested size: 2408.99416pt x 2408.99416pt.
-
-Overfull \hbox (2010.65558pt too wide) in paragraph at lines 435--436
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 1798.53192pt on input line 440.
-
+(pdftex.def)             Requested size: 398.33858pt x 398.3133pt.
 [5 <./figs/linear-example-1.png>]
-
-LaTeX Warning: Reference `fig:kmeans' on page 6 undefined on input line 460.
-
-
-LaTeX Warning: Reference `fig:kmeans' on page 6 undefined on input line 467.
-
-<figs/kmeans-plots-1.png, id=170, 2409.0pt x 1355.0625pt>
-File: figs/kmeans-plots-1.png Graphic file (type png)
-<use figs/kmeans-plots-1.png>
-Package pdftex.def Info: figs/kmeans-plots-1.png  used on input line 476.
-(pdftex.def)             Requested size: 2408.99416pt x 1355.0592pt.
-
-Overfull \hbox (2010.65558pt too wide) in paragraph at lines 476--477
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 689.59697pt on input line 481.
-
-[6 <./figs/simpsons-1.png>] [7 <./figs/pca-1.png>] [8 <./figs/kmeans-plots-1.png>] [9] (./RJwrapper.bbl (./RJwrapper.brf)
+<figs/kmeans-1.png, id=172, 2409.0pt x 1355.0625pt>
+File: figs/kmeans-1.png Graphic file (type png)
+<use figs/kmeans-1.png>
+Package pdftex.def Info: figs/kmeans-1.png  used on input line 476.
+(pdftex.def)             Requested size: 398.33858pt x 224.05122pt.
+[6 <./figs/simpsons-1.png>] [7 <./figs/pca-1.png>] [8 <./figs/kmeans-1.png>] (./RJwrapper.bbl (./RJwrapper.brf)
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
-[10])
+[9] [10])
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
 (Font)              using `T1/zi4/m/n' instead on input line 653.
@@ -835,27 +813,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 663--664
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: E5156D9ED0E41D1AABC0440083FBAE57;2284.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: 2D32CA4A23BED0A02033C6F4D93535FB;1597.
+(rerunfilecheck)             Checksum: FD1D4143B6D62D892FC1DC56030270E2;1587.
  ) 
 Here is how much of TeX's memory you used:
- 26689 strings out of 480238
- 492147 string characters out of 5894844
+ 26688 strings out of 480238
+ 492056 string characters out of 5894844
  788839 words of memory out of 5000000
- 43758 multiletter control sequences out of 15000+600000
+ 43757 multiletter control sequences out of 15000+600000
  517173 words of font info for 297 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 115i,11n,131p,1048b,663s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 115i,11n,131p,1048b,680s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (11 pages, 1794775 bytes).
+Output written on RJwrapper.pdf (11 pages, 1794732 bytes).
 PDF statistics:
- 372 PDF objects out of 1000 (max. 8388607)
- 331 compressed objects within 4 object streams
+ 374 PDF objects out of 1000 (max. 8388607)
+ 333 compressed objects within 4 object streams
  69 named destinations out of 1000 (max. 500000)
  65659 words of extra memory for PDF output out of 74296 (max. 10000000)
 

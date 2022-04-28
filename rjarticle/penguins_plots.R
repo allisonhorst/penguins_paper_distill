@@ -387,7 +387,7 @@ iris_screeplot <- iris_percvar %>%
 
 #ggsave(here("fig","pca_plots.png"), width = 8, height = 8, dpi = 500)
 
-## ---- pca-plotly ---------------------------------------------------------
+## ---- pca-web ---------------------------------------------------------
 
 pca_penguins_plotly <- plot_ly(juice(penguin_recipe),
                x = ~PC1,
@@ -437,7 +437,7 @@ for (i in seq(4)){
 
 pca_iris_plotly
 
-## ---- kmeans-counts ---------------------------------------------------------
+## ---- kmeans ---------------------------------------------------------
 
 # TWO VARIABLE k-means comparison
 # Penguins: Bill length vs. bill depth
@@ -513,8 +513,6 @@ kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
   kable_styling(full_width = FALSE) %>%
   add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
 
-## ---- kmeans-plots ---------------------------------------------------------
-
 # Plot penguin k-means clusters:
 # make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
 pb_kmeans_base <-
@@ -556,7 +554,7 @@ ip_kmeans_gg <- ip_kmeans_base +
 # Save image:
 # ggsave(here("fig","kmeans.png"), width = 8, height = 4.5, dpi = 500)
 
-## ---- kmeans-plotly ---------------------------------------------------------
+## ---- kmeans-web ---------------------------------------------------------
 
 # Plot penguin k-means clusters:
 pb_kmeans_plotly <- pb_kmeans_base +
@@ -592,4 +590,5 @@ subplot(pb_kmeans_plotly, ip_kmeans_plotly,
         titleX = TRUE,
         titleY = TRUE,
         margin = 0.09) %>%
-  layout()
+  layout() %>%
+  style(showlegend = FALSE)
