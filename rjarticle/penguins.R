@@ -178,7 +178,7 @@ penguin_flip_mass_scatter <-
     TRUE ~ species
   )) %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(aes(color = species, shape = species), size = 1.5, alpha = 0.7) +
+  geom_point(aes(color = species, shape = species), size = 2, alpha = 0.7) +
   geom_smooth(method = "lm", aes(group = species, color = species), se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
@@ -186,13 +186,13 @@ penguin_flip_mass_scatter <-
   labs(x = "Flipper length (mm)",
        y = "Body mass (g)") +
   theme(plot.title.position = "plot",
-        panel.grid = element_blank(),
+        #panel.grid = element_blank(),
         panel.border = element_rect(fill = NA, color = "gray70"),
         legend.title = element_blank())
 
 # To compare without penguin species as a variable (not in manuscript):
 penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(color = "gray50", size = 1.5) +
+  geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
   labs(x = "Flipper length (mm)",
@@ -203,7 +203,7 @@ penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y =
 
 # Iris linear relationships (petal dimensions):
 iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point(aes(color = Species, size = Species, shape = Species), size = 1.5, alpha = 0.7) +
+  geom_point(aes(color = Species, size = Species, shape = Species), size = 2, alpha = 0.7) +
   geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_manual(values = c("gray70","gray40","black")) +
@@ -211,13 +211,13 @@ iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
   labs(x = "Petal length (cm)",
        y = "Petal width (cm)") +
   theme(plot.title.position = "plot",
-        panel.grid = element_blank(),
+        #panel.grid = element_blank(),
         panel.border = element_rect(fill = NA, color = "gray70"),
         legend.title = element_blank())
 
 # To compare without iris species as a variable (not in manuscript):
 iris_petal_scatter_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point(color = "gray50", size = 1.5) +
+  geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
   labs(x = "Petal length (cm)",
@@ -234,28 +234,52 @@ linear_example
 
 
 ## ----linear-web, opts.label= c('linear-example', 'fig.web')-------------------
+a <- list(
+  text = "A",
+  xref = "paper",
+  yref = "paper",
+  yanchor = "bottom",
+  xanchor = "center",
+  align = "center",
+  x = 0.5,
+  y = 1,
+  showarrow = FALSE
+)
+
+b <- list(
+  text = "B",
+  xref = "paper",
+  yref = "paper",
+  yanchor = "bottom",
+  xanchor = "center",
+  align = "center",
+  x = 0.5,
+  y = 1,
+  showarrow = FALSE
+)
+
 linear_figa <- ggplotly(penguin_flip_mass_scatter,
                         height=600,
                         width=1000,
                         tooltip = c("x","y","colour")) %>%
-  style(showlegend = FALSE, traces = 4:6)
+  layout(annotations = a)
+
 linear_figb <- ggplotly(iris_petal_scatter,
                         height=600,
                         width=1000,
                         tooltip = c("x","y","colour")) %>%
-  style(showlegend = FALSE, traces = 4:6)
+  layout(annotations = b)
+
 subplot(linear_figa, linear_figb,
         nrows = 1,
         titleX = TRUE,
         titleY = TRUE,
         margin = 0.05,
         widths = c(0.5, 0.5)) %>%
-  layout(legend = list(orientation = 'h'),
-         xanchor = "center",  # use center of legend as anchor
-         x = 0.5)             # put legend in center of x-axis
+  style(showlegend = FALSE)
 
 
-## ---- simpsons----------------------------------------------------------------
+## ----simpsons, opts.label='fig.pdf'-------------------------------------------
 # Simpson's Paradox example (bill dimensions, omitting species):
 simpson_nospecies <- ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
   geom_point(color = "gray40", alpha = 0.6, size = 2) +
@@ -286,6 +310,26 @@ simpson_wspecies <-
 simpson_gg <- (simpson_nospecies | simpson_wspecies) + plot_annotation(tag_levels = 'A')
 simpson_gg
 #ggsave(here("fig","simpson_gg.png"), width = 6, height = 2.5, dpi = 500)
+
+
+## ----simpsons-web, opts.label= c('simpsons', 'fig.web')-----------------------
+simpson_figa <- ggplotly(simpson_nospecies,
+                        height=600,
+                        width=1000,
+                        tooltip = c("x","y"))
+
+simpson_figb <- ggplotly(simpson_wspecies,
+                        height=600,
+                        width=1000,
+                        tooltip = c("x","y","colour")) %>%
+  style(showlegend = FALSE, traces = 4:6)
+
+subplot(simpson_figa, simpson_figb,
+        nrows = 1,
+        titleX = TRUE,
+        titleY = TRUE,
+        margin = 0.05,
+        widths = c(0.5, 0.5))
 
 
 ## ----pca-plots----------------------------------------------------------------

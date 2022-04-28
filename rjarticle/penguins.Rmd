@@ -314,14 +314,17 @@ Both `penguins` and `iris` offer numerous opportunities to explore linear relati
 
 Notably, distinctions between species are clearer for iris petals - particularly, the much smaller petals for *Iris setosa* - compared to penguins, in which Adélie and Chinstrap penguins are largely overlapping in body size (body mass and flipper length), and are both generally smaller than Gentoo penguins.
 
-Simpson's Paradox is a data phenomenon in which a trend observed between variables is reversed when data are pooled, omitting a meaningful variable. While often taught and discussed in statistics courses, finding a real-world and approachable example of Simpson's Paradox can be a challenge. Here, we show one (of several possible - see Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguin-pairs-web)', '\\@ref(fig:penguin-pairs)'))`) Simpson's Paradox example in `penguins`: exploring bill dimensions with and without species included (Figure \@ref(fig:simpsons)). When penguin species is omitted (Figure \@ref(fig:simpsons)A), bill length and depth appear negatively correlated overall. The trend is reversed when species is included, revealing an obviously positive correlation between bill length and bill depth within species (Figure \@ref(fig:simpsons)B).
+Simpson's Paradox is a data phenomenon in which a trend observed between variables is reversed when data are pooled, omitting a meaningful variable. While often taught and discussed in statistics courses, finding a real-world and approachable example of Simpson's Paradox can be a challenge. Here, we show one (of several possible - see Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguin-pairs-web)', '\\@ref(fig:penguin-pairs)'))`) Simpson's Paradox example in `penguins`: exploring bill dimensions with and without species included (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:simpsons-web)', '\\@ref(fig:simpsons)'))`). When penguin species is omitted (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:simpsons-web)', '\\@ref(fig:simpsons)'))`A), bill length and depth appear negatively correlated overall. The trend is reversed when species is included, revealing an obviously positive correlation between bill length and bill depth within species (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:simpsons-web)', '\\@ref(fig:simpsons)'))`B).
 
-```{r, simpsons}
-#| layout: "l-body-outset"
+```{r simpsons, opts.label='fig.pdf'}
 #| fig.width: 6
 #| fig.height: 4
 #| fig.cap: "Trends for penguin bill dimensions (bill length and bill depth, millimeters) if the species variable is excluded (A) or included (B), illustrating Simpson’s Paradox. Note: linear regression for bill dimensions without including species in (A) is ill-advised; the linear trendline is only included to visualize trend reversal for Simpson’s Paradox when compared to (B)."
 #| fig.alt: "As an example of Simpson's Paradox, side-by-side scatterplots compare linear model results of the relationship between penguin bill length and depth when species is excluded (left) or included (right). When species is excluded (left), the overall relationship appears negative (i.e., bill depth appears to decrease as bill length increases). However, when species is included (right), it is clear that within species there is a positive relationship between bill length and depth variables (i.e., bill depth increases as bill length increases)."
+```
+
+```{r simpsons-web, opts.label= c('simpsons', 'fig.web')}
+#| fig.cap: "Trends for penguin bill dimensions (bill length and bill depth, millimeters) if the species variable is excluded (A) or included (B), illustrating Simpson’s Paradox. Note: linear regression for bill dimensions without including species in (A) is ill-advised; the linear trendline is only included to visualize trend reversal for Simpson’s Paradox when compared to (B)."
 ```
 
 ### Principal component analysis
