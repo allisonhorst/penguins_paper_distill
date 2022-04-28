@@ -697,7 +697,7 @@ subplot(pb_kmeans_plotly, ip_kmeans_plotly,
 kmeans_2var_table 
 
 
-## ---- echo = FALSE------------------------------------------------------------
+## -----------------------------------------------------------------------------
 overview_penguins_raw <- tribble(
   ~Feature, ~penguins_raw,
   "Year(s) collected", "2007 - 2009",

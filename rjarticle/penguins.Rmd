@@ -53,7 +53,8 @@ knitr::opts_template$set(
                  out.width = '100%'),
   fig.pdf = list(include = knitr::is_latex_output(), 
                  purl = FALSE, 
-                 out.width = '\\textwidth')
+                 out.width = '\\textwidth',
+                 fig.pos = 'htbp')
 )
 ```
 
@@ -300,7 +301,6 @@ Both `penguins` and `iris` offer numerous opportunities to explore linear relati
 ```{r linear-example, opts.label = 'fig.pdf'}
 #| width: 6
 #| height: 3
-#| fig.pos: 'htbp'
 #| fig.cap: "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \\textit{Iris setosa} (light gray circles), \\textit{Iris versicolor} (dark gray triangles) and \\textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species."
 #| fig.alt: "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset."
 ```
@@ -357,7 +357,6 @@ K-means clustering with penguin bill dimensions and iris petal dimensions yields
 
 
 ```{r kmeans, opts.label='fig.pdf'}
-#| fig.pos: 'htbp'
 #| fig.width: 8
 #| fig.height: 4.5
 #| fig.cap: "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both \\textbf{penguins} and \\textbf{iris}."
@@ -391,7 +390,7 @@ Data in the `penguins` object have been minimally updated from `penguins_raw` as
 
 ## Summary of the `penguins_raw` dataset {.appendix}
 
-```{r, echo = FALSE}
+```{r}
 overview_penguins_raw <- tribble(
   ~Feature, ~penguins_raw,
   "Year(s) collected", "2007 - 2009",
