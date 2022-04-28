@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  27 APR 2022 22:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.2.10)  28 APR 2022 06:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -800,12 +800,12 @@ Package pdftex.def Info: figs/kmeans-1.png  used on input line 476.
 [9] [10])
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 653.
+(Font)              using `T1/zi4/m/n' instead on input line 660.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 663.
+(Font)              scaled to size 9.18004pt on input line 670.
 
-Underfull \hbox (badness 10000) in paragraph at lines 663--664
+Underfull \hbox (badness 10000) in paragraph at lines 670--671
 
  []
 
@@ -819,18 +819,18 @@ Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
 (rerunfilecheck)             Checksum: FD1D4143B6D62D892FC1DC56030270E2;1587.
  ) 
 Here is how much of TeX's memory you used:
- 26688 strings out of 480238
- 492056 string characters out of 5894844
- 788839 words of memory out of 5000000
- 43757 multiletter control sequences out of 15000+600000
- 517173 words of font info for 297 fonts, out of 8000000 for 9000
+ 26691 strings out of 480238
+ 492077 string characters out of 5894844
+ 789961 words of memory out of 5000000
+ 43760 multiletter control sequences out of 15000+600000
+ 517088 words of font info for 295 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  115i,11n,131p,1048b,680s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{/Users/alison/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4b.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></Users/alison/Library/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (11 pages, 1794732 bytes).
+Output written on RJwrapper.pdf (11 pages, 1794871 bytes).
 PDF statistics:
- 374 PDF objects out of 1000 (max. 8388607)
- 333 compressed objects within 4 object streams
- 69 named destinations out of 1000 (max. 500000)
+ 377 PDF objects out of 1000 (max. 8388607)
+ 336 compressed objects within 4 object streams
+ 72 named destinations out of 1000 (max. 500000)
  65659 words of extra memory for PDF output out of 74296 (max. 10000000)
 

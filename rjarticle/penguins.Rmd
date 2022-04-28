@@ -406,7 +406,9 @@ overview_penguins_raw %>%
 
 ## palmerpenguins for other programming languages {.appendix}
 
-**Python:** Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
+### Python
+
+Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
 
 ```python
 pip install palmerpenguins
@@ -414,14 +416,18 @@ from palmerpenguins import load_penguins
 penguins = load_penguins()
 ```
 
-**Julia:** Julia users can access the penguins data in the **PalmerPenguins.jl** package. Example code to import the penguins data through **PalmerPenguins.jl** (more information on **PalmerPenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/PalmerPenguins.jl)):
+### Julia
+
+Julia users can access the penguins data in the **PalmerPenguins.jl** package. Example code to import the penguins data through **PalmerPenguins.jl** (more information on **PalmerPenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/PalmerPenguins.jl)):
 
 ```julia
 julia> using PalmerPenguins
 julia> table = PalmerPenguins.load()
 ```
 
-**TensorFlow:** TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for **penguins** data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
+### TensorFlow
+
+TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for **penguins** data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
 
 ## Acknowledgements {.appendix}
 
