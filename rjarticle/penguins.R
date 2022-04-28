@@ -259,14 +259,12 @@ b <- list(
 )
 
 linear_figa <- ggplotly(penguin_flip_mass_scatter,
-                        height=600,
-                        width=1000,
+                        height=500,
                         tooltip = c("x","y","colour")) %>%
   layout(annotations = a)
 
 linear_figb <- ggplotly(iris_petal_scatter,
-                        height=600,
-                        width=1000,
+                        height=500,
                         tooltip = c("x","y","colour")) %>%
   layout(annotations = b)
 
@@ -274,7 +272,7 @@ subplot(linear_figa, linear_figb,
         nrows = 1,
         titleX = TRUE,
         titleY = TRUE,
-        margin = 0.05,
+        margin = 0.09,
         widths = c(0.5, 0.5)) %>%
   style(showlegend = FALSE)
 
@@ -314,21 +312,21 @@ simpson_gg
 
 ## ----simpsons-web, opts.label= c('simpsons', 'fig.web')-----------------------
 simpson_figa <- ggplotly(simpson_nospecies,
-                        height=600,
-                        width=1000,
-                        tooltip = c("x","y"))
+                        height=500,
+                        tooltip = c("x","y")) %>%
+  layout(annotations = a)
 
 simpson_figb <- ggplotly(simpson_wspecies,
-                        height=600,
-                        width=1000,
+                        height=500,
                         tooltip = c("x","y","colour")) %>%
-  style(showlegend = FALSE, traces = 4:6)
+  style(showlegend = FALSE, traces = 4:6) %>%
+  layout(annotations = b)
 
 subplot(simpson_figa, simpson_figb,
         nrows = 1,
         titleX = TRUE,
         titleY = TRUE,
-        margin = 0.05,
+        margin = 0.09,
         widths = c(0.5, 0.5))
 
 
@@ -666,10 +664,10 @@ pb_kmeans_plotly <- pb_kmeans_base +
                              "\nBill length (mm): ", bill_length_mm,
                              "\nBill depth (mm): ", bill_depth_mm)
                 ),
-            size = 3) +
-  annotate(geom = "text", label = "A", x = 31, y = 21.2, size = 4)
+            size = 3)
 
-pb_kmeans_plotly <- ggplotly(pb_kmeans_plotly, height = 300, tooltip = "text")
+pb_kmeans_plotly <- ggplotly(pb_kmeans_plotly, height = 300, tooltip = "text") %>%
+  layout(annotations = a)
 
 # Plot iris k-means clusters:
 ip_kmeans_plotly <- ip_kmeans_base +
@@ -680,10 +678,10 @@ ip_kmeans_plotly <- ip_kmeans_base +
                              "\nPetal Length (cm): ", Petal.Length,
                              "\nPetal width (cm): ", Petal.Width)
                 ),
-            size = 3) +
-  annotate(geom = "text", label = "B", x = 1.2, y = 2.43, size = 4)
+            size = 3)
 
-ip_kmeans_plotly <- ggplotly(ip_kmeans_plotly, height = 300, tooltip = "text")
+ip_kmeans_plotly <- ggplotly(ip_kmeans_plotly, height = 300, tooltip = "text")  %>%
+  layout(annotations = b)
 
 # Combine k-means plots for penguins & iris:
 subplot(pb_kmeans_plotly, ip_kmeans_plotly,
