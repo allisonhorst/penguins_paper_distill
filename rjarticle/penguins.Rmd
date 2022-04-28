@@ -143,7 +143,7 @@ R users can install the \CRANpkg{palmerpenguins} package from CRAN:
 install.packages("palmerpenguins")
 ```
 
-Information, examples, and links to community-contributed materials are available on the \CRANpkg{palmerpenguins} package website: [allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). See the Appendix  for how Python and Julia users can access the same data.
+Information, examples, and links to community-contributed materials are available on the \CRANpkg{palmerpenguins} package website: [allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). See the Appendix for how Python and Julia users can access the same data.
 
 The \CRANpkg{palmerpenguins} R package contains two data objects: `penguins_raw` and `penguins`. The `penguins_raw` data consists of all raw data for `r ncol(palmerpenguins::penguins_raw)` variables, recorded completely or in part for `r nrow(palmerpenguins::penguins_raw)` individual penguins, accessed directly from EDI (`penguins_raw` properties are summarized in Appendix B). We generally recommend using the curated data in `penguins`, which is a subset of `penguins_raw` retaining all `r nrow(palmerpenguins::penguins)` observations, minimally updated (Appendix A) and reduced to the following eight variables:
 
@@ -207,7 +207,7 @@ overview %>%
 
 ### Data structure and sample size
 
-Both `iris` and `penguins` are in tidy format [@wickham_tidy_2014] with each column denoting a single variable and each row containing measurements for a single iris flower or penguin, respectively. The two datasets are comparable in size: dimensions (columns × rows) are `r ncol(iris)` × `r nrow(iris)` and `r ncol(penguins)` × `r nrow(penguins)` for `iris` and `penguins`, respectively, and sample sizes within species are similar (Tables 1 & 2).
+Both `iris` and `penguins` are in tidy format [@wickham_tidy_2014] with each column denoting a single variable and each row containing measurements for a single iris flower or penguin, respectively. The two datasets are comparable in size: dimensions (columns × rows) are `r ncol(iris)` × `r nrow(iris)` and `r ncol(penguins)` × `r nrow(penguins)` for `iris` and `penguins`, respectively, and sample sizes within species are similar (Tables `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(tab:overview-tbl-web)', '\\@ref(tab:overview-tbl)'))` & `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(tab:counts-tbl-web)', '\\@ref(tab:counts-tbl)'))`).
 
 Notably, while sample sizes in `iris` across species are all the same, sample sizes in `penguins` differ across the three species. The inclusion of three factor variables in `penguins` (`species`, `island`, and `sex`), along with `year`, create additional opportunities for grouping, faceting, and analysis compared to the single factor (`Species`) in `iris`.
 
@@ -248,6 +248,7 @@ iris_penguin_n %>%
 
 ```{r counts-tbl-pdf}
 #| eval: !expr knitr::is_latex_output()
+#| purl: FALSE
 
 iris_penguin_n %>% 
    kable(caption = "Grouped sample size for \\textbf{iris} (by species; \\textit{n} = 150 total) and \\textbf{penguins} (by species and sex; \\textit{n} = 344 total). Data in \\textbf{penguins} can be further grouped by island and study year.", 
@@ -353,7 +354,7 @@ A comparison of PCA with the four variables of structural size measurements in `
 
 Unsupervised clustering by k-means is a common and popular entryway to machine learning and classification, and again, the `iris` dataset is frequently used in introductory examples. The `penguins` data provides similar opportunities for introducing k-means clustering. For simplicity, we compare k-means clustering using only two variables for each dataset: for `iris`, petal width and petal length, and for `penguins`, bill length and bill depth. All variables are scaled prior to k-means. Three clusters (*k* = 3) are specified for each, since there are three species of irises (*Iris setosa*, *Iris versicolor*, and *Iris virginica*) and penguins (Adélie, Chinstrap and Gentoo).
 
-K-means clustering with penguin bill dimensions and iris petal dimensions yields largely distinct clusters, each dominated by one species (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:kmeans-interactive)', '\\@ref(fig:kmeans)'))`). For iris petal dimensions, k-means yields a perfectly separated cluster (Cluster 3) containing all 50 *Iris setosa* observations and zero misclassified *Iris virginica* or *Iris versicolor* (Table 3). While clustering is not perfectly distinct for any penguin species, each species is largely contained within a single cluster, with little overlap from the other two species. For example, considering Adélie penguins (orange observations in Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:kmeans-interactive)', '\\@ref(fig:kmeans)'))`A): 147 (out of 151) Adélie penguins are assigned to Cluster 3, zero are assigned to Cluster 1, and 4 are assigned to the Chinstrap-dominated Cluster 2 (Table 3). Only 5 (of 68) Chinstrap penguins and 1 (of 123) Gentoo penguins are assigned to the Adélie-dominated Cluster 3 (Table 3).
+K-means clustering with penguin bill dimensions and iris petal dimensions yields largely distinct clusters, each dominated by one species (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:kmeans-web)', '\\@ref(fig:kmeans)'))`). For iris petal dimensions, k-means yields a perfectly separated cluster (Cluster 3) containing all 50 *Iris setosa* observations and zero misclassified *Iris virginica* or *Iris versicolor* (Table \@ref(tab:kmeans-tbl)). While clustering is not perfectly distinct for any penguin species, each species is largely contained within a single cluster, with little overlap from the other two species. For example, considering Adélie penguins (orange observations in Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:kmeans-web)', '\\@ref(fig:kmeans)'))`A): 147 (out of 151) Adélie penguins are assigned to Cluster 3, zero are assigned to Cluster 1, and 4 are assigned to the Chinstrap-dominated Cluster 2 (Table \@ref(tab:kmeans-tbl)). Only 5 (of 68) Chinstrap penguins and 1 (of 123) Gentoo penguins are assigned to the Adélie-dominated Cluster 3 (Table \@ref(tab:kmeans-tbl)).
 
 
 ```{r kmeans, opts.label='fig.pdf'}
@@ -406,9 +407,7 @@ overview_penguins_raw %>%
 
 ## palmerpenguins for other programming languages {.appendix}
 
-### Python
-
-Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
+**Python:** Python users can load the palmerpenguins datasets into their Python environment using the following code to install and access data in the [palmerpenguins Python package](https://pypi.org/project/palmerpenguins/):
 
 ```python
 pip install palmerpenguins
@@ -416,18 +415,14 @@ from palmerpenguins import load_penguins
 penguins = load_penguins()
 ```
 
-### Julia
-
-Julia users can access the penguins data in the **PalmerPenguins.jl** package. Example code to import the penguins data through **PalmerPenguins.jl** (more information on **PalmerPenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/PalmerPenguins.jl)):
+**Julia:** Julia users can access the penguins data in the **PalmerPenguins.jl** package. Example code to import the penguins data through **PalmerPenguins.jl** (more information on **PalmerPenguins.jl** from David Widmann can be found [here](https://github.com/devmotion/PalmerPenguins.jl)):
 
 ```julia
 julia> using PalmerPenguins
 julia> table = PalmerPenguins.load()
 ```
 
-### TensorFlow
-
-TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for **penguins** data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
+**TensorFlow:** TensorFlow users can access the penguins data in TensorFlow Datasets. Information and examples for **penguins** data in TensorFlow can be found [here](https://www.tensorflow.org/datasets/catalog/penguins).
 
 ## Acknowledgements {.appendix}
 

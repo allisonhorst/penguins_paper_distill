@@ -81,12 +81,6 @@ iris_penguin_n <- cbind(iris_counts, penguin_counts) %>%
 #>   kable_styling(full_width = TRUE)
 
 
-## ----counts-tbl-pdf-----------------------------------------------------------
-iris_penguin_n %>% 
-   kable(caption = "Grouped sample size for \\textbf{iris} (by species; \\textit{n} = 150 total) and \\textbf{penguins} (by species and sex; \\textit{n} = 344 total). Data in \\textbf{penguins} can be further grouped by island and study year.", 
-         align = "lclccc",
-         booktabs = TRUE) %>% 
-  add_header_above(c("iris sample size (by species)" = 2, "penguins sample size (by species and sex)" = 4 ))
 
 
 ## ----penguin-pairs, opts.label = 'fig.pdf'------------------------------------
