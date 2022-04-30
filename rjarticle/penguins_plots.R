@@ -1,3 +1,15 @@
+# ~~How this works~~
+# First, when you knit the file 'penguins.Rmd'
+# This script is read in in the chunk named `load-ext-chunks`
+# From there, anytime you see a chunk with no code and perhaps only chunk options,
+# it is evaluating the code between named "chunks" here.
+# In general, chunks with the `*-web` name pattern are the interactive versions of the same
+# graphic produced by the same-named (i.e., `*`) chunk.
+# For example, `pca-web` is the interactive HTML version of `pca`.
+# The actual name of the plot objects made in each chunk don't really matter-
+# although we have tried to be consistent with `-int` as the suffix for the interactive version.
+# Chunks with the `*-plotly` suffix are kept for posterity but not used in the manuscript.
+
 ## ---- penguin-pairs ---------------------------------------------------------
 ### Pairs plots for penguins and iris (with ggpairs)
 
@@ -5,7 +17,7 @@
 # Thanks to: https://stackoverflow.com/questions/34975190/set-alpha-and-remove-black-outline-of-density-plots-in-ggpairs
 ggpairs_alpha <- function(data, mapping, ...) {
   ggplot(data = data, mapping = mapping) +
-    geom_density(..., alpha = 0.7, color = NA)
+    geom_density(..., alpha = 0.8, color = NA)
 }
 
 # Penguin pairs plot:
@@ -23,7 +35,7 @@ penguin_pairs <- penguins %>%
                       "bill_length_mm", "bill_depth_mm"),
           columnLabels = c("Flipper length (mm)","Body mass (g)", "Bill length (mm)", "Bill depth (mm)"),
           upper = list(continuous = wrap("cor", size = 2.7)),
-          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.7))) +
+          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.8))) +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   scale_fill_paletteer_d("colorblindr::OkabeIto") +
   scale_shape_manual(values = c(15,16,17)) +
@@ -52,7 +64,7 @@ iris_pairs <- iris %>%
                       "Sepal.Length", "Sepal.Width"),
           columnLabels = c("Petal length (cm)","Petal width (cm)", "Sepal length (cm)", "Sepal width (cm)"),
           upper = list(continuous = wrap("cor", size = 2.7, color = "black")),
-          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.7))) +
+          lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.8))) +
   scale_colour_manual(values = c("gray70","gray40","black")) +
   scale_fill_manual(values = c("gray70","gray40","black")) +
   theme_minimal() +
@@ -67,11 +79,11 @@ iris_pairs <- iris %>%
   )
 iris_pairs
 
-## ---- linear-example ---------------------------------------------------------
+## ---- linear ---------------------------------------------------------
 
 # Penguin linear relationships (flipper length versus body mass):
 
-penguin_flip_mass_scatter <-
+penguin_linear_base <-
   penguins %>%
   mutate(species = as.character(species)) %>%
   mutate(species = case_when(
@@ -79,8 +91,6 @@ penguin_flip_mass_scatter <-
     TRUE ~ species
   )) %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(aes(color = species, shape = species), size = 2, alpha = 0.7) +
-  geom_smooth(method = "lm", aes(group = species, color = species), se = FALSE, show.legend = FALSE) +
   theme_minimal() +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   theme(legend.position = c(0.2,0.85)) +
@@ -91,8 +101,14 @@ penguin_flip_mass_scatter <-
         panel.border = element_rect(fill = NA, color = "gray70"),
         legend.title = element_blank())
 
+penguin_linear <-
+  penguin_linear_base +
+  geom_point(aes(color = species, shape = species), size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", aes(group = species, color = species), se = FALSE, show.legend = FALSE)
+
+
 # To compare without penguin species as a variable (not in manuscript):
-penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+penguin_linear_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
@@ -103,9 +119,7 @@ penguin_flip_mass_scatter_all <- ggplot(penguins, aes(x = flipper_length_mm, y =
         panel.border = element_rect(fill = NA, color = "gray70"))
 
 # Iris linear relationships (petal dimensions):
-iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point(aes(color = Species, shape = Species), size = 2, alpha = 0.7) +
-  geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE) +
+iris_linear_base <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
   theme_minimal() +
   scale_color_manual(values = c("gray70","gray40","black")) +
   theme(legend.position = c(0.2, 0.85)) +
@@ -116,8 +130,12 @@ iris_petal_scatter <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
         panel.border = element_rect(fill = NA, color = "gray70"),
         legend.title = element_blank())
 
+iris_linear <- iris_linear_base +
+  geom_point(aes(color = Species, shape = Species), size = 2, alpha = 0.8) +
+  geom_smooth(aes(group = Species, color = Species), method = "lm", se = FALSE, show.legend = FALSE)
+
 # To compare without iris species as a variable (not in manuscript):
-iris_petal_scatter_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+iris_linear_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
   geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
@@ -128,7 +146,7 @@ iris_petal_scatter_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
         panel.background = element_rect(fill = NA, color = "gray70"))
 
 # Combine and save image:
-linear_example <- (penguin_flip_mass_scatter + iris_petal_scatter) + plot_annotation(tag_levels = 'A')
+linear_example <- (penguin_linear + iris_linear) + plot_annotation(tag_levels = 'A')
 linear_example
 
 # ggsave(here("fig","linear_example.png"), width = 6, height = 3)
@@ -159,12 +177,12 @@ b <- list(
   showarrow = FALSE
 )
 
-linear_figa <- ggplotly(penguin_flip_mass_scatter,
+linear_figa <- ggplotly(penguin_linear,
                         height=500,
                         tooltip = c("x","y","colour")) %>%
   layout(annotations = a)
 
-linear_figb <- ggplotly(iris_petal_scatter,
+linear_figb <- ggplotly(iris_linear,
                         height=500,
                         tooltip = c("x","y","colour")) %>%
   layout(annotations = b)
@@ -183,14 +201,21 @@ penguins_tooltip <- c(str_c("Flipper length (mm) = ", penguins$flipper_length_mm
                            "\n Body mass (g) = ", penguins$body_mass_g,
                            "\n Species = ", penguins$species))
 
-penguin_int <-
-  penguin_flip_mass_scatter +
+penguin_linear_int <-
+  penguin_linear_base +
   geom_point_interactive(aes(color = species,
                              shape = species,
                              tooltip = penguins_tooltip,
                              data_id = species),
-                         size = 2
-                         )
+                         size = 2,
+                         alpha = .8
+                         ) +
+  geom_smooth_interactive(aes(group = species,
+                              color = species,
+                              data_id= species),
+                          method = lm,
+                          se = FALSE
+                          )
 
 # girafe(ggobj = penguin_int)
 
@@ -198,28 +223,35 @@ iris_tooltip <- c(str_c("Petal length = ", iris$Petal.Length,
                         "\n Petal width = ", iris$Petal.Width,
                         "\n Species = ", iris$Species))
 
-iris_int <-
-  iris_petal_scatter +
+iris_linear_int <-
+  iris_linear_base +
   geom_point_interactive(aes(color = Species,
                              shape = Species,
                              tooltip = iris_tooltip,
                              data_id = Species),
-                         size = 2
+                         size = 2,
+                         alpha = .8
+                         ) +
+  geom_smooth_interactive(aes(group = Species,
+                              color = Species,
+                              data_id= Species),
+                          method = lm,
+                          se = FALSE
   )
 
 # girafe(ggobj = iris_int)
 
-girafe(code = print(penguin_int + iris_int + plot_annotation(tag_levels = 'A')),
+girafe(code = print(penguin_linear_int + iris_linear_int + plot_annotation(tag_levels = 'A')),
        width_svg = 8,
        height_svg = 4,
        options = list(
-         opts_hover_inv(css = "opacity:0.1;"),
-         opts_hover(css = "fill:#F0E442; stroke:white;")
+         opts_hover_inv(css = "opacity:0.2;"),
+         opts_hover(css = "opacity:1; filter: brightness(100%);")
        ))
 
 ## ---- simpsons -------------------------------------------------------------------------------
 # Simpson's Paradox example (bill dimensions, omitting species):
-simpson_nospecies <- penguins %>%
+simpson_nospecies_base <- penguins %>%
   # doing this so ggiraph recognizes species across plots
   mutate(species = as.character(species)) %>%
   mutate(species = case_when(
@@ -227,14 +259,16 @@ simpson_nospecies <- penguins %>%
     TRUE ~ species)
   ) %>%
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(color = "gray40", alpha = 0.6, size = 2) +
-  geom_smooth(method = "lm", se = FALSE, color = "black") +
   theme_minimal() +
   theme(panel.border = element_rect(fill = NA, color = "gray70")) +
   labs(x = "Bill length (mm)", y = "Bill depth (mm)")
 
+simpson_nospecies <- simpson_nospecies_base +
+  geom_point(color = "gray40", alpha = 0.6, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, color = "black")
+
 # Bill dimensions, including species:
-simpson_wspecies <-
+simpson_wspecies_base <-
   penguins %>%
   mutate(species = as.character(species)) %>%
   mutate(species = case_when(
@@ -242,14 +276,18 @@ simpson_wspecies <-
     TRUE ~ species)
     ) %>%
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm, group = species)) +
-  geom_point(aes(color = species, shape = species), size = 2, alpha = 0.8) +
-  geom_smooth(method = "lm", se = FALSE, aes(color = species), show.legend = FALSE) +
+
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   theme_minimal() +
   theme(panel.border = element_rect(fill = NA, color = "gray70")) +
   labs(x = "Bill length (mm)", y = "Bill depth (mm)") +
   guides(color = guide_legend("Species"),
            shape = guide_legend("Species"))
+
+simpson_wspecies <-
+  simpson_wspecies_base +
+  geom_point(aes(color = species, shape = species), size = 2, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = species), show.legend = FALSE)
 
 # Combining into a compound figure:
 simpson_gg <- (simpson_nospecies | simpson_wspecies) + plot_annotation(tag_levels = 'A')
@@ -283,11 +321,15 @@ nospecies_tooltip <- c(str_c("Bill length (mm) = ", penguins$bill_length_mm,
                             "\n Species = ", penguins$species))
 
 simpson_nospecies_int <-
-  simpson_nospecies +
+  simpson_nospecies_base +
   geom_point_interactive(aes(tooltip = nospecies_tooltip,
                              data_id = species),
                          size = 2,
-                         alpha = 0.7)
+                         alpha = 0.8) +
+  geom_smooth_interactive(method = lm,
+                          se = FALSE,
+                          color = "black"
+  )
 
 # girafe(ggobj = simpson_nospecies_int)
 
@@ -296,13 +338,18 @@ wspecies_tooltip <- c(str_c("Bill length (mm) = ", penguins$bill_length_mm,
                              "\n Species = ", penguins$species))
 
 simpson_wspecies_int <-
-  simpson_wspecies +
+  simpson_wspecies_base +
   geom_point_interactive(aes(color = species,
                              shape = species,
                              tooltip = wspecies_tooltip,
                              data_id = species),
                          size = 2,
-                         alpha = 0.7)
+                         alpha = 0.8) +
+  geom_smooth_interactive(aes(color= species,
+                              data_id= species),
+                          method = lm,
+                          se = FALSE
+  )
 
 # girafe(ggobj = simpson_wspecies_int)
 
@@ -310,8 +357,8 @@ girafe(code = print(simpson_nospecies_int + simpson_wspecies_int + plot_annotati
        width_svg = 8,
        height_svg = 4,
        options = list(
-         opts_hover_inv(css = "opacity:0.1;"),
-         opts_hover(css = "fill:#F0E442; stroke:white;")
+         opts_hover_inv(css = "opacity:0.2;"),
+         opts_hover(css = "opacity:1; filter: brightness(100%);")
        ))
 
 
@@ -356,32 +403,27 @@ pca_wider <- penguin_pca %>%
 arrow_style <- arrow(length = unit(.05, "inches"),
                      type = "closed")
 
+penguins_juiced <- juice(penguin_recipe)
+
 # Make the penguins PCA biplot:
 pca_plot <-
-  juice(penguin_recipe) %>%
+  penguins_juiced %>%
   ggplot(aes(PC1, PC2)) +
-  geom_point(aes(color = species, shape = species),
-             alpha = 0.7,
-             size = 2) +
+  coord_cartesian(
+    xlim = c(-3, 4),
+    ylim = c(-2.5, 2))  +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   guides(color = guide_legend("Species"),
-        shape = guide_legend("Species"))
-
-penguins_biplot <- pca_plot +
-  geom_segment(data = pca_wider,
-               aes(xend = PC1, yend = PC2),
-               x = 0,
-               y = 0,
-               arrow = arrow_style) +
-  geom_shadowtext(data = pca_wider,
-            aes(x = PC1, y = PC2, label = terms),
-            nudge_x = c(0.7,0.7,1.7,1.2),
-            nudge_y = c(-0.1,-0.2,0.1,-0.1),
-            size = 4,
-            color = "black",
-            bg.color = "white") +
+        shape = guide_legend("Species")) +
   theme(legend.position = "bottom",
-        panel.border = element_rect(color = "gray70", fill = NA))
+        panel.border = element_rect(color = "gray70", fill = NA)) +
+  geom_shadowtext(data = pca_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(1.5,-1,1.5,1.3),
+                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white")
 
 # For positioning (above):
 # 1: bill_length
@@ -389,17 +431,29 @@ penguins_biplot <- pca_plot +
 # 3: flipper length
 # 4: body mass
 
-penguin_screeplot <- penguin_percvar %>%
+penguins_biplot <- pca_plot +
+  geom_segment(data = pca_wider,
+               aes(xend = PC1, yend = PC2),
+               x = 0,
+               y = 0,
+               arrow = arrow_style) +
+  geom_point(aes(color = species, shape = species),
+             alpha = 0.7,
+             size = 2)
+
+penguin_screeplot_base <- penguin_percvar %>%
   ggplot(aes(x = component, y = value)) +
-  geom_col(fill = "gray50") +
   scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
   scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
   ylab("% of total variance") +
-  geom_text(aes(label = round(value,2)), vjust=-0.25) +
   theme(panel.border = element_rect(color = "gray70", fill = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.minor.y = element_blank())
+
+penguin_screeplot <- penguin_screeplot_base +
+  geom_col(fill = "gray50") +
+  geom_text(aes(label = round(value,2)), vjust=-0.25)
 
 ### IRIS PCA:
 
@@ -423,29 +477,35 @@ iris_wider <- iris_pca %>%
 arrow_style <- arrow(length = unit(.05, "inches"),
                      type = "closed")
 
+iris_juiced <- juice(iris_recipe)
+
 # Make the iris PCA biplot:
 iris_pca_plot <-
-  juice(iris_recipe) %>%
+  iris_juiced %>%
   ggplot(aes(PC1, PC2)) +
+  coord_cartesian(
+    xlim = c(-3, 3),
+    ylim = c(-3, 3)) +
+  scale_colour_manual(values = c("gray70","gray40","black")) +
+  geom_shadowtext(data = iris_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(0.5,0,1,1),
+                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white") +
+  theme(panel.background = element_rect(fill = NA, color = "gray70"),
+        legend.position = "bottom")
+
+iris_biplot <- iris_pca_plot  +
   geom_point(aes(color = Species, shape = Species),
              alpha = 0.8,
              size = 2) +
-  scale_colour_manual(values = c("gray70","gray40","black"))
-iris_biplot <- iris_pca_plot +
   geom_segment(data = iris_wider,
                aes(xend = PC1, yend = PC2),
                x = 0,
                y = 0,
-               arrow = arrow_style) +
-  geom_shadowtext(data = iris_wider,
-            aes(x = PC1, y = PC2, label = terms),
-            nudge_x = c(0.5,0.3,1,1.2),
-            nudge_y = c(-0.1,-0.2,0.1,-0.1),
-            size = 4,
-            color = "black",
-            bg.color = "white") +
-  theme(panel.background = element_rect(fill = NA, color = "gray70"),
-        legend.position = "bottom")
+               arrow = arrow_style)
 
 iris_percvar <- iris_recipe %>%
   tidy(id = "pca", type = "variance") %>%
@@ -453,17 +513,19 @@ iris_percvar <- iris_recipe %>%
 
 # Iris screeplot:
 
-iris_screeplot <- iris_percvar %>%
+iris_screeplot_base <- iris_percvar %>%
   ggplot(aes(x = component, y = value)) +
-  geom_col(fill = "gray50") +
   scale_x_continuous(limits = c(0, 5), breaks = c(1,2,3,4), expand = c(0,0)) +
   scale_y_continuous(limits = c(0,100), expand = c(0,0)) +
   ylab("% of total variance") +
-  geom_text(aes(label = round(value,2)), vjust=-0.25) +
   theme(panel.border = element_rect(color = "gray70", fill = NA),
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.minor.y = element_blank())
+
+iris_screeplot <- iris_screeplot_base +
+  geom_col(fill = "gray50") +
+  geom_text(aes(label = round(value,2)), vjust=-0.25)
 
 # Combine biplots and screeplots for both iris & penguins:
 
@@ -520,6 +582,67 @@ for (i in seq(4)){
 }
 
 pca_iris_plotly
+
+## ---- pca-web ---------------------------------------------------------
+
+
+penguins_biplot_tooltip <- c(str_c("Species = ", penguins_juiced$species,
+                             "\n PC1 = ", penguins_juiced$PC1,
+                             "\n PC2 = ", penguins_juiced$PC2))
+
+penguins_biplot_int <- pca_plot +
+  geom_segment_interactive(data = pca_wider,
+               aes(xend = PC1, yend = PC2),
+               x = 0,
+               y = 0,
+               arrow = arrow_style) +
+  geom_point_interactive(aes(color = species, shape = species,
+                             tooltip = penguins_biplot_tooltip,
+                             data_id = species),
+             alpha = 0.7,
+             size = 2)
+
+penguin_screeplot_int <- penguin_screeplot_base +
+  geom_col_interactive(aes(tooltip = round(value,2)), fill = "gray50") +
+  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25)
+
+# girafe(ggobj = penguins_biplot_int)
+
+iris_biplot_tooltip <- c(str_c("Species = ", iris_juiced$Species,
+                               "\n PC1 = ", iris_juiced$PC1,
+                               "\n PC2 = ", iris_juiced$PC2))
+
+iris_biplot_int <- iris_pca_plot +
+  geom_segment_interactive(data = iris_wider,
+                           aes(xend = PC1, yend = PC2),
+                           x = 0,
+                           y = 0,
+                           arrow = arrow_style) +
+  geom_point_interactive(aes(color = Species, shape = Species,
+                             tooltip = iris_biplot_tooltip,
+                             data_id = Species),
+                         alpha = 0.7,
+                         size = 2)
+
+# girafe(ggobj = iris_biplot_int)
+
+iris_screeplot_int <- iris_screeplot_base +
+  geom_col_interactive(aes(tooltip = round(value,2)), fill = "gray50") +
+  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25)
+
+
+
+girafe(code = print((penguins_biplot_int | iris_biplot_int) /
+                      (penguin_screeplot_int | iris_screeplot_int) +
+                      plot_annotation(tag_levels = 'A')
+                    ),
+       width_svg = 8,
+       height_svg = 8,
+       options = list(
+         opts_hover_inv(css = "opacity:0.2;"),
+         opts_hover(css = "opacity:1; filter: brightness(100%);")
+       ))
+
 
 ## ---- kmeans ---------------------------------------------------------
 
@@ -688,7 +811,8 @@ pb_kmeans_int <- pb_kmeans_base +
   geom_text_interactive(aes(
     label = .cluster,
     color = species,
-    tooltip = pb_tooltip),
+    tooltip = pb_tooltip,
+    data_id = .cluster),
     size = 3)
 
 # girafe(ggobj = pb_kmeans_int)
@@ -702,7 +826,8 @@ ip_kmeans_int <- ip_kmeans_base +
   geom_text_interactive(aes(
     label = .cluster,
     color = Species,
-    tooltip = ip_tooltip),
+    tooltip = ip_tooltip,
+    data_id = .cluster),
     size = 3)
 
 # girafe(ggobj = ip_kmeans_int)

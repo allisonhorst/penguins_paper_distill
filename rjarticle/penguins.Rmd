@@ -80,6 +80,11 @@ ggplot2::theme_set(ggplot2::theme_minimal())
 # for modeling
 library(recipes)
 library(broom)
+```
+
+```{r load-ext-chunks}
+#| include: FALSE
+#| purl: FALSE
 
 # https://bookdown.org/yihui/rmarkdown-cookbook/read-chunk.html
 knitr::read_chunk("penguins_plots.R")
@@ -297,17 +302,17 @@ ggplotly(penguin_pairs, tooltip = "text", height = 500)
 ggplotly(iris_pairs, tooltip = "text", height = 500)
 ```
 
-Both `penguins` and `iris` offer numerous opportunities to explore linear relationships and correlations, within and across species (Figures `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguin-pairs-web)', '\\@ref(fig:penguin-pairs)'))` & `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:iris-pairs-web)', '\\@ref(fig:iris-pairs)'))`). A bivariate scatterplot made with the `iris` dataset reveals a clear linear relationship between petal length and petal width. Using `penguins` (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:linear-web)', '\\@ref(fig:linear-example)'))`), we can create a uniquely similar scatterplot with flipper length and body mass. The overall trend across all three species is approximately linear for both `iris` and `penguins`. Teachers may encourage students to explore how simple linear regression results and predictions differ when the species variable is omitted, compared to, for example, multiple linear regression with species included (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:linear-web)', '\\@ref(fig:linear-example)'))`).
+Both `penguins` and `iris` offer numerous opportunities to explore linear relationships and correlations, within and across species (Figures `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:penguin-pairs-web)', '\\@ref(fig:penguin-pairs)'))` & `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:iris-pairs-web)', '\\@ref(fig:iris-pairs)'))`). A bivariate scatterplot made with the `iris` dataset reveals a clear linear relationship between petal length and petal width. Using `penguins` (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:linear-web)', '\\@ref(fig:linear)'))`), we can create a uniquely similar scatterplot with flipper length and body mass. The overall trend across all three species is approximately linear for both `iris` and `penguins`. Teachers may encourage students to explore how simple linear regression results and predictions differ when the species variable is omitted, compared to, for example, multiple linear regression with species included (Figure `r knitr::asis_output(ifelse(knitr::is_html_output(), '\\@ref(fig:linear-web)', '\\@ref(fig:linear)'))`).
 
 
-```{r linear-example, opts.label = 'fig.pdf'}
+```{r linear, opts.label = 'fig.pdf'}
 #| width: 6
 #| height: 3
 #| fig.cap: "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \\textit{Iris setosa} (light gray circles), \\textit{Iris versicolor} (dark gray triangles) and \\textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species."
 #| fig.alt: "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset."
 ```
 
-```{r linear-web, opts.label= c('linear-example', 'fig.web')}
+```{r linear-web, opts.label= c('linear', 'fig.web')}
 #| fig.cap: "Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for *Iris setosa* (light gray circles), *Iris versicolor* (dark gray triangles) and *Iris virginica* (black squares). Within-species linear model is visualized for each penguin or iris species."
 #| fig.alt: "Scatterplots highlighting linear relationships between penguin body mass and flipper length (left) and iris petal length and petal width (right), both across and within the three species for each dataset."
 ```
@@ -346,7 +351,6 @@ A comparison of PCA with the four variables of structural size measurements in `
 ```{r pca-web, opts.label=c('pca', 'fig.web')}
 #| fig.width: 8
 #| fig.height: 8
-#| eval: FALSE
 #| fig.cap: "Principal component analysis biplots and screeplots for structural size measurements in **penguins** (A,C) and **iris** (B,D), revealing similarities in multivariate patterns, variable loadings, and variance explained by each component. For **penguins**, variables are flipper length (mm), body mass (g), bill length (mm) and bill depth (mm); groups are visualized by species (Adélie = orange circles, Chinstrap = blue triangles, Gentoo = green squares). For **iris**, variables are petal length (cm), petal width (cm), sepal length (cm) and sepal width (cm); groups are visualized by species (*Iris setosa* = light gray circles, *Iris versicolor* = dark gray triangles, *Iris virginica* = black squares). Values above screeplot columns (C,D) indicate percent of total variance explained by each of the four principal components."
 ```
 
@@ -370,7 +374,7 @@ K-means clustering with penguin bill dimensions and iris petal dimensions yields
 #| fig.cap: "K-means clustering outcomes for penguin bill dimensions (A) and iris petal dimensions (B). Numbers indicate the cluster to which an observation was assigned, revealing a high degree of separation between species for both **penguins** and **iris**. Penguin species (Adélie = orange, Chinstrap = blue, Gentoo = green) and iris species (*setosa* = light gray, *versicolor* = medium gray, *virginica* = dark gray), along with bill dimensions and cluster number, are included in the tooltip when hovering."
 ```
 
-```{r kmeans-table}
+```{r kmeans-tbl}
 kmeans_2var_table 
 ```
 
@@ -428,12 +432,16 @@ julia> table = PalmerPenguins.load()
 
 All analyses were performed in the R language environment using version 4.1.2 [@R-base]. Complete code for this paper is shared in the Supplemental Material. We acknowledge the following R packages used in analyses, with gratitude to developers and contributors:
 
--   \CRANpkg{tidyverse} [@tidyverse2019]: for data import and cleaning
+-   \CRANpkg{GGally} [@R-GGally]: for pairs plots
+-   \CRANpkg{ggiraph} [@R-ggiraph]: for interactive \CRANpkg{ggplot2} graphics
 -   \CRANpkg{ggplot2} [@R-ggplot2]: for data visualizations
 -   \CRANpkg{kableExtra} [@R-kableExtra]: for finalized tables
--   \CRANpkg{GGally} [@R-GGally]: for pairs plots
--   \CRANpkg{patchwork} [@R-patchwork]: for compound figures
--   \CRANpkg{shadowtext} [@R-shadowtext]: to add a background color to text labels
--   \CRANpkg{recipes} [@R-recipes] and \CRANpkg{broom} [@R-broom]: for modeling
 -   \CRANpkg{paletteer} [@R-paletteer]: for the Okabe Ito color palette, provided by the \CRANpkg{colorblindr} package
+-   \CRANpkg{patchwork} [@R-patchwork]: for compound figures
 -   \CRANpkg{plotly} [@R-plotly]: for interactive graphics
+-   \CRANpkg{recipes} [@R-recipes] and \CRANpkg{broom} [@R-broom]: for modeling
+-   \CRANpkg{shadowtext} [@R-shadowtext]: to add a background color to text labels
+-   \CRANpkg{tidyverse} [@tidyverse2019]: for data import and cleaning
+
+
+

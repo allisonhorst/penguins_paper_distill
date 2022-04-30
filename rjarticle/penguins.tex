@@ -355,23 +355,22 @@ explore linear relationships and correlations, within and across species
 (Figures \ref{fig:penguin-pairs} \& \ref{fig:iris-pairs}). A bivariate
 scatterplot made with the \texttt{iris} dataset reveals a clear linear
 relationship between petal length and petal width. Using
-\texttt{penguins} (Figure \ref{fig:linear-example}), we can create a
-uniquely similar scatterplot with flipper length and body mass. The
-overall trend across all three species is approximately linear for both
-\texttt{iris} and \texttt{penguins}. Teachers may encourage students to
-explore how simple linear regression results and predictions differ when
-the species variable is omitted, compared to, for example, multiple
-linear regression with species included (Figure
-\ref{fig:linear-example}).
+\texttt{penguins} (Figure \ref{fig:linear}), we can create a uniquely
+similar scatterplot with flipper length and body mass. The overall trend
+across all three species is approximately linear for both \texttt{iris}
+and \texttt{penguins}. Teachers may encourage students to explore how
+simple linear regression results and predictions differ when the species
+variable is omitted, compared to, for example, multiple linear
+regression with species included (Figure \ref{fig:linear}).
 
 \begin{Schunk}
 \begin{figure}[htbp]
 
-{\centering \includegraphics[width=\textwidth]{figs/linear-example-1} 
+{\centering \includegraphics[width=\textwidth]{figs/linear-1} 
 
 }
 
-\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \textit{Iris setosa} (light gray circles), \textit{Iris versicolor} (dark gray triangles) and \textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear-example}
+\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \textit{Iris setosa} (light gray circles), \textit{Iris versicolor} (dark gray triangles) and \textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear}
 \end{figure}
 \end{Schunk}
 
@@ -617,27 +616,30 @@ analyses, with gratitude to developers and contributors:
 \begin{itemize}
 \tightlist
 \item
-  \CRANpkg{tidyverse} \citep{tidyverse2019}: for data import and
-  cleaning
+  \CRANpkg{GGally} \citep{R-GGally}: for pairs plots
+\item
+  \CRANpkg{ggiraph} \citep{R-ggiraph}: for interactive \CRANpkg{ggplot2}
+  graphics
 \item
   \CRANpkg{ggplot2} \citep{R-ggplot2}: for data visualizations
 \item
   \CRANpkg{kableExtra} \citep{R-kableExtra}: for finalized tables
 \item
-  \CRANpkg{GGally} \citep{R-GGally}: for pairs plots
+  \CRANpkg{paletteer} \citep{R-paletteer}: for the Okabe Ito color
+  palette, provided by the \CRANpkg{colorblindr} package
 \item
   \CRANpkg{patchwork} \citep{R-patchwork}: for compound figures
 \item
-  \CRANpkg{shadowtext} \citep{R-shadowtext}: to add a background color
-  to text labels
+  \CRANpkg{plotly} \citep{R-plotly}: for interactive graphics
 \item
   \CRANpkg{recipes} \citep{R-recipes} and \CRANpkg{broom}
   \citep{R-broom}: for modeling
 \item
-  \CRANpkg{paletteer} \citep{R-paletteer}: for the Okabe Ito color
-  palette, provided by the \CRANpkg{colorblindr} package
+  \CRANpkg{shadowtext} \citep{R-shadowtext}: to add a background color
+  to text labels
 \item
-  \CRANpkg{plotly} \citep{R-plotly}: for interactive graphics
+  \CRANpkg{tidyverse} \citep{tidyverse2019}: for data import and
+  cleaning
 \end{itemize}
 
 \bibliography{penguins.bib}
