@@ -837,5 +837,5 @@ girafe(code = print(pb_kmeans_int + ip_kmeans_int + plot_annotation(tag_levels =
        height_svg = 4,
        options = list(
          opts_hover_inv(css = "opacity:0.1;"),
-         opts_hover(css = "fill:#F0E442; stroke:white;")
+         opts_hover(css = "opacity:1; filter: brightness(80%);")
        ))
