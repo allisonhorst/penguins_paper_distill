@@ -122,7 +122,16 @@ ggplotly(iris_pairs, tooltip = "text", height = 500)
 
 
 ## ----kmeans-tbl---------------------------------------------------------------
-kmeans_2var_table 
+# Making cluster assignments table
+kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
+  kable(col.names = c("Cluster", "Adélie", "Chinstrap", "Gentoo", "Cluster", "setosa", "versicolor", "virginica"),
+        caption = "K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).",
+        align = "cccccc",
+        booktabs = TRUE) %>%
+  kable_styling(full_width = FALSE) %>%
+  add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
+
+kmeans_2var_table
 
 
 ## -----------------------------------------------------------------------------

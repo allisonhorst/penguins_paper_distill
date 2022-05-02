@@ -39,7 +39,6 @@ penguin_pairs <- penguins %>%
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   scale_fill_paletteer_d("colorblindr::OkabeIto") +
   scale_shape_manual(values = c(15,16,17)) +
-  theme_minimal() +
   theme(
     text = element_text(size = 9),
     axis.text = element_text(size = 7),
@@ -67,7 +66,6 @@ iris_pairs <- iris %>%
           lower = list(continuous = wrap(ggally_points, size = 1.3, alpha = 0.8))) +
   scale_colour_manual(values = c("gray70","gray40","black")) +
   scale_fill_manual(values = c("gray70","gray40","black")) +
-  theme_minimal() +
   theme(
     text = element_text(size = 9),
     axis.text = element_text(size = 7),
@@ -91,7 +89,6 @@ penguin_linear_base <-
     TRUE ~ species
   )) %>%
   ggplot(aes(x = flipper_length_mm, y = body_mass_g)) +
-  theme_minimal() +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
   theme(legend.position = c(0.2,0.85)) +
   labs(x = "Flipper length (mm)",
@@ -111,7 +108,6 @@ penguin_linear <-
 penguin_linear_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
-  theme_minimal() +
   labs(x = "Flipper length (mm)",
        y = "Body mass (g)") +
   theme(plot.title.position = "plot",
@@ -120,7 +116,6 @@ penguin_linear_all <- ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_
 
 # Iris linear relationships (petal dimensions):
 iris_linear_base <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  theme_minimal() +
   scale_color_manual(values = c("gray70","gray40","black")) +
   theme(legend.position = c(0.2, 0.85)) +
   labs(x = "Petal length (cm)",
@@ -138,7 +133,6 @@ iris_linear <- iris_linear_base +
 iris_linear_all <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
   geom_point(color = "gray50", size = 2) +
   geom_smooth(method = "lm", se = FALSE, color = "black") +
-  theme_minimal() +
   labs(x = "Petal length (cm)",
        y = "Petal width (cm)") +
   theme(plot.title.position = "plot",
@@ -246,7 +240,7 @@ girafe(code = print(penguin_linear_int + iris_linear_int + plot_annotation(tag_l
        height_svg = 4,
        options = list(
          opts_hover_inv(css = "opacity:0.2;"),
-         opts_hover(css = "opacity:1; filter: brightness(100%);")
+         opts_hover(css = "opacity:1; filter: brightness(90%);")
        ))
 
 ## ---- simpsons -------------------------------------------------------------------------------
@@ -259,7 +253,6 @@ simpson_nospecies_base <- penguins %>%
     TRUE ~ species)
   ) %>%
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
-  theme_minimal() +
   theme(panel.border = element_rect(fill = NA, color = "gray70")) +
   labs(x = "Bill length (mm)", y = "Bill depth (mm)")
 
@@ -278,7 +271,6 @@ simpson_wspecies_base <-
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm, group = species)) +
 
   scale_color_paletteer_d("colorblindr::OkabeIto") +
-  theme_minimal() +
   theme(panel.border = element_rect(fill = NA, color = "gray70")) +
   labs(x = "Bill length (mm)", y = "Bill depth (mm)") +
   guides(color = guide_legend("Species"),
@@ -358,7 +350,7 @@ girafe(code = print(simpson_nospecies_int + simpson_wspecies_int + plot_annotati
        height_svg = 4,
        options = list(
          opts_hover_inv(css = "opacity:0.2;"),
-         opts_hover(css = "opacity:1; filter: brightness(100%);")
+         opts_hover(css = "opacity:1; filter: brightness(90%);")
        ))
 
 
@@ -416,15 +408,7 @@ pca_plot <-
   guides(color = guide_legend("Species"),
         shape = guide_legend("Species")) +
   theme(legend.position = "bottom",
-        panel.border = element_rect(color = "gray70", fill = NA)) +
-  geom_shadowtext(data = pca_wider,
-                  aes(x = PC1, y = PC2, label = terms),
-                  nudge_x = c(1.5,-1,1.5,1.3),
-                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
-                  size = 4,
-                  color = "black",
-                  bg.color = "white")
-
+        panel.border = element_rect(color = "gray70", fill = NA))
 # For positioning (above):
 # 1: bill_length
 # 2: bill_depth
@@ -439,7 +423,15 @@ penguins_biplot <- pca_plot +
                arrow = arrow_style) +
   geom_point(aes(color = species, shape = species),
              alpha = 0.7,
-             size = 2)
+             size = 2) +
+  geom_shadowtext(data = pca_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(0.7,0.7,1.7,1.2),
+                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white")
+
 
 penguin_screeplot_base <- penguin_percvar %>%
   ggplot(aes(x = component, y = value)) +
@@ -487,13 +479,6 @@ iris_pca_plot <-
     xlim = c(-3, 3),
     ylim = c(-3, 3)) +
   scale_colour_manual(values = c("gray70","gray40","black")) +
-  geom_shadowtext(data = iris_wider,
-                  aes(x = PC1, y = PC2, label = terms),
-                  nudge_x = c(0.5,0,1,1),
-                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
-                  size = 4,
-                  color = "black",
-                  bg.color = "white") +
   theme(panel.background = element_rect(fill = NA, color = "gray70"),
         legend.position = "bottom")
 
@@ -505,7 +490,19 @@ iris_biplot <- iris_pca_plot  +
                aes(xend = PC1, yend = PC2),
                x = 0,
                y = 0,
-               arrow = arrow_style)
+               arrow = arrow_style) +
+  geom_shadowtext(data = iris_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(0.5,0.3,1,1.2),
+                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white")
+
+
+# 1:
+# 2:
+# 3: Petal.Length
 
 iris_percvar <- iris_recipe %>%
   tidy(id = "pca", type = "variance") %>%
@@ -586,9 +583,9 @@ pca_iris_plotly
 ## ---- pca-web ---------------------------------------------------------
 
 
-penguins_biplot_tooltip <- c(str_c("Species = ", penguins_juiced$species,
-                             "\n PC1 = ", penguins_juiced$PC1,
-                             "\n PC2 = ", penguins_juiced$PC2))
+penguins_biplot_tooltip <- str_c("Species = ", penguins_juiced$species,
+                             "\n PC1 = ", round(penguins_juiced$PC1, 2),
+                             "\n PC2 = ", round(penguins_juiced$PC2, 2))
 
 penguins_biplot_int <- pca_plot +
   geom_segment_interactive(data = pca_wider,
@@ -600,17 +597,25 @@ penguins_biplot_int <- pca_plot +
                              tooltip = penguins_biplot_tooltip,
                              data_id = species),
              alpha = 0.7,
-             size = 2)
+             size = 2) +
+  geom_shadowtext(data = pca_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(0.7,0.7,1.7,1.2),
+                  nudge_y = c(-0.1,-0.2,0.1,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white")
+
 
 penguin_screeplot_int <- penguin_screeplot_base +
   geom_col_interactive(aes(tooltip = round(value,2)), fill = "gray50") +
-  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25)
+  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25, check_overlap = TRUE)
 
 # girafe(ggobj = penguins_biplot_int)
 
-iris_biplot_tooltip <- c(str_c("Species = ", iris_juiced$Species,
-                               "\n PC1 = ", iris_juiced$PC1,
-                               "\n PC2 = ", iris_juiced$PC2))
+iris_biplot_tooltip <- str_c("Species = ", iris_juiced$Species,
+                               "\n PC1 = ", round(iris_juiced$PC1, 2),
+                               "\n PC2 = ", round(iris_juiced$PC2, 2))
 
 iris_biplot_int <- iris_pca_plot +
   geom_segment_interactive(data = iris_wider,
@@ -622,13 +627,20 @@ iris_biplot_int <- iris_pca_plot +
                              tooltip = iris_biplot_tooltip,
                              data_id = Species),
                          alpha = 0.7,
-                         size = 2)
+                         size = 2) +
+  geom_shadowtext(data = iris_wider,
+                  aes(x = PC1, y = PC2, label = terms),
+                  nudge_x = c(0.5,0,1,1),
+                  nudge_y = c(-0.1,-0.2,0.2,-0.1),
+                  size = 4,
+                  color = "black",
+                  bg.color = "white")
 
 # girafe(ggobj = iris_biplot_int)
 
 iris_screeplot_int <- iris_screeplot_base +
   geom_col_interactive(aes(tooltip = round(value,2)), fill = "gray50") +
-  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25)
+  geom_text_interactive(aes(label = round(value,2)), vjust=-0.25, check_overlap = TRUE)
 
 
 
@@ -640,7 +652,7 @@ girafe(code = print((penguins_biplot_int | iris_biplot_int) /
        height_svg = 8,
        options = list(
          opts_hover_inv(css = "opacity:0.2;"),
-         opts_hover(css = "opacity:1; filter: brightness(100%);")
+         opts_hover(css = "opacity:1; filter: brightness(90%);")
        ))
 
 
@@ -711,14 +723,6 @@ ip_clust_n <- ip_clust %>%
   arrange(.cluster) %>%
   replace_na(list(`setosa` = 0, `versicolor` = 0, `virginica` = 0))
 
-# Making cluster assignments table
-kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
-  kable(col.names = c("Cluster", "Adélie", "Chinstrap", "Gentoo", "Cluster", "setosa", "versicolor", "virginica"),
-        caption = "K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).",
-        align = "cccccc",
-        booktabs = TRUE) %>%
-  kable_styling(full_width = FALSE) %>%
-  add_header_above(c("Penguins cluster assignments" = 4, "Iris cluster assignments" = 4))
 
 # Plot penguin k-means clusters:
 # make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
@@ -726,6 +730,7 @@ pb_kmeans_base <-
   pb_clust %>%
   ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
   scale_color_paletteer_d("colorblindr::OkabeIto") +
+  scale_fill_paletteer_d("colorblindr::OkabeIto") +
   scale_x_continuous(limits = c(30, 60),
                      breaks = c(30, 40, 50, 60)) +
   theme(legend.position = "bottom",
@@ -733,11 +738,14 @@ pb_kmeans_base <-
   labs(x = "Bill length (mm)",
        y = "Bill depth (mm)",
        color = "Species")
+# ggpubr::stat_chull(aes(fill = .cluster, color = .cluster),
+# alpha = 0.5, geom = "polygon", show.legend = FALSE)
 
 pb_kmeans_gg <- pb_kmeans_base +
   geom_text(aes(label = .cluster,
                 color = species),
-            key_glyph = draw_key_rect)
+            key_glyph = draw_key_rect,
+            check_overlap = TRUE)
 
 # Plot iris k-means clusters:
 # make a base plot b/c https://github.com/plotly/plotly.R/issues/1942
@@ -749,11 +757,13 @@ ip_kmeans_base <-
   scale_color_manual(values = c("gray70","gray50","black"))  +
   labs(x = "Petal length (cm)",
        y = "Petal width (cm)")
+# ggpubr::stat_chull(aes(fill = .cluster, color = .cluster),
+# alpha = 0.5, geom = "polygon", show.legend = FALSE)
 
 ip_kmeans_gg <- ip_kmeans_base +
-  geom_text(aes(label = .cluster,
-                color = Species),
-            key_glyph = draw_key_rect)
+  geom_text(aes(label = .cluster),
+            key_glyph = draw_key_rect,
+            check_overlap = TRUE)
 
 # Combine k-means plots for penguins & iris:
 (pb_kmeans_gg | ip_kmeans_gg) + plot_annotation(tag_levels = "A")
@@ -802,33 +812,45 @@ subplot(pb_kmeans_plotly, ip_kmeans_plotly,
 
 ## ---- kmeans-web ---------------------------------------------------------
 
-pb_tooltip <- c(str_c("Species: ", pb_clust$species,
-                      "\n Cluster: ", pb_clust$.cluster,
+pb_tooltip <- str_c("Cluster: ", pb_clust$.cluster,
+                      "\n Species: ", pb_clust$species,
                       "\n Bill length (mm): ", pb_clust$bill_length_mm,
-                      "\n Bill depth (mm) : ", pb_clust$bill_depth_mm))
+                      "\n Bill depth (mm) : ", pb_clust$bill_depth_mm)
 
 pb_kmeans_int <- pb_kmeans_base +
   geom_text_interactive(aes(
     label = .cluster,
     color = species,
     tooltip = pb_tooltip,
-    data_id = .cluster),
-    size = 3)
+    data_id = species),
+    size = 3,
+    check_overlap = TRUE)
+
+# pb_kmeans_int <- pb_kmeans_base +
+#   geom_point_interactive(aes(
+#     #label = .cluster,
+#     color = .cluster,
+#     shape = species,
+#     tooltip = pb_tooltip,
+#     data_id = .cluster),
+#     alpha = .8,
+#     size = 2)
 
 # girafe(ggobj = pb_kmeans_int)
 
-ip_tooltip <- c(str_c("Species: ", ip_clust$Species,
-                      "\n Cluster: ", ip_clust$.cluster,
+ip_tooltip <- str_c("Cluster: ", ip_clust$.cluster,
+                      "\n Species: ", ip_clust$Species,
                       "\n Petal Length (cm): ", ip_clust$Petal.Length,
-                      "\n Petal Width (cm): ", ip_clust$Petal.Width))
+                      "\n Petal Width (cm): ", ip_clust$Petal.Width)
 
 ip_kmeans_int <- ip_kmeans_base +
   geom_text_interactive(aes(
     label = .cluster,
     color = Species,
     tooltip = ip_tooltip,
-    data_id = .cluster),
-    size = 3)
+    data_id = Species),
+    size = 3,
+    check_overlap = TRUE)
 
 # girafe(ggobj = ip_kmeans_int)
 
@@ -837,5 +859,5 @@ girafe(code = print(pb_kmeans_int + ip_kmeans_int + plot_annotation(tag_levels =
        height_svg = 4,
        options = list(
          opts_hover_inv(css = "opacity:0.1;"),
-         opts_hover(css = "opacity:1; filter: brightness(80%);")
+         opts_hover(css = "opacity:1; filter: brightness(90%);")
        ))
