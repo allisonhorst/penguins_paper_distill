@@ -10,35 +10,35 @@ In 1935, Edgar Anderson collected size measurements for 150 flowers from
 three species of \emph{Iris} on the Gaspé Peninsula in Quebec, Canada.
 Since then, Anderson's \emph{Iris} observations have become a classic
 dataset in statistics, machine learning, and data science teaching
-materials. It is included in the base R \textbf{datasets} package as
-\textbf{iris}, making it easy for users to access without knowing much
+materials. It is included in the base R \CRANpkg{datasets} package as
+\texttt{iris}, making it easy for users to access without knowing much
 about it. However, the lack of data documentation, presence of
 non-intuitive variables (e.g.~``sepal width''), and perfectly balanced
-groups with zero missing values make \textbf{iris} an inadequate and
+groups with zero missing values make \texttt{iris} an inadequate and
 stale dataset for teaching and learning modern data science skills.
 Users would benefit from working with a more representative, real-world
 environmental dataset with a clear link to current scientific research.
 Importantly, Anderson's \emph{Iris} data appeared in a 1936 publication
 by R. A. Fisher in the \emph{Annals of Eugenics} (which is often the
 first-listed citation for the dataset), inextricably linking
-\textbf{iris} to eugenics research. Thus, a modern alternative to
-\textbf{iris} is needed. In this paper, we introduce the
-\textbf{palmerpenguins} R package, which includes body size measurements
-collected from 2007 - 2009 for three species of \emph{Pygoscelis}
-penguins that breed on islands throughout the Palmer Archipelago,
-Antarctica. The \textbf{penguins} dataset in \textbf{palmerpenguins}
-provides an approachable, charismatic, and near drop-in replacement for
-\textbf{iris} with topical relevance for polar climate change and
-environmental impacts on marine predators. Since the release on CRAN in
-July 2020, the \textbf{palmerpenguins} package has been downloaded over
-402,000 times, highlighting the demand and widespread adoption of this
-viable \textbf{iris} alternative. We directly compare the \textbf{iris}
-and \textbf{penguins} datasets for selected analyses to demonstrate that
-R users, in particular teachers and learners currently using
-\textbf{iris}, can switch to the Palmer Archipelago penguins for many
-use cases including data wrangling, visualization, linear modeling,
-multivariate analysis (e.g., PCA), cluster analysis and classification
-(e.g., by k-means).
+\texttt{iris} to eugenics research. Thus, a modern alternative to
+\texttt{iris} is needed. In this paper, we introduce the
+\CRANpkg{palmerpenguins} R package \citep{R-palmerpenguins}, which
+includes body size measurements collected from 2007 - 2009 for three
+species of \emph{Pygoscelis} penguins that breed on islands throughout
+the Palmer Archipelago, Antarctica. The \texttt{penguins} dataset in
+\CRANpkg{palmerpenguins} provides an approachable, charismatic, and near
+drop-in replacement for \texttt{iris} with topical relevance for polar
+climate change and environmental impacts on marine predators. Since the
+release on CRAN in July 2020, the \CRANpkg{palmerpenguins} package has
+been downloaded over 424,000 times, highlighting the demand and
+widespread adoption of this viable \texttt{iris} alternative. We
+directly compare the \texttt{iris} and \texttt{penguins} datasets for
+selected analyses to demonstrate that R users, in particular teachers
+and learners currently using \texttt{iris}, can switch to the Palmer
+Archipelago penguins for many use cases including data wrangling,
+visualization, linear modeling, multivariate analysis (e.g., PCA),
+cluster analysis and classification (e.g., by k-means).
 }
 
 \hypertarget{introduction}{%
@@ -49,48 +49,50 @@ structural dimensions (length and width) for 50 flowers from three
 \emph{Iris} species: \emph{Iris setosa}, \emph{Iris versicolor}, and
 \emph{Iris virginica} \citep{anderson_irises_1935}. The manageable but
 non-trivial size (5 variables and 150 total observations) and
-characteristics of Anderson's \emph{Iris} dataset (hereinafter referred
-to as \textbf{iris}), including linear relationships and multivariate
-normality, have made it amenable for introducing a wide range of
-statistical methods including data wrangling, visualization, linear
-modeling, multivariate analyses, and machine learning. The \textbf{iris}
-dataset is built into a number of software packages including the
-auto-installed datasets package in R \citep{r_core_team_r_2019},
-Python's scikit-learn machine learning library
-\citep{pedregosa_scikit-learn_2011}, and the SAS Sashelp library (SAS
-Institute, Cary NC), which has facilitated its widespread use. As a
-result, eighty-six years after the data were initially published,
-\textbf{iris} remains ubiquitous in statistics, computational methods,
-software documentation, and data science courses and materials.
+characteristics of Anderson's \emph{Iris} dataset, including linear
+relationships and multivariate normality, have made it amenable for
+introducing a wide range of statistical methods including data
+wrangling, visualization, linear modeling, multivariate analyses, and
+machine learning. The \emph{Iris} dataset is built into a number of
+software packages including the auto-installed datasets package in R
+\citep[as \texttt{iris},][]{R-base}, Python's scikit-learn machine
+learning library \citep{pedregosa_scikit-learn_2011}, and the SAS
+Sashelp library (SAS Institute, Cary NC), which has facilitated its
+widespread use. As a result, eighty-six years after the data were
+initially published, the \emph{Iris} dataset remains ubiquitous in
+statistics, computational methods, software documentation, and data
+science courses and materials.
 
 There are a number of reasons that modern data science practitioners and
-educators may want to move on from \textbf{iris}. First, the dataset
+educators may want to move on from \texttt{iris}. First, the dataset
 lacks metadata \citep{anderson_irises_1935}, which does not reinforce
 best practices and limits meaningful interpretation and discussion of
 research methods, analyses, and outcomes. Of the five variables in
-\textbf{iris}, two (\emph{Sepal.Width} and \emph{Sepal.Length}) are not
-intuitive for most non-botanists. Even with explanation, the difference
-between \emph{petal} and \emph{sepal} dimensions is not obvious. Second,
-\textbf{iris} contains equal sample sizes for each of the three species
-(\emph{n} = 50) with no missing values, which is cleaner than most
-real-world data that learners are likely to encounter. Third, the single
-factor (\emph{Species}) in \textbf{iris} limits options for analyses.
-Finally, due to its publication in the \emph{Annals of Eugenics} by
-statistician R.A. Fisher \citep{fisher_use_1936}, \textbf{iris} is
-burdened by a history in eugenics research, which we are committed to
-addressing through the development of new data science education
-products as described below.
+\texttt{iris}, two (\texttt{Sepal.Width} and \texttt{Sepal.Length}) are
+not intuitive for most non-botanists. Even with explanation, the
+difference between \emph{petal} and \emph{sepal} dimensions is not
+obvious. Second, \texttt{iris} contains equal sample sizes for each of
+the three species (\emph{n} = 50) with no missing values, which is
+cleaner than most real-world data that learners are likely to encounter.
+Third, the single factor (\texttt{Species}) in \texttt{iris} limits
+options for analyses. Finally, due to its publication in the
+\emph{Annals of Eugenics} by statistician R.A. Fisher
+\citep{fisher_use_1936}, \texttt{iris} is burdened by a history in
+eugenics research, which we are committed to addressing through the
+development of new data science education products as described below.
 
 Given the growing need for fresh data science-ready datasets, we sought
 to identify an alternative dataset that could be made easily accessible
 for a broad audience. After evaluating the positive and negative
-features of \textbf{iris} in data science and statistics materials, we
+features of \texttt{iris} in data science and statistics materials, we
 established the following criteria for a suitable alternative:
 
 \begin{itemize}
 \tightlist
 \item
-  Available by appropriate license (ideally, CC0 ``no rights reserved'')
+  Available by appropriate license like a
+  \href{https://creativecommons.org/share-your-work/public-domain/cc0/}{Creative
+  Commons 0 license} (CC0 ``no rights reserved'')
 \item
   Feature intuitive subjects and variables that are interesting and
   understandable to learners across disciplines
@@ -106,10 +108,10 @@ established the following criteria for a suitable alternative:
   Provides similar opportunities for teaching and learning R, data
   science, and statistical skills
 \item
-  Can easily replace \textbf{iris} for most use cases
+  Can easily replace \texttt{iris} for most use cases
 \end{itemize}
 
-Here, we describe an alternative to \textbf{iris} that largely satisfies
+Here, we describe an alternative to \texttt{iris} that largely satisfies
 these criteria: a refreshing, approachable, and charismatic dataset
 containing real-world body size measurements for three \emph{Pygoscelis}
 penguin species that breed throughout the Western Antarctic Peninsula
@@ -117,7 +119,7 @@ region, made available through the United States Long-Term Ecological
 Research (US LTER) Network. By comparing data structure, size, and a
 range of analyses side-by-side for the two datasets, we demonstrate that
 the Palmer Archipelago penguin data are an ideal substitute for
-\textbf{iris} for many use cases in statistics and data science
+\texttt{iris} for many use cases in statistics and data science
 education.
 
 \hypertarget{data-source}{%
@@ -133,10 +135,10 @@ first egg laid, and clutch completion), and carbon
 \(\delta\)\textsuperscript{15}N) stable isotope values of red blood
 cells for adult male and female Adélie (\emph{P. adeliae}), chinstrap
 (\emph{P. antarcticus}), and gentoo (\emph{P. papua}) penguins on three
-islands (Biscoe, Dream and Torgersen) within the Palmer Archipelago were
-collected from 2007 - 2009 by Dr.~Kristen Gorman in collaboration with
-the \href{https://pal.lternet.edu/}{Palmer Station LTER}, part of the
-\href{https://lternet.edu/}{US LTER Network}. For complete data
+islands (Biscoe, Dream, and Torgersen) within the Palmer Archipelago
+were collected from 2007 - 2009 by Dr.~Kristen Gorman in collaboration
+with the \href{https://pal.lternet.edu/}{Palmer Station LTER}, part of
+the \href{https://lternet.edu/}{US LTER Network}. For complete data
 collection methods and published analyses, see
 \citet{gorman_ecological_2014}. Throughout this paper, penguins species
 are referred to as ``Adélie'', ``Chinstrap'', and ``Gentoo''.
@@ -168,8 +170,9 @@ Initiative (EDI) Data Portal} at the links below:
   Data Package 221.6}
 \end{itemize}
 
-\hypertarget{r-package-palmerpenguins}{%
-\subsection{R package: palmerpenguins}\label{r-package-palmerpenguins}}
+\hypertarget{the-palmerpenguins-r-package}{%
+\subsection{The palmerpenguins R
+package}\label{the-palmerpenguins-r-package}}
 
 R users can install the \CRANpkg{palmerpenguins} package from CRAN:
 
@@ -184,41 +187,41 @@ See the Appendix for how Python and Julia users can access the same
 data.
 
 The \CRANpkg{palmerpenguins} R package contains two data objects:
-\textbf{penguins\_raw} and \textbf{penguins}. The \textbf{penguins\_raw}
+\texttt{penguins\_raw} and \texttt{penguins}. The \texttt{penguins\_raw}
 data consists of all raw data for 17 variables, recorded completely or
 in part for 344 individual penguins, accessed directly from EDI
-(\textbf{penguins\_raw} properties are summarized in Appendix B). We
-generally recommend using the curated data in \textbf{penguins}, which
-is a subset of \textbf{penguins\_raw} retaining all 344 observations,
+(\texttt{penguins\_raw} properties are summarized in Appendix B). We
+generally recommend using the curated data in \texttt{penguins}, which
+is a subset of \texttt{penguins\_raw} retaining all 344 observations,
 minimally updated (Appendix A) and reduced to the following eight
 variables:
 
 \begin{itemize}
 \tightlist
 \item
-  \emph{species:} a factor denoting the penguin species (Adélie,
+  \texttt{species}: a factor denoting the penguin species (Adélie,
   Chinstrap, or Gentoo)
 \item
-  \emph{island:} a factor denoting the Palmer Archipelago island in
+  \texttt{island}: a factor denoting the Palmer Archipelago island in
   Antarctica where each penguin was observed (Biscoe Point, Dream
   Island, or Torgersen Island)
 \item
-  \emph{bill\_length\_mm:} a number denoting length of the dorsal ridge
-  of a penguin bill (millimeters)
+  \texttt{bill\_length\_mm}: a number denoting length of the dorsal
+  ridge of a penguin bill (millimeters)
 \item
-  \emph{bill\_depth\_mm:} a number denoting the depth of a penguin bill
-  (millimeters)
+  \texttt{bill\_depth\_mm}: a number denoting the depth of a penguin
+  bill (millimeters)
 \item
-  \emph{flipper\_length\_mm:} an integer denoting the length of a
+  \texttt{flipper\_length\_mm}: an integer denoting the length of a
   penguin flipper (millimeters)
 \item
-  \emph{body\_mass\_g:} an integer denoting the weight of a penguin's
+  \texttt{body\_mass\_g}: an integer denoting the weight of a penguin's
   body (grams)
 \item
-  \emph{sex:} a factor denoting the sex of a penguin sex (male, female)
-  based on molecular data
+  \texttt{sex}: a factor denoting the sex of a penguin sex (male,
+  female) based on molecular data
 \item
-  \emph{year:} an integer denoting the year of study (2007, 2008, or
+  \texttt{year}: an integer denoting the year of study (2007, 2008, or
   2009)
 \end{itemize}
 
@@ -228,30 +231,30 @@ the built-in \texttt{path\_to\_file()} function in
 \CRANpkg{palmerpenguins}. For example,
 
 \begin{verbatim}
-    library(palmerpenguins)
-    df <- read.csv(path_to_file("penguins.csv"))
+library(palmerpenguins)
+df <- read.csv(path_to_file("penguins.csv"))
 \end{verbatim}
 
 will read in ``penguins.csv'' as if from an external file, thus
-automatically parsing \emph{species}, \emph{island}, and \emph{sex}
-variables as characters instead of factors. This option allows users
-opportunities to practice or demonstrate reading in data from a CSV,
-then updating variable class (e.g., characters to factors).
+automatically parsing \texttt{species}, \texttt{island}, and
+\texttt{sex} variables as characters instead of factors. This option
+allows users opportunities to practice or demonstrate reading in data
+from a CSV, then updating variable class (e.g., characters to factors).
 
 \hypertarget{comparing-iris-and-penguins}{%
-\subsection{\texorpdfstring{Comparing \textbf{iris} and
-\textbf{penguins}}{Comparing iris and penguins}}\label{comparing-iris-and-penguins}}
+\subsection{\texorpdfstring{Comparing \texttt{iris} and
+\texttt{penguins}}{Comparing iris and penguins}}\label{comparing-iris-and-penguins}}
 
-The \textbf{penguins} data in \CRANpkg{palmerpenguins} is useful and
+The \texttt{penguins} data in \CRANpkg{palmerpenguins} is useful and
 approachable for data science and statistics education, and is uniquely
-well-suited to replace the \textbf{iris} dataset. Comparisons presented
-are selected examples for common \textbf{iris} uses, and are not
+well-suited to replace the \texttt{iris} dataset. Comparisons presented
+are selected examples for common \texttt{iris} uses, and are not
 exhaustive.
 
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-2}Overview comparison of \textbf{penguins} and \textbf{iris} dataset features and characteristics.}
+\caption{\label{tab:overview-tbl-pdf}Overview comparison of \textbf{penguins} and \textbf{iris} dataset features and characteristics.}
 \centering
 \begin{tabular}[t]{lcl}
 \toprule
@@ -272,31 +275,32 @@ Missing values? & no (n = 0; 0.0\%) & yes (n = 19; 0.7\%)\\
 \subsubsection{Data structure and sample
 size}\label{data-structure-and-sample-size}}
 
-Both \textbf{iris} and \textbf{penguins} are in tidy format
+Both \texttt{iris} and \texttt{penguins} are in tidy format
 \citep{wickham_tidy_2014} with each column denoting a single variable
 and each row containing measurements for a single iris flower or
 penguin, respectively. The two datasets are comparable in size:
-dimensions (columns × rows) are 5 × 150 and 8 × 344 for \textbf{iris}
-and \textbf{penguins}, respectively, and sample sizes within species are
-similar (Tables 1 \& 2).
+dimensions (columns × rows) are 5 × 150 and 8 × 344 for \texttt{iris}
+and \texttt{penguins}, respectively, and sample sizes within species are
+similar (Tables \ref{tab:overview-tbl} \& \ref{tab:counts-tbl}).
 
-Notably, while sample sizes in \textbf{iris} across species are all the
-same, sample sizes in \textbf{penguins} differ across the three species.
-The inclusion of three factor variables in \textbf{penguins}
-(\emph{species}, \emph{island}, and \emph{sex}), along with \emph{year},
-create additional opportunities for grouping, faceting, and analysis
-compared to the single factor (\emph{Species}) in \textbf{iris}.
+Notably, while sample sizes in \texttt{iris} across species are all the
+same, sample sizes in \texttt{penguins} differ across the three species.
+The inclusion of three factor variables in \texttt{penguins}
+(\texttt{species}, \texttt{island}, and \texttt{sex}), along with
+\texttt{year}, create additional opportunities for grouping, faceting,
+and analysis compared to the single factor (\texttt{Species}) in
+\texttt{iris}.
 
-Unlike \textbf{iris}, which contains only complete cases, the
-\textbf{penguins} dataset contains a small number of missing values
+Unlike \texttt{iris}, which contains only complete cases, the
+\texttt{penguins} dataset contains a small number of missing values
 (\emph{n}\textsubscript{missing} = 19, out of 2,752 total values).
 Missing values and unequal sample sizes are common in real-world data,
-and create added learning opportunity to the \textbf{penguins} dataset.
+and create added learning opportunity to the \texttt{penguins} dataset.
 
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-4}Grouped sample size for \textbf{iris} (by species; \textit{n} = 150 total) and \textbf{penguins} (by species and sex; \textit{n} = 344 total). Data in \textbf{penguins} can be further grouped by island and study year.}
+\caption{\label{tab:counts-tbl-pdf}Grouped sample size for \textbf{iris} (by species; \textit{n} = 150 total) and \textbf{penguins} (by species and sex; \textit{n} = 344 total). Data in \textbf{penguins} can be further grouped by island and study year.}
 \centering
 \begin{tabular}[t]{lclccc}
 \toprule
@@ -319,13 +323,13 @@ variables}\label{continuous-quantitative-variables}}
 
 Distributions, relationships between variables, and clustering can be
 visually explored between species for the four structural size
-measurements in \textbf{penguins} (flipper length, body mass, bill
-length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
+measurements in \texttt{penguins} (flipper length, body mass, bill
+length and depth; Figure \ref{fig:penguin-pairs}) and \texttt{iris}
 (sepal width and length, petal width and length; Figure
 \ref{fig:iris-pairs}).
 
 \begin{Schunk}
-\begin{figure}
+\begin{figure}[htbp]
 
 {\centering \includegraphics[width=\textwidth]{figs/penguin-pairs-1} 
 
@@ -336,7 +340,7 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 \end{Schunk}
 
 \begin{Schunk}
-\begin{figure}
+\begin{figure}[htbp]
 
 {\centering \includegraphics[width=\textwidth]{figs/iris-pairs-1} 
 
@@ -346,28 +350,27 @@ length and depth; Figure \ref{fig:penguin-pairs}) and \textbf{iris}
 \end{figure}
 \end{Schunk}
 
-Both \textbf{penguins} and \textbf{iris} offer numerous opportunities to
+Both \texttt{penguins} and \texttt{iris} offer numerous opportunities to
 explore linear relationships and correlations, within and across species
 (Figures \ref{fig:penguin-pairs} \& \ref{fig:iris-pairs}). A bivariate
-scatterplot made with the \textbf{iris} dataset reveals a clear linear
+scatterplot made with the \texttt{iris} dataset reveals a clear linear
 relationship between petal length and petal width. Using
-\textbf{penguins} (Figure \ref{fig:linear-example}), we can create a
-uniquely similar scatterplot with flipper length and body mass. The
-overall trend across all three species is approximately linear for both
-\textbf{iris} and \textbf{penguins}. Teachers may encourage students to
-explore how simple linear regression results and predictions differ when
-the species variable is omitted, compared to, for example, multiple
-linear regression with species included (Figure
-\ref{fig:linear-example}).
+\texttt{penguins} (Figure \ref{fig:linear}), we can create a uniquely
+similar scatterplot with flipper length and body mass. The overall trend
+across all three species is approximately linear for both \texttt{iris}
+and \texttt{penguins}. Teachers may encourage students to explore how
+simple linear regression results and predictions differ when the species
+variable is omitted, compared to, for example, multiple linear
+regression with species included (Figure \ref{fig:linear}).
 
 \begin{Schunk}
 \begin{figure}[htbp]
 
-{\centering \includegraphics[width=\textwidth]{figs/linear-example-1} 
+{\centering \includegraphics[width=\textwidth]{figs/linear-1} 
 
 }
 
-\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \textit{Iris setosa} (light gray circles), \textit{Iris versicolor} (dark gray triangles) and \textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear-example}
+\caption[Representative linear relationships for (A)]{Representative linear relationships for (A): penguin flipper length (mm) and body mass (g) for Adélie (orange circles), Chinstrap (blue triangles), and Gentoo (green squares) penguins; (B): iris petal length (cm) and width (cm) for \textit{Iris setosa} (light gray circles), \textit{Iris versicolor} (dark gray triangles) and \textit{Iris virginica} (black squares). Within-species linear model is visualized for each penguin or iris species.}\label{fig:linear}
 \end{figure}
 \end{Schunk}
 
@@ -382,7 +385,7 @@ variables is reversed when data are pooled, omitting a meaningful
 variable. While often taught and discussed in statistics courses,
 finding a real-world and approachable example of Simpson's Paradox can
 be a challenge. Here, we show one (of several possible - see Figure
-\ref{fig:penguin-pairs}) Simpson's Paradox example in \textbf{penguins}:
+\ref{fig:penguin-pairs}) Simpson's Paradox example in \texttt{penguins}:
 exploring bill dimensions with and without species included (Figure
 \ref{fig:simpsons}). When penguin species is omitted (Figure
 \ref{fig:simpsons}A), bill length and depth appear negatively correlated
@@ -407,12 +410,12 @@ analysis}\label{principal-component-analysis}}
 
 Principal component analysis (PCA) is a dimensional reduction method
 commonly used to explore patterns in multivariate data. The
-\textbf{iris} dataset frequently appears in PCA tutorials due to
+\texttt{iris} dataset frequently appears in PCA tutorials due to
 multivariate normality and clear interpretation of variable loadings and
 clustering.
 
 A comparison of PCA with the four variables of structural size
-measurements in \textbf{penguins} and \textbf{iris} (both normalized
+measurements in \texttt{penguins} and \texttt{iris} (both normalized
 prior to PCA) reveals highly similar results (Figure \ref{fig:pca}). For
 both datasets, one species is distinct (Gentoo penguins, and
 \emph{setosa} irises) while the other two species (Chinstrap/Adélie and
@@ -420,8 +423,8 @@ both datasets, one species is distinct (Gentoo penguins, and
 first two principal components (Figure \ref{fig:pca} A,B). Screeplots
 reveal that the variance explained by each principal component (PC) is
 very similar across the two datasets, particularly for PC1 and PC2: for
-\textbf{penguins}, 88.15\% of total variance is captured by the first
-two PCs, compared to 95.81\% for \textbf{iris}, with a similarly large
+\texttt{penguins}, 88.15\% of total variance is captured by the first
+two PCs, compared to 95.81\% for \texttt{iris}, with a similarly large
 percentage of variance captured by PC1 and PC2 in each (Figure
 \ref{fig:pca} C,D).
 
@@ -440,12 +443,12 @@ percentage of variance captured by PC1 and PC2 in each (Figure
 \subsubsection{K-means clustering}\label{k-means-clustering}}
 
 Unsupervised clustering by k-means is a common and popular entryway to
-machine learning and classification, and again, the \textbf{iris}
+machine learning and classification, and again, the \texttt{iris}
 dataset is frequently used in introductory examples. The
-\textbf{penguins} data provides similar opportunities for introducing
+\texttt{penguins} data provides similar opportunities for introducing
 k-means clustering. For simplicity, we compare k-means clustering using
-only two variables for each dataset: for \textbf{iris}, petal width and
-petal length, and for \textbf{penguins}, bill length and bill depth. All
+only two variables for each dataset: for \texttt{iris}, petal width and
+petal length, and for \texttt{penguins}, bill length and bill depth. All
 variables are scaled prior to k-means. Three clusters (\emph{k} = 3) are
 specified for each, since there are three species of irises (\emph{Iris
 setosa}, \emph{Iris versicolor}, and \emph{Iris virginica}) and penguins
@@ -456,15 +459,16 @@ dimensions yields largely distinct clusters, each dominated by one
 species (Figure \ref{fig:kmeans}). For iris petal dimensions, k-means
 yields a perfectly separated cluster (Cluster 3) containing all 50
 \emph{Iris setosa} observations and zero misclassified \emph{Iris
-virginica} or \emph{Iris versicolor} (Table 3). While clustering is not
-perfectly distinct for any penguin species, each species is largely
-contained within a single cluster, with little overlap from the other
-two species. For example, considering Adélie penguins (orange
-observations in Figure \ref{fig:kmeans}A): 147 (out of 151) Adélie
-penguins are assigned to Cluster 3, zero are assigned to Cluster 1, and
-4 are assigned to the Chinstrap-dominated Cluster 2 (Table 3). Only 5
-(of 68) Chinstrap penguins and 1 (of 123) Gentoo penguins are assigned
-to the Adélie-dominated Cluster 3 (Table 3).
+virginica} or \emph{Iris versicolor} (Table \ref{tab:kmeans-tbl}). While
+clustering is not perfectly distinct for any penguin species, each
+species is largely contained within a single cluster, with little
+overlap from the other two species. For example, considering Adélie
+penguins (orange observations in Figure \ref{fig:kmeans}A): 147 (out of
+151) Adélie penguins are assigned to Cluster 3, zero are assigned to
+Cluster 1, and 4 are assigned to the Chinstrap-dominated Cluster 2
+(Table \ref{tab:kmeans-tbl}). Only 5 (of 68) Chinstrap penguins and 1
+(of 123) Gentoo penguins are assigned to the Adélie-dominated Cluster 3
+(Table \ref{tab:kmeans-tbl}).
 
 \begin{Schunk}
 \begin{figure}[htbp]
@@ -480,7 +484,7 @@ to the Adélie-dominated Cluster 3 (Table 3).
 \begin{Schunk}
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-5}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
+\caption{\label{tab:kmeans-tbl}K-means cluster assignments by species based on penguin bill length (mm) and depth (mm), and iris petal length (cm) and width (cm).}
 \centering
 \begin{tabular}[t]{cccccccc}
 \toprule
@@ -488,7 +492,7 @@ to the Adélie-dominated Cluster 3 (Table 3).
 \cmidrule(l{3pt}r{3pt}){1-4} \cmidrule(l{3pt}r{3pt}){5-8}
 Cluster & Adélie & Chinstrap & Gentoo & Cluster & setosa & versicolor & virginica\\
 \midrule
-1 & 0 & 9 & 116 & 1 & 0 & 2 & 46\\
+1 & NA & 9 & 116 & 1 & 0 & 2 & 46\\
 2 & 4 & 54 & 6 & 2 & 0 & 48 & 4\\
 3 & 147 & 5 & 1 & 3 & 50 & 0 & 0\\
 \bottomrule
@@ -501,60 +505,56 @@ Cluster & Adélie & Chinstrap & Gentoo & Cluster & setosa & versicolor & virgini
 \subsection{Conclusion}\label{conclusion}}
 
 Here, we have shown that structural size measurements for Palmer
-Archipelago \emph{Pygoscelis} penguins, available as \textbf{penguins}
+Archipelago \emph{Pygoscelis} penguins, available as \texttt{penguins}
 in the \CRANpkg{palmerpenguins} R package, offer a near drop-in
-replacement for \textbf{iris} in a number of common use cases for data
+replacement for \texttt{iris} in a number of common use cases for data
 science and statistics education including exploratory data
 visualization, linear correlation and regression, PCA, and clustering by
 k-means. In addition, teaching and learning opportunities in
-\textbf{penguins} are increased due to a greater number of variables,
+\texttt{penguins} are increased due to a greater number of variables,
 missing values, unequal sample sizes, and Simpson's Paradox examples.
-Importantly, the \textbf{penguins} dataset encompasses real-world
+Importantly, the \texttt{penguins} dataset encompasses real-world
 information derived from several charismatic marine predator species
 with regional breeding populations notably responding to environmental
 change occurring throughout the Western Antarctic Peninsula region of
 the Southern Ocean (see \citet{bestelmeyer_analysis_2011},
 \citet{gorman_ecological_2014}, \citet{gorman_population_2017},
-\citet{gorman_advancing_2021}). Thus, the \textbf{penguins} dataset can
+\citet{gorman_advancing_2021}). Thus, the \texttt{penguins} dataset can
 facilitate discussions more broadly on biodiversity responses to global
 change - a contemporary and critical topic in ecology, evolution, and
 the environmental sciences.
 
-\hypertarget{appendix}{%
-\section*{Appendix}\label{appendix}}
-\addcontentsline{toc}{section}{Appendix}
-
 \hypertarget{penguins-data-processing}{%
 \subsection{Penguins data processing}\label{penguins-data-processing}}
 
-Data in the \textbf{penguins} object have been minimally updated from
-\textbf{penguins\_raw} as follows:
+Data in the \texttt{penguins} object have been minimally updated from
+\texttt{penguins\_raw} as follows:
 
 \begin{itemize}
 \tightlist
 \item
   All variable names are converted to lower snake case (e.g.~from
-  \emph{Flipper Length (mm)} to \emph{flipper\_length\_mm})
+  \texttt{Flipper\ Length\ (mm)} to \texttt{flipper\_length\_mm})
 \item
-  Entries in \emph{species} are truncated to only include the common
+  Entries in \texttt{species} are truncated to only include the common
   name (e.g.~``Gentoo'', instead of ``gentoo penguin (\emph{Pygoscelis
   papua})'')
 \item
   Recorded sex for penguin N36A1, originally recorded as ``.'', is
   updated to \texttt{NA}
 \item
-  \emph{culmen\_length\_mm} and \emph{culmen\_depth\_mm} variable names
-  are updated to \emph{bill\_length\_mm} and \emph{bill\_depth\_mm},
-  respectively
+  \texttt{culmen\_length\_mm} and \texttt{culmen\_depth\_mm} variable
+  names are updated to \texttt{bill\_length\_mm} and
+  \texttt{bill\_depth\_mm}, respectively
 \item
-  Class for categorical variables (\emph{species}, \emph{island},
-  \emph{sex}) is updated to factor
+  Class for categorical variables (\texttt{species}, \texttt{island},
+  \texttt{sex}) is updated to factor
 \item
-  Variable \emph{year} was pulled from clutch observations
+  Variable \texttt{year} was pulled from clutch observations
 \end{itemize}
 
 \hypertarget{summary-of-the-penguins_raw-dataset}{%
-\subsection{\texorpdfstring{Summary of the \textbf{penguins\_raw}
+\subsection{\texorpdfstring{Summary of the \texttt{penguins\_raw}
 dataset}{Summary of the penguins\_raw dataset}}\label{summary-of-the-penguins_raw-dataset}}
 
 \begin{Schunk}
@@ -584,9 +584,9 @@ data in the
 package}:
 
 \begin{verbatim}
-    pip install palmerpenguins
-    from palmerpenguins import load_penguins
-    penguins = load_penguins()
+pip install palmerpenguins
+from palmerpenguins import load_penguins
+penguins = load_penguins()
 \end{verbatim}
 
 \textbf{Julia:} Julia users can access the penguins data in the
@@ -596,8 +596,8 @@ data through \textbf{PalmerPenguins.jl} (more information on
 \href{https://github.com/devmotion/PalmerPenguins.jl}{here}):
 
 \begin{verbatim}
-    julia> using PalmerPenguins
-    julia> table = PalmerPenguins.load()
+julia> using PalmerPenguins
+julia> table = PalmerPenguins.load()
 \end{verbatim}
 
 \textbf{TensorFlow:} TensorFlow users can access the penguins data in
@@ -609,36 +609,37 @@ in TensorFlow can be found
 \subsection{Acknowledgements}\label{acknowledgements}}
 
 All analyses were performed in the R language environment using version
-3.6.2 \citep{r_core_team_r_2019}. Complete code for this paper is shared
-in the Supplemental Material. We acknowledge the following R packages
-used in analyses, with gratitude to developers and contributors:
+4.1.2 \citep{R-base}. Complete code for this paper is shared in the
+Supplemental Material. We acknowledge the following R packages used in
+analyses, with gratitude to developers and contributors:
 
 \begin{itemize}
 \tightlist
 \item
-  \CRANpkg{tidyverse} \citep{wickham_welcome_2019}: for data import and
+  \CRANpkg{GGally} \citep{R-GGally}: for pairs plots
+\item
+  \CRANpkg{ggiraph} \citep{R-ggiraph}: for interactive \CRANpkg{ggplot2}
+  graphics
+\item
+  \CRANpkg{ggplot2} \citep{R-ggplot2}: for data visualizations
+\item
+  \CRANpkg{kableExtra} \citep{R-kableExtra}: for finalized tables
+\item
+  \CRANpkg{paletteer} \citep{R-paletteer}: for the Okabe Ito color
+  palette, provided by the \CRANpkg{colorblindr} package
+\item
+  \CRANpkg{patchwork} \citep{R-patchwork}: for compound figures
+\item
+  \CRANpkg{plotly} \citep{R-plotly}: for interactive graphics
+\item
+  \CRANpkg{recipes} \citep{R-recipes} and \CRANpkg{broom}
+  \citep{R-broom}: for modeling
+\item
+  \CRANpkg{shadowtext} \citep{R-shadowtext}: to add a background color
+  to text labels
+\item
+  \CRANpkg{tidyverse} \citep{tidyverse2019}: for data import and
   cleaning
-\item
-  \CRANpkg{ggplot2} \citep{wickham_ggplot2_2016}: for data
-  visualizations
-\item
-  \CRANpkg{kableExtra} \citep{zhu_kableextra_2019}: for finalized tables
-\item
-  \CRANpkg{GGally} \citep{schloerke_ggally_2020}: for pairs plots
-\item
-  \CRANpkg{patchwork} \citep{pedersen_patchwork_2019}: for compound
-  figures
-\item
-  \CRANpkg{shadowtext} \citep{yu_shadowtext_2019}: to add a background
-  color to text labels
-\item
-  \CRANpkg{recipes} \citep{kuhn_recipes_2020}: for data pre-processing
-\item
-  \CRANpkg{pkgdown} \citep{wickham_pkgdown_2020}: to build the package
-  website
-\item
-  \textbf{base} and \textbf{stats} \citep{r_core_team_r_2019}: for
-  various analyses throughout
 \end{itemize}
 
 \bibliography{penguins.bib}
@@ -656,7 +657,7 @@ Bren School of Environmental Science and Management\\ Santa Barbara, CA
 
 \address{%
 Alison Presmanes Hill\\
-AI Strategy \& Innovation, IBM\\%
+Voltron Data\\%
 \\
 %
 %
