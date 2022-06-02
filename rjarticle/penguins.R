@@ -122,6 +122,8 @@ ggplotly(iris_pairs, tooltip = "text", height = 500)
 
 
 ## ----kmeans-tbl---------------------------------------------------------------
+options(knitr.kable.NA = "0")
+
 # Making cluster assignments table
 kmeans_2var_table <- cbind(pb_clust_n, ip_clust_n) %>%
   kable(col.names = c("Cluster", "Adélie", "Chinstrap", "Gentoo", "Cluster", "setosa", "versicolor", "virginica"),
